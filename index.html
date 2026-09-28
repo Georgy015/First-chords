@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>First Chords — a starter guide to acoustic guitar</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#FAF6EC; --ink:#3B2E24; --wood:#C9873F; --sage:#7A8B6F;
+    --rule:#D9CFBB; --card:#FFFFFF;
+    box-sizing:border-box;
+    padding-top:env(safe-area-inset-top,0px);
+    padding-bottom:env(safe-area-inset-bottom,0px);
+  }
+  html{scroll-padding-top:env(safe-area-inset-top,0px);}
+  *{box-sizing:border-box;}
+  body{
+    margin:0; background:var(--paper); color:var(--ink);
+    font-family:'Inter',system-ui,sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3{font-family:'Fraunces',Georgia,serif; margin:0; font-weight:600;}
+  .wrap{max-width:720px; margin:0 auto; padding:0 24px;}
+  section{padding:64px 0;}
+  .hero{padding:88px 0 56px; text-align:center;}
+  .hero h1{font-size:clamp(2.2rem,6vw,3.4rem); line-height:1.08; letter-spacing:-0.01em;}
+  .hero p{font-size:1.05rem; color:#6b5c4c; margin:18px auto 0; max-width:46ch; line-height:1.55;}
+  .torn{height:14px; margin:8px auto 0; max-width:720px;}
+  .divider{border:none; border-top:1px solid var(--rule); margin:0;}
+  h2{font-size:1.7rem; margin-bottom:6px;}
+  .lede{color:#6b5c4c; margin:0 0 28px; font-size:0.98rem;}
+
+  /* anatomy */
+  .anatomy-diagram{width:100%; max-width:560px; display:block; margin:8px auto 0;}
+  .callout-title{font-family:'Fraunces',serif; font-weight:600; font-size:15px; fill:var(--ink);}
+  .callout-sub{font-family:'Inter',sans-serif; font-size:11px; fill:#8a7a66;}
+
+  /* tuning */
+  .strings{display:flex; flex-direction:column; gap:8px; margin-top:8px;}
+  .string-row{display:flex; align-items:center; gap:14px;}
+  .string-row .note{
+    width:38px; height:38px; border-radius:50%; border:1.6px solid var(--ink);
+    display:flex; align-items:center; justify-content:center; font-family:'Fraunces',serif;
+    font-weight:600; font-size:1rem; flex-shrink:0; background:var(--card);
+  }
+  .string-row .line{height:2px; background:var(--rule); flex:1; position:relative;}
+  .string-row .label{font-size:0.85rem; color:#8a7a66; width:64px; flex-shrink:0;}
+
+  /* chords */
+  .chord-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:16px;}
+  @media (max-width:560px){.chord-grid{grid-template-columns:repeat(2,1fr);}}
+  .chord-card{
+    background:var(--card); border-radius:10px; padding:16px 10px 14px;
+    text-align:center; cursor:pointer; border:1.4px solid var(--rule);
+    transition:border-color .15s, transform .15s;
+  }
+  .chord-card:hover{border-color:var(--wood); transform:translateY(-2px);}
+  .chord-card.open{border-color:var(--sage); border-width:2px;}
+  .chord-card svg{width:100%; height:auto; max-width:110px;}
+  .chord-card .name{font-family:'Fraunces',serif; font-weight:600; font-size:1.1rem; margin-top:6px; display:block;}
+  .chord-note{
+    grid-column:1/-1; background:var(--card); border-left:3px solid var(--sage);
+    border-radius:6px; padding:14px 18px; font-size:0.92rem; color:#4a3d30; display:none; line-height:1.5;
+  }
+  .chord-note.show{display:block;}
+
+  /* strumming */
+  .strum-pattern{display:flex; gap:10px; margin-top:14px; flex-wrap:wrap;}
+  .beat{
+    font-family:'Fraunces',serif; font-weight:700; font-size:1.3rem;
+    width:46px; height:46px; border-radius:8px; border:1.6px solid var(--ink);
+    display:flex; align-items:center; justify-content:center; background:var(--card);
+    transition:background .12s, color .12s;
+  }
+  .beat.active{background:var(--wood); color:#fff; border-color:var(--wood);}
+  .strum-btn{
+    margin-top:20px; font-family:'Inter'; font-weight:600; font-size:0.92rem;
+    background:var(--ink); color:var(--paper); border:none; border-radius:7px;
+    padding:11px 22px; cursor:pointer;
+  }
+  .strum-btn:hover{background:#2a2018;}
+
+  /* songs */
+  .song{padding:16px 0; border-bottom:1px solid var(--rule);}
+  .song:last-child{border-bottom:none;}
+  .song .title{font-family:'Fraunces',serif; font-weight:600; font-size:1.15rem;}
+  .song .prog{font-size:0.95rem; color:#8a7a66; margin-top:4px; letter-spacing:0.02em;}
+
+  footer{padding:60px 0 80px; text-align:center;}
+  footer p{color:#6b5c4c; max-width:44ch; margin:0 auto 20px; line-height:1.55;}
+  .cta{
+    display:inline-block; font-family:'Fraunces',serif; font-weight:600;
+    background:var(--wood); color:#fff; padding:14px 28px; border-radius:8px;
+    text-decoration:none; font-size:1.02rem;
+  }
+  .cta:hover{background:#b5762f;}
+  :focus-visible{outline:2px solid var(--sage); outline-offset:2px;}
+  @media (prefers-reduced-motion:reduce){*{transition:none !important;}}
+</style>
+</head>
+<body>
+
+<div class="hero wrap">
+  <h1>Your first six chords,<br>learned in one sitting.</h1>
+  <p>A gentle starting point for acoustic guitar — no theory, no rush. Just the shapes and sounds that get you playing real songs today.</p>
+</div>
+<svg class="torn" viewBox="0 0 720 14" preserveAspectRatio="none"><path d="M0,7 Q30,2 60,8 T120,6 T180,9 T240,5 T300,8 T360,6 T420,9 T480,5 T540,8 T600,6 T660,9 T720,6" stroke="#D9CFBB" stroke-width="1.4" fill="none"/></svg>
+
+<section class="wrap">
+  <h2>The parts you'll hear about</h2>
+  <p class="lede">Just enough vocabulary to follow along.</p>
+  <svg class="anatomy-diagram" viewBox="0 0 620 560" fill="none">
+    <!-- sketchy offset shadow of body -->
+    <path d="M287,232 L337,232 C382,237 402,257 397,282 C394,307 372,322 367,337 C362,352 427,372 422,412 C420,452 392,480 312,482 C232,480 204,452 202,412 C197,372 262,352 257,337 C252,322 230,307 227,282 C222,257 242,237 287,232 Z" stroke="#3B2E24" stroke-width="1.3" opacity="0.28" transform="translate(3,4)"/>
+    <!-- body -->
+    <path d="M285,230 L335,230 C380,235 400,255 395,280 C392,305 370,320 365,335 C360,350 425,370 420,410 C418,450 390,478 310,480 C230,478 202,450 200,410 C195,370 260,350 255,335 C250,320 228,305 225,280 C220,255 240,235 285,230 Z" fill="#FFFFFF" stroke="#3B2E24" stroke-width="2"/>
+    <!-- neck -->
+    <line x1="285" y1="96" x2="285" y2="230" stroke="#3B2E24" stroke-width="2"/>
+    <line x1="335" y1="96" x2="335" y2="230" stroke="#3B2E24" stroke-width="2"/>
+    <g stroke="#C9B99E" stroke-width="1">
+      <line x1="285" y1="115" x2="335" y2="115"/>
+      <line x1="285" y1="135" x2="335" y2="135"/>
+      <line x1="285" y1="155" x2="335" y2="155"/>
+      <line x1="285" y1="175" x2="335" y2="175"/>
+      <line x1="285" y1="195" x2="335" y2="195"/>
+      <line x1="285" y1="215" x2="335" y2="215"/>
+    </g>
+    <circle cx="310" cy="145" r="2.6" fill="#C9B99E"/>
+    <circle cx="310" cy="185" r="2.6" fill="#C9B99E"/>
+    <!-- nut -->
+    <rect x="283" y="90" width="54" height="6" fill="#3B2E24"/>
+    <!-- headstock -->
+    <path d="M283,90 L270,20 L350,20 L337,90 Z" fill="#FFFFFF" stroke="#3B2E24" stroke-width="2"/>
+    <g stroke="#3B2E24" stroke-width="1.5">
+      <line x1="270" y1="30" x2="255" y2="27"/><circle cx="253" cy="26" r="4" fill="none"/>
+      <line x1="273" y1="48" x2="258" y2="47"/><circle cx="256" cy="47" r="4" fill="none"/>
+      <line x1="277" y1="66" x2="262" y2="67"/><circle cx="260" cy="68" r="4" fill="none"/>
+      <line x1="350" y1="30" x2="365" y2="27"/><circle cx="367" cy="26" r="4" fill="none"/>
+      <line x1="347" y1="48" x2="362" y2="47"/><circle cx="364" cy="47" r="4" fill="none"/>
+      <line x1="343" y1="66" x2="358" y2="67"/><circle cx="360" cy="68" r="4" fill="none"/>
+    </g>
+    <!-- soundhole -->
+    <circle cx="310" cy="300" r="44" stroke="#C9B99E" stroke-width="1.5"/>
+    <circle cx="310" cy="300" r="38" fill="#3B2E24" opacity="0.9"/>
+    <!-- pickguard -->
+    <path d="M355,318 C378,325 388,345 372,365 C360,378 345,368 348,350 C350,336 348,326 355,318 Z" fill="#3B2E24" opacity="0.16"/>
+    <!-- bridge -->
+    <rect x="280" y="400" width="60" height="13" rx="3" fill="#3B2E24"/>
+    <line x1="280" y1="396" x2="340" y2="396" stroke="#3B2E24" stroke-width="2.5"/>
+    <!-- strings -->
+    <g stroke="#8a7a66" stroke-width="1">
+      <line x1="286" y1="96" x2="288" y2="404"/><line x1="296" y1="96" x2="297" y2="404"/>
+      <line x1="306" y1="96" x2="306" y2="404"/><line x1="316" y1="96" x2="316" y2="404"/>
+      <line x1="326" y1="96" x2="325" y2="404"/><line x1="336" y1="96" x2="334" y2="404"/>
+    </g>
+    <circle cx="288" cy="406" r="2.4" fill="#3B2E24"/><circle cx="297" cy="406" r="2.4" fill="#3B2E24"/>
+    <circle cx="306" cy="406" r="2.4" fill="#3B2E24"/><circle cx="316" cy="406" r="2.4" fill="#3B2E24"/>
+    <circle cx="325" cy="406" r="2.4" fill="#3B2E24"/><circle cx="334" cy="406" r="2.4" fill="#3B2E24"/>
+
+    <!-- callouts -->
+    <g stroke="#B9AE9C" stroke-width="1">
+      <path d="M310,20 L470,20"/><circle cx="310" cy="20" r="3" fill="#C9873F"/>
+      <path d="M283,60 L60,95"/><circle cx="283" cy="60" r="3" fill="#C9873F"/>
+      <path d="M335,170 L560,150"/><circle cx="335" cy="170" r="3" fill="#C9873F"/>
+      <path d="M275,300 L60,285"/><circle cx="275" cy="300" r="3" fill="#C9873F"/>
+      <path d="M368,345 L560,345"/><circle cx="368" cy="345" r="3" fill="#C9873F"/>
+      <path d="M300,406 L60,430"/><circle cx="300" cy="406" r="3" fill="#C9873F"/>
+    </g>
+    <text x="475" y="24"><tspan class="callout-title" x="475" dy="0">Headstock</tspan><tspan class="callout-sub" x="475" dy="14">holds the tuning pegs</tspan></text>
+    <text x="55" y="100" text-anchor="end"><tspan class="callout-title" x="55" dy="0">Nut</tspan><tspan class="callout-sub" x="55" dy="14">meets neck &amp; headstock</tspan></text>
+    <text x="565" y="154"><tspan class="callout-title" x="565" dy="0">Neck &amp; frets</tspan><tspan class="callout-sub" x="565" dy="14">press behind the fret bar</tspan></text>
+    <text x="55" y="289" text-anchor="end"><tspan class="callout-title" x="55" dy="0">Soundhole</tspan><tspan class="callout-sub" x="55" dy="14">where the tone projects</tspan></text>
+    <text x="565" y="349"><tspan class="callout-title" x="565" dy="0">Pickguard</tspan><tspan class="callout-sub" x="565" dy="14">shields the top from pick strikes</tspan></text>
+    <text x="55" y="434" text-anchor="end"><tspan class="callout-title" x="55" dy="0">Bridge &amp; saddle</tspan><tspan class="callout-sub" x="55" dy="14">anchors the strings</tspan></text>
+  </svg>
+</section>
+
+<hr class="divider">
+
+<section class="wrap">
+  <h2>Tune up first</h2>
+  <p class="lede">Standard tuning, low string to high. Match each one with a tuner before you play anything.</p>
+  <div class="strings">
+    <div class="string-row"><div class="note">E</div><div class="line"></div><div class="label">string 6 · thick</div></div>
+    <div class="string-row"><div class="note">A</div><div class="line"></div><div class="label">string 5</div></div>
+    <div class="string-row"><div class="note">D</div><div class="line"></div><div class="label">string 4</div></div>
+    <div class="string-row"><div class="note">G</div><div class="line"></div><div class="label">string 3</div></div>
+    <div class="string-row"><div class="note">B</div><div class="line"></div><div class="label">string 2</div></div>
+    <div class="string-row"><div class="note">E</div><div class="line"></div><div class="label">string 1 · thin</div></div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<section class="wrap">
+  <h2>Six chords, click to learn</h2>
+  <p class="lede">These cover a huge share of songs you already know. Tap a card for how to place your fingers.</p>
+  <div class="chord-grid" id="chordGrid"></div>
+</section>
+
+<hr class="divider">
+
+<section class="wrap">
+  <h2>A basic strum pattern</h2>
+  <p class="lede">Down, down, up, down, up — the workhorse pattern behind countless songs. Press play and strum along.</p>
+  <div class="strum-pattern" id="strumRow"></div>
+  <button class="strum-btn" id="strumPlay">Play pattern</button>
+</section>
+
+<hr class="divider">
+
+<section class="wrap">
+  <h2>Songs you can play right now</h2>
+  <p class="lede">Once the chords above feel steady, try these — same shapes, real songs.</p>
+  <div class="song"><div class="title">Knockin' on Heaven's Door</div><div class="prog">G · D · Am · C — Bob Dylan</div></div>
+  <div class="song"><div class="title">Horse With No Name</div><div class="prog">Em · D6/9 (or just Em, C) — America</div></div>
+  <div class="song"><div class="title">Three Little Birds</div><div class="prog">A · D · E — Bob Marley</div></div>
+</section>
+
+<footer class="wrap">
+  <p>That's enough to start playing today. The full guide adds barre chords, fingerpicking, a week-by-week practice plan, and a bigger song list.</p>
+  <a class="cta" href="#" id="ctaLink">Get the full guide (PDF)</a>
+</footer>
+
+<script>
+(function(){
+  // chord data: fret number per string (low E to high e), null = muted, 0 = open
+  const chords = [
+    {name:"Em", frets:[0,2,2,0,0,0]},
+    {name:"C",  frets:[null,3,2,0,1,0]},
+    {name:"G",  frets:[3,2,0,0,0,3]},
+    {name:"D",  frets:[null,null,0,2,3,2]},
+    {name:"A",  frets:[null,0,2,2,2,0]},
+    {name:"Am", frets:[null,0,2,2,1,0]},
+  ];
+  const tips = {
+    Em:"Rest your middle and ring fingers on the A and D strings, second fret. Everything else stays open. The easiest shape to start with.",
+    C:"Ring finger on the A string (3rd fret), middle on the D string (2nd fret), index on the B string (1st fret). Leave the low E string unplayed.",
+    G:"Ring finger low E (3rd fret), index A string (2nd fret), pinky high E (3rd fret). Takes a stretch — go slow.",
+    D:"Index on the G string (2nd fret), middle on high E (2nd fret), ring on B string (3rd fret). Only strum the top four strings.",
+    A:"Index, middle and ring fingers all press the 2nd fret across D, G and B strings. Leave low E unplayed.",
+    Am:"Same shape as A, shifted: index on B string 1st fret, middle on D 2nd fret, ring on G 2nd fret."
+  };
+
+  function fretSVG(frets){
+    const strings=6, fretsShown=4;
+    const w=100,h=120, left=14, top=14, sw=(w-2*left)/(strings-1), fh=(h-top-10)/fretsShown;
+    let s=`<svg viewBox="0 0 ${w} ${h}">`;
+    // nut
+    s+=`<rect x="${left-1}" y="${top-3}" width="${w-2*left+2}" height="3" fill="#3B2E24"/>`;
+    for(let f=0;f<=fretsShown;f++){
+      const y=top+f*fh;
+      s+=`<line x1="${left}" y1="${y}" x2="${w-left}" y2="${y}" stroke="#B9AE9C" stroke-width="${f===0?0:1}"/>`;
+    }
+    for(let i=0;i<strings;i++){
+      const x=left+i*sw;
+      s+=`<line x1="${x}" y1="${top}" x2="${x}" y2="${top+fretsShown*fh}" stroke="#8a7a66" stroke-width="0.9"/>`;
+    }
+    frets.forEach((f,i)=>{
+      const x=left+i*sw;
+      if(f===null){
+        s+=`<text x="${x}" y="${top-6}" font-size="8" text-anchor="middle" fill="#B08968">✕</text>`;
+      } else if(f===0){
+        s+=`<circle cx="${x}" cy="${top-7}" r="3.4" fill="none" stroke="#7A8B6F" stroke-width="1.4"/>`;
+      } else {
+        const y=top+(f-0.5)*fh;
+        s+=`<circle cx="${x}" cy="${y}" r="5.4" fill="#C9873F"/>`;
+      }
+    });
+    s+="</svg>";
+    return s;
+  }
+
+  const grid=document.getElementById('chordGrid');
+  chords.forEach(c=>{
+    const card=document.createElement('div');
+    card.className='chord-card';
+    card.innerHTML=fretSVG(c.frets)+`<span class="name">${c.name}</span>`;
+    card.addEventListener('click',()=>{
+      document.querySelectorAll('.chord-card').forEach(el=>{if(el!==card)el.classList.remove('open');});
+      document.querySelectorAll('.chord-note').forEach(n=>n.remove());
+      const wasOpen=card.classList.contains('open');
+      card.classList.remove('open');
+      if(!wasOpen){
+        card.classList.add('open');
+        const note=document.createElement('div');
+        note.className='chord-note show';
+        note.textContent=tips[c.name];
+        card.after(note);
+      }
+    });
+    grid.appendChild(card);
+  });
+
+  // strum pattern
+  const pattern=["D","D","U","D","U"];
+  const row=document.getElementById('strumRow');
+  pattern.forEach(p=>{
+    const b=document.createElement('div');
+    b.className='beat';
+    b.textContent=p;
+    row.appendChild(b);
+  });
+  let playing=false;
+  document.getElementById('strumPlay').addEventListener('click',function(){
+    if(playing)return;
+    playing=true;
+    const beats=row.querySelectorAll('.beat');
+    beats.forEach(b=>b.classList.remove('active'));
+    let i=0;
+    const iv=setInterval(()=>{
+      beats.forEach(b=>b.classList.remove('active'));
+      if(i<beats.length){beats[i].classList.add('active');i++;}
+      else{clearInterval(iv);playing=false;beats.forEach(b=>b.classList.remove('active'));}
+    },420);
+  });
+})();
+</script>
+</body>
+</html>
