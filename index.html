@@ -70,6 +70,31 @@
   .g-lead polyline{fill:none; stroke:#B9AE9C; stroke-width:1;}
   .g-anchor{fill:var(--wood); stroke:#FFFFFF; stroke-width:1.2;}
 
+  /* hand + pick figures */
+  .figs{display:grid; grid-template-columns:1fr 1fr; gap:20px; margin-top:40px;}
+  @media (max-width:560px){.figs{grid-template-columns:1fr;}}
+  .fig{margin:0; background:var(--card); border:1.4px solid var(--rule); border-radius:10px; padding:16px 16px 18px; min-width:0;}
+  .fig-svg{width:100%; height:auto; display:block; max-width:300px; margin:0 auto;}
+  .fig h3{font-size:1.1rem; margin:10px 0 6px;}
+  .fig p,.fig ol{margin:0; font-size:0.88rem; line-height:1.5; color:#4a3d30;}
+  .fig ol{padding-left:1.2em; display:grid; gap:4px;}
+  .h-out{fill:none; stroke:var(--ink); stroke-width:4.4; stroke-linejoin:round;}
+  .h-skin{fill:#F3D6B6;}
+  .h-crease{fill:none; stroke:#C79E7C; stroke-width:1.3; stroke-linecap:round;}
+  .h-nail{fill:#FBEBDD; stroke:#C79E7C; stroke-width:1;}
+  .h-badge{fill:var(--wood);}
+  .h-num{font-family:'Fraunces',serif; font-weight:700; font-size:12px; fill:#FFFFFF; text-anchor:middle;}
+  .fig-label{font-family:'Fraunces',serif; font-weight:600; font-size:16px; fill:var(--ink);}
+  .fig-sub{font-family:'Inter',sans-serif; font-size:12px; fill:#8a7a66;}
+  .fig-mini{font-family:'Inter',sans-serif; font-size:10.5px; fill:#8a7a66;}
+  .fig-num{font-variant-numeric:tabular-nums;}
+  .lead{stroke:#B9AE9C; stroke-width:1;}
+  .lead-dot{fill:var(--wood);}
+  .p-pick{fill:#B5562F; stroke:var(--ink); stroke-width:1.6; stroke-linejoin:round;}
+  .p-shine{fill:none; stroke:#FFFFFF; stroke-width:2; stroke-linecap:round; opacity:.5;}
+  .g-outline{fill:none; stroke:var(--ink); stroke-linecap:round;}
+  .g-skinline{fill:none; stroke:#F3D6B6; stroke-linecap:round;}
+
   /* tuning */
   .strings{display:flex; flex-direction:column; gap:8px; margin-top:8px;}
   .string-row{display:flex; align-items:center; gap:14px;}
@@ -297,8 +322,90 @@
 <text x="502" y="625" text-anchor="start"><tspan class="callout-title" x="502">Saddle</tspan><tspan class="callout-sub" x="502" dy="16">sets the string height</tspan></text>
 <text x="502" y="710" text-anchor="start"><tspan class="callout-title" x="502">Body</tspan><tspan class="callout-sub" x="502" dy="16">the spruce top vibrates</tspan></text>
 </svg>
-
-
+  </div>
+  <div class="figs">
+    <figure class="fig">
+<svg class="fig-svg" viewBox="0 0 340 330" role="img" aria-labelledby="handT">
+<title id="handT">Back of the left hand with each finger named and numbered</title>
+<path d="M104,186 C98,240 108,292 152,302 C202,310 232,284 234,244 C236,214 228,190 214,180 C190,170 130,170 104,186 Z" class="h-out"/>
+<path d="M120,290 L118,360 L208,360 L210,286 Z" class="h-out"/>
+<rect x="-11.0" y="-70" width="22" height="96" rx="11.0" transform="translate(112 188) rotate(-14)" class="h-out"/>
+<rect x="-12.5" y="-96" width="25" height="122" rx="12.5" transform="translate(140 178) rotate(-5)" class="h-out"/>
+<rect x="-13.0" y="-108" width="26" height="134" rx="13.0" transform="translate(170 175) rotate(2)" class="h-out"/>
+<rect x="-12.5" y="-96" width="25" height="122" rx="12.5" transform="translate(199 180) rotate(10)" class="h-out"/>
+<rect x="-15.0" y="-78" width="30" height="104" rx="15.0" transform="translate(222 256) rotate(52)" class="h-out"/>
+<path d="M104,186 C98,240 108,292 152,302 C202,310 232,284 234,244 C236,214 228,190 214,180 C190,170 130,170 104,186 Z" class="h-skin"/>
+<path d="M120,290 L118,360 L208,360 L210,286 Z" class="h-skin"/>
+<rect x="-11.0" y="-70" width="22" height="96" rx="11.0" transform="translate(112 188) rotate(-14)" class="h-skin"/>
+<rect x="-12.5" y="-96" width="25" height="122" rx="12.5" transform="translate(140 178) rotate(-5)" class="h-skin"/>
+<rect x="-13.0" y="-108" width="26" height="134" rx="13.0" transform="translate(170 175) rotate(2)" class="h-skin"/>
+<rect x="-12.5" y="-96" width="25" height="122" rx="12.5" transform="translate(199 180) rotate(10)" class="h-skin"/>
+<rect x="-15.0" y="-78" width="30" height="104" rx="15.0" transform="translate(222 256) rotate(52)" class="h-skin"/>
+<path d="M-6.16,-26.6 Q0,-23.6 6.16,-26.6" class="h-crease" transform="translate(112 188) rotate(-14)"/>
+<path d="M-6.16,-46.2 Q0,-43.2 6.16,-46.2" class="h-crease" transform="translate(112 188) rotate(-14)"/>
+<rect x="-7" y="-65" width="14.1" height="13.6" rx="6.6" class="h-nail" transform="translate(112 188) rotate(-14)"/>
+<circle cx="104.4" cy="157.4" r="10" class="h-badge"/><text x="104.4" y="161.4" class="h-num">4</text>
+<path d="M-7.000000000000001,-36.5 Q0,-33.5 7.000000000000001,-36.5" class="h-crease" transform="translate(140 178) rotate(-5)"/>
+<path d="M-7.000000000000001,-63.4 Q0,-60.4 7.000000000000001,-63.4" class="h-crease" transform="translate(140 178) rotate(-5)"/>
+<rect x="-8" y="-91" width="16" height="15.5" rx="7.5" class="h-nail" transform="translate(140 178) rotate(-5)"/>
+<circle cx="136.2" cy="135" r="10" class="h-badge"/><text x="136.2" y="139" class="h-num">3</text>
+<path d="M-7.280000000000001,-41 Q0,-38 7.280000000000001,-41" class="h-crease" transform="translate(170 175) rotate(2)"/>
+<path d="M-7.280000000000001,-71.3 Q0,-68.3 7.280000000000001,-71.3" class="h-crease" transform="translate(170 175) rotate(2)"/>
+<rect x="-8.3" y="-103" width="16.6" height="16.1" rx="7.8" class="h-nail" transform="translate(170 175) rotate(2)"/>
+<circle cx="171.7" cy="126.4" r="10" class="h-badge"/><text x="171.7" y="130.4" class="h-num">2</text>
+<path d="M-7.000000000000001,-36.5 Q0,-33.5 7.000000000000001,-36.5" class="h-crease" transform="translate(199 180) rotate(10)"/>
+<path d="M-7.000000000000001,-63.4 Q0,-60.4 7.000000000000001,-63.4" class="h-crease" transform="translate(199 180) rotate(10)"/>
+<rect x="-8" y="-91" width="16" height="15.5" rx="7.5" class="h-nail" transform="translate(199 180) rotate(10)"/>
+<circle cx="206.5" cy="137.5" r="10" class="h-badge"/><text x="206.5" y="141.5" class="h-num">1</text>
+<path d="M-8.4,-39 Q0,-36 8.4,-39" class="h-crease" transform="translate(222 256) rotate(52)"/>
+<rect x="-9.6" y="-73" width="19.2" height="18.6" rx="9" class="h-nail" transform="translate(222 256) rotate(52)"/>
+<circle cx="249.7" cy="234.4" r="10" class="h-badge"/><text x="249.7" y="238.4" class="h-num">T</text>
+<line x1="94.6" y1="118.1" x2="64" y2="115" class="lead"/><circle cx="94.6" cy="118.1" r="2.5" class="lead-dot"/>
+<text x="14" y="120" text-anchor="start" class="fig-label">Pinky</text>
+<line x1="131.5" y1="80.4" x2="74" y2="36" class="lead"/><circle cx="131.5" cy="80.4" r="2.5" class="lead-dot"/>
+<text x="70" y="40" text-anchor="end" class="fig-label">Ring</text>
+<line x1="173.8" y1="65.1" x2="170" y2="32" class="lead"/><circle cx="173.8" cy="65.1" r="2.5" class="lead-dot"/>
+<text x="170" y="24" text-anchor="middle" class="fig-label">Middle</text>
+<line x1="216" y1="83.5" x2="264" y2="44" class="lead"/><circle cx="216" cy="83.5" r="2.5" class="lead-dot"/>
+<text x="268" y="48" text-anchor="start" class="fig-label">Index</text>
+<line x1="285" y1="206.7" x2="292" y2="246" class="lead"/><circle cx="285" cy="206.7" r="2.5" class="lead-dot"/>
+<text x="292" y="262" text-anchor="middle" class="fig-label">Thumb</text>
+</svg>
+      <figcaption>
+        <h3>Your fretting hand</h3>
+        <p>Chord charts name fingers by number: index 1, middle 2, ring 3, pinky 4. The thumb (T) rests behind the neck.</p>
+      </figcaption>
+    </figure>
+    <figure class="fig">
+<svg class="fig-svg" viewBox="0 0 340 330" role="img" aria-labelledby="pickT">
+<title id="pickT">A guitar pick and how to hold it between thumb and index finger</title>
+<g transform="translate(82 128) scale(4.6)"><path d="M0,-14 C9,-14 14,-10 14,-4 C14,3 5,13 0,16 C-5,13 -14,3 -14,-4 C-14,-10 -9,-14 0,-14 Z" class="p-pick" vector-effect="non-scaling-stroke"/><path d="M-9,-8 C-6,-11 -2,-12 2,-12" class="p-shine" vector-effect="non-scaling-stroke"/></g>
+<line x1="82" y1="200" x2="82" y2="228" class="lead"/><circle cx="82" cy="200" r="2.5" class="lead-dot"/><text x="82" y="244" text-anchor="middle" class="fig-label">Tip</text><text x="82" y="260" text-anchor="middle" class="fig-sub">hits the string</text>
+<text x="20" y="292" class="fig-sub">Thickness</text>
+<g transform="translate(40 312) scale(0.75)"><path d="M0,-14 C9,-14 14,-10 14,-4 C14,3 5,13 0,16 C-5,13 -14,3 -14,-4 C-14,-10 -9,-14 0,-14 Z" class="p-pick" vector-effect="non-scaling-stroke"/></g>
+<text x="56" y="310" class="fig-mini">thin</text><text x="56" y="323" class="fig-mini fig-num">.46 mm</text>
+<g transform="translate(140 312) scale(0.75)"><path d="M0,-14 C9,-14 14,-10 14,-4 C14,3 5,13 0,16 C-5,13 -14,3 -14,-4 C-14,-10 -9,-14 0,-14 Z" class="p-pick" vector-effect="non-scaling-stroke"/></g>
+<text x="156" y="310" class="fig-mini">medium</text><text x="156" y="323" class="fig-mini fig-num">.71 mm</text>
+<g transform="translate(240 312) scale(0.75)"><path d="M0,-14 C9,-14 14,-10 14,-4 C14,3 5,13 0,16 C-5,13 -14,3 -14,-4 C-14,-10 -9,-14 0,-14 Z" class="p-pick" vector-effect="non-scaling-stroke"/></g>
+<text x="256" y="310" class="fig-mini">heavy</text><text x="256" y="323" class="fig-mini fig-num">1.0 mm</text>
+<path d="M352,176 C300,172 236,164 220,192 C208,214 232,232 262,226" class="g-outline" stroke-width="38"/><path d="M352,176 C300,172 236,164 220,192 C208,214 232,232 262,226" class="g-skinline" stroke-width="34"/>
+<path d="M292,160 Q296,176 292,190" class="h-crease"/>
+<g transform="translate(224 190) rotate(8) scale(1.9)"><path d="M0,-14 C9,-14 14,-10 14,-4 C14,3 5,13 0,16 C-5,13 -14,3 -14,-4 C-14,-10 -9,-14 0,-14 Z" class="p-pick" vector-effect="non-scaling-stroke"/></g>
+<path d="M352,138 C310,138 258,146 214,156" class="g-outline" stroke-width="38"/><path d="M352,138 C310,138 258,146 214,156" class="g-skinline" stroke-width="34"/>
+<ellipse cx="222" cy="154" rx="12" ry="9" transform="rotate(-10 222 154)" class="h-nail"/>
+<path d="M270,136 Q266,146 270,156" class="h-crease"/>
+<text x="300" y="112" text-anchor="middle" class="fig-sub">thumb</text><text x="300" y="258" text-anchor="middle" class="fig-sub">index finger</text>
+<line x1="222" y1="221" x2="222" y2="250" class="lead"/><circle cx="222" cy="221" r="2.5" class="lead-dot"/><text x="222" y="266" text-anchor="middle" class="fig-sub">tip shows</text>
+</svg>
+      <figcaption>
+        <h3>Holding a pick</h3>
+        <ol>
+          <li>Curl your index finger and lay the pick on the side of its last joint, tip pointing away from you.</li>
+          <li>Press your thumb flat on top, crossing the finger.</li>
+          <li>Let 2–3 mm of tip show. Grip firmly, keep the wrist loose.</li>
+        </ol>
+      </figcaption>
+    </figure>
   </div>
 </section>
 
