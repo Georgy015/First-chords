@@ -104,13 +104,12 @@
   .s-badge{fill:var(--card); stroke:var(--ink); stroke-width:1.6;}
   .s-letter{font-family:'Fraunces',serif; font-weight:600; font-size:17px; fill:var(--ink); text-anchor:middle;}
   .s-ord{font-family:'Fraunces',serif; font-weight:600; font-size:14px; fill:var(--ink);}
-  .s-gauge{font-family:'Inter',sans-serif; font-size:11px; fill:#8a7a66; font-variant-numeric:tabular-nums;}
   .s-cap{font-family:'Inter',sans-serif; font-size:11px; fill:#8a7a66; text-anchor:middle;}
   .s-cap-l{text-anchor:start;}
   @media (max-width:560px){
     .s-letter{font-size:20px;}
     .s-ord{font-size:18px;}
-    .s-gauge,.s-cap{display:none;}
+    .s-cap{display:none;}
   }
 
   /* tuning */
@@ -418,7 +417,7 @@
     </figure>
     <figure class="fig fig-wide">
 <svg class="fig-svg strings-svg" viewBox="0 0 600 250" role="img" aria-labelledby="stringsT">
-<title id="stringsT">The six strings, high e at the top to low E at the bottom, as in guitar tab</title>
+<title id="stringsT">The six strings, low E at the top to high e at the bottom, as you see them looking down at the guitar</title>
 <rect x="96" y="22" width="418" rx="3" height="206" class="s-board"/>
 <line x1="180.6" y1="22" x2="180.6" y2="228" class="s-fret"/>
 <line x1="260.5" y1="22" x2="260.5" y2="228" class="s-fret"/>
@@ -428,30 +427,30 @@
 <circle cx="298.2" cy="125" r="6" class="s-dot"/>
 <circle cx="440.6" cy="125" r="6" class="s-dot"/>
 <rect x="89" y="18" width="8" height="214" rx="2" class="s-nut"/>
-<line x1="89" y1="42" x2="520" y2="42" class="s-plain" stroke-width="1.3"/>
-<circle cx="44" cy="42" r="15" class="s-badge"/><text x="44" y="48" class="s-letter">e</text>
-<text x="534" y="40" class="s-ord">1st</text><text x="534" y="54" class="s-gauge">.012"</text>
-<line x1="89" y1="75" x2="520" y2="75" class="s-plain" stroke-width="1.8"/>
-<circle cx="44" cy="75" r="15" class="s-badge"/><text x="44" y="81" class="s-letter">B</text>
-<text x="534" y="73" class="s-ord">2nd</text><text x="534" y="87" class="s-gauge">.016"</text>
-<line x1="89" y1="108" x2="520" y2="108" class="s-wound" stroke-width="2.6"/>
-<circle cx="44" cy="108" r="15" class="s-badge"/><text x="44" y="114" class="s-letter">G</text>
-<text x="534" y="106" class="s-ord">3rd</text><text x="534" y="120" class="s-gauge">.024"</text>
-<line x1="89" y1="141" x2="520" y2="141" class="s-wound" stroke-width="3.5"/>
-<circle cx="44" cy="141" r="15" class="s-badge"/><text x="44" y="147" class="s-letter">D</text>
-<text x="534" y="139" class="s-ord">4th</text><text x="534" y="153" class="s-gauge">.032"</text>
-<line x1="89" y1="174" x2="520" y2="174" class="s-wound" stroke-width="4.6"/>
-<circle cx="44" cy="174" r="15" class="s-badge"/><text x="44" y="180" class="s-letter">A</text>
-<text x="534" y="172" class="s-ord">5th</text><text x="534" y="186" class="s-gauge">.042"</text>
-<line x1="89" y1="207" x2="520" y2="207" class="s-wound" stroke-width="5.8"/>
-<circle cx="44" cy="207" r="15" class="s-badge"/><text x="44" y="213" class="s-letter">E</text>
-<text x="534" y="205" class="s-ord">6th</text><text x="534" y="219" class="s-gauge">.053"</text>
+<line x1="89" y1="42" x2="520" y2="42" class="s-wound" stroke-width="5.8"/>
+<circle cx="44" cy="42" r="15" class="s-badge"/><text x="44" y="48" class="s-letter">E</text>
+<text x="534" y="47" class="s-ord">6th</text>
+<line x1="89" y1="75" x2="520" y2="75" class="s-wound" stroke-width="4.6"/>
+<circle cx="44" cy="75" r="15" class="s-badge"/><text x="44" y="81" class="s-letter">A</text>
+<text x="534" y="80" class="s-ord">5th</text>
+<line x1="89" y1="108" x2="520" y2="108" class="s-wound" stroke-width="3.5"/>
+<circle cx="44" cy="108" r="15" class="s-badge"/><text x="44" y="114" class="s-letter">D</text>
+<text x="534" y="113" class="s-ord">4th</text>
+<line x1="89" y1="141" x2="520" y2="141" class="s-wound" stroke-width="2.6"/>
+<circle cx="44" cy="141" r="15" class="s-badge"/><text x="44" y="147" class="s-letter">G</text>
+<text x="534" y="146" class="s-ord">3rd</text>
+<line x1="89" y1="174" x2="520" y2="174" class="s-plain" stroke-width="1.8"/>
+<circle cx="44" cy="174" r="15" class="s-badge"/><text x="44" y="180" class="s-letter">B</text>
+<text x="534" y="179" class="s-ord">2nd</text>
+<line x1="89" y1="207" x2="520" y2="207" class="s-plain" stroke-width="1.3"/>
+<circle cx="44" cy="207" r="15" class="s-badge"/><text x="44" y="213" class="s-letter">e</text>
+<text x="534" y="212" class="s-ord">1st</text>
 <text x="44" y="246" class="s-cap">note</text><text x="96" y="246" class="s-cap" text-anchor="start">nut</text>
-<text x="220.6" y="246" class="s-cap">frets →</text><text x="534" y="246" class="s-cap s-cap-l">string · gauge</text>
+<text x="220.6" y="246" class="s-cap">frets →</text><text x="534" y="246" class="s-cap s-cap-l">string</text>
 </svg>
       <figcaption>
         <h3>The six strings</h3>
-        <p>Drawn the way tab shows them: thinnest high e on top, thickest low E at the bottom. Strings are numbered from the thin side, so high e is the 1st and low E the 6th. To remember E A D G B E from low to high: <em>Eddie Ate Dynamite, Good Bye Eddie</em>.</p>
+        <p>Drawn as you see them looking down at your guitar: thickest low E on top, thinnest high e at the bottom. Strings are numbered from the thin side, so high e is the 1st and low E the 6th. To remember E A D G B E from top to bottom: <em>Eddie Ate Dynamite, Good Bye Eddie</em>.</p>
       </figcaption>
     </figure>
   </div>
