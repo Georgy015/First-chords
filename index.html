@@ -28,15 +28,47 @@
   .hero{padding:88px 0 56px; text-align:center;}
   .hero h1{font-size:clamp(2.2rem,6vw,3.4rem); line-height:1.08; letter-spacing:-0.01em;}
   .hero p{font-size:1.05rem; color:#6b5c4c; margin:18px auto 0; max-width:46ch; line-height:1.55;}
-  .torn{height:14px; margin:8px auto 0; max-width:720px;}
+  .torn{display:block; width:100%; height:14px; margin:8px auto 0; max-width:720px;}
   .divider{border:none; border-top:1px solid var(--rule); margin:0;}
   h2{font-size:1.7rem; margin-bottom:6px;}
   .lede{color:#6b5c4c; margin:0 0 28px; font-size:0.98rem;}
 
-  /* anatomy */
-  .anatomy-diagram{width:100%; max-width:560px; display:block; margin:8px auto 0;}
-  .callout-title{font-family:'Fraunces',serif; font-weight:600; font-size:15px; fill:var(--ink);}
-  .callout-sub{font-family:'Inter',sans-serif; font-size:11px; fill:#8a7a66;}
+  /* anatomy: proportioned dreadnought, drawn in millimetres */
+  .anatomy-wrap{margin:8px -8px 0;}
+  .anatomy-diagram{width:100%; max-width:680px; height:auto; display:block; margin:0 auto;}
+  .callout-title{font-family:'Fraunces',serif; font-weight:600; font-size:17px; fill:var(--ink);}
+  .callout-sub{font-family:'Inter',sans-serif; font-size:12.5px; fill:#8a7a66;}
+  @media (max-width:560px){
+    .callout-sub{display:none;}
+    .callout-title{font-size:22px;}
+  }
+  .g-top{fill:#F1DDB0;}
+  .g-grain path{fill:none; stroke:#D9BF8A; stroke-width:0.8; opacity:.55;}
+  .g-sketch{fill:none; stroke:var(--ink); stroke-width:1.2; opacity:.22;}
+  .g-bind{fill:none; stroke:#FBF4E4; stroke-width:7;}
+  .g-purf{fill:none; stroke:#5A4232; stroke-width:10;}
+  .g-ink{stroke:var(--ink); stroke-width:1.8; stroke-linejoin:round;}
+  path.g-ink:not([class*=" "]){fill:none;}
+  .g-ink-thin{stroke:var(--ink); stroke-width:1;}
+  .g-ring{fill:none; stroke:#5A4232; stroke-width:1;}
+  .g-herring{fill:none; stroke:#3B2E24; stroke-width:5; stroke-dasharray:2 1.6;}
+  .g-hole{fill:#2A1F18;}
+  .g-guard{fill:#7A4528; fill-opacity:.88;}
+  .g-board{fill:#3A2C24;}
+  .g-head{fill:#3A2C24;}
+  .g-fret{stroke:#D4CEC2; stroke-width:1.4;}
+  .g-dot{fill:#EDE6D6;}
+  .g-shaft{stroke:#9C968C; stroke-width:2.2;}
+  .g-button{fill:#D8D3C9;}
+  .g-bush{fill:#B9B3A8;}
+  .g-post{fill:#8F897F;}
+  .g-bone{fill:#F6EEDB;}
+  .g-bridge{fill:#3A2C24;}
+  .g-pin{fill:#F6EEDB;}
+  .g-wound{fill:none; stroke:#B98E52;}
+  .g-plain{fill:none; stroke:#C9C4BA;}
+  .g-lead polyline{fill:none; stroke:#B9AE9C; stroke-width:1;}
+  .g-anchor{fill:var(--wood); stroke:#FFFFFF; stroke-width:1.2;}
 
   /* tuning */
   .strings{display:flex; flex-direction:column; gap:8px; margin-top:8px;}
@@ -112,70 +144,162 @@
 <section class="wrap">
   <h2>The parts you'll hear about</h2>
   <p class="lede">Just enough vocabulary to follow along.</p>
-  <svg class="anatomy-diagram" viewBox="0 0 620 560" fill="none">
-    <!-- sketchy offset shadow of body -->
-    <path d="M287,232 L337,232 C382,237 402,257 397,282 C394,307 372,322 367,337 C362,352 427,372 422,412 C420,452 392,480 312,482 C232,480 204,452 202,412 C197,372 262,352 257,337 C252,322 230,307 227,282 C222,257 242,237 287,232 Z" stroke="#3B2E24" stroke-width="1.3" opacity="0.28" transform="translate(3,4)"/>
-    <!-- body -->
-    <path d="M285,230 L335,230 C380,235 400,255 395,280 C392,305 370,320 365,335 C360,350 425,370 420,410 C418,450 390,478 310,480 C230,478 202,450 200,410 C195,370 260,350 255,335 C250,320 228,305 225,280 C220,255 240,235 285,230 Z" fill="#FFFFFF" stroke="#3B2E24" stroke-width="2"/>
-    <!-- neck -->
-    <line x1="285" y1="96" x2="285" y2="230" stroke="#3B2E24" stroke-width="2"/>
-    <line x1="335" y1="96" x2="335" y2="230" stroke="#3B2E24" stroke-width="2"/>
-    <g stroke="#C9B99E" stroke-width="1">
-      <line x1="285" y1="115" x2="335" y2="115"/>
-      <line x1="285" y1="135" x2="335" y2="135"/>
-      <line x1="285" y1="155" x2="335" y2="155"/>
-      <line x1="285" y1="175" x2="335" y2="175"/>
-      <line x1="285" y1="195" x2="335" y2="195"/>
-      <line x1="285" y1="215" x2="335" y2="215"/>
-    </g>
-    <circle cx="310" cy="145" r="2.6" fill="#C9B99E"/>
-    <circle cx="310" cy="185" r="2.6" fill="#C9B99E"/>
-    <!-- nut -->
-    <rect x="283" y="90" width="54" height="6" fill="#3B2E24"/>
-    <!-- headstock -->
-    <path d="M283,90 L270,20 L350,20 L337,90 Z" fill="#FFFFFF" stroke="#3B2E24" stroke-width="2"/>
-    <g stroke="#3B2E24" stroke-width="1.5">
-      <line x1="270" y1="30" x2="255" y2="27"/><circle cx="253" cy="26" r="4" fill="none"/>
-      <line x1="273" y1="48" x2="258" y2="47"/><circle cx="256" cy="47" r="4" fill="none"/>
-      <line x1="277" y1="66" x2="262" y2="67"/><circle cx="260" cy="68" r="4" fill="none"/>
-      <line x1="350" y1="30" x2="365" y2="27"/><circle cx="367" cy="26" r="4" fill="none"/>
-      <line x1="347" y1="48" x2="362" y2="47"/><circle cx="364" cy="47" r="4" fill="none"/>
-      <line x1="343" y1="66" x2="358" y2="67"/><circle cx="360" cy="68" r="4" fill="none"/>
-    </g>
-    <!-- soundhole -->
-    <circle cx="310" cy="300" r="44" stroke="#C9B99E" stroke-width="1.5"/>
-    <circle cx="310" cy="300" r="38" fill="#3B2E24" opacity="0.9"/>
-    <!-- pickguard -->
-    <path d="M355,318 C378,325 388,345 372,365 C360,378 345,368 348,350 C350,336 348,326 355,318 Z" fill="#3B2E24" opacity="0.16"/>
-    <!-- bridge -->
-    <rect x="280" y="400" width="60" height="13" rx="3" fill="#3B2E24"/>
-    <line x1="280" y1="396" x2="340" y2="396" stroke="#3B2E24" stroke-width="2.5"/>
-    <!-- strings -->
-    <g stroke="#8a7a66" stroke-width="1">
-      <line x1="286" y1="96" x2="288" y2="404"/><line x1="296" y1="96" x2="297" y2="404"/>
-      <line x1="306" y1="96" x2="306" y2="404"/><line x1="316" y1="96" x2="316" y2="404"/>
-      <line x1="326" y1="96" x2="325" y2="404"/><line x1="336" y1="96" x2="334" y2="404"/>
-    </g>
-    <circle cx="288" cy="406" r="2.4" fill="#3B2E24"/><circle cx="297" cy="406" r="2.4" fill="#3B2E24"/>
-    <circle cx="306" cy="406" r="2.4" fill="#3B2E24"/><circle cx="316" cy="406" r="2.4" fill="#3B2E24"/>
-    <circle cx="325" cy="406" r="2.4" fill="#3B2E24"/><circle cx="334" cy="406" r="2.4" fill="#3B2E24"/>
+  <div class="anatomy-wrap">
+<svg class="anatomy-diagram" viewBox="0 0 680 800" role="img" aria-labelledby="anatomyTitle">
+<title id="anatomyTitle">Labelled drawing of a dreadnought acoustic guitar</title>
+<defs><clipPath id="bodyClip"><path d="M0,541 C60,541 105,544 128,560 C145,573 148,605 147,640 C147,690 135,725 135,765 C135,800 198,840 198,900 C198,990 130,1051 0,1051 C-130,1051 -198,990 -198,900 C-198,840 -135,800 -135,765 C-135,725 -147,690 -147,640 C-148,605 -145,573 -128,560 C-105,544 -60,541 0,541 Z"/></clipPath></defs>
+<g transform="translate(340 20) scale(0.72)">
+<path d="M0,541 C60,541 105,544 128,560 C145,573 148,605 147,640 C147,690 135,725 135,765 C135,800 198,840 198,900 C198,990 130,1051 0,1051 C-130,1051 -198,990 -198,900 C-198,840 -135,800 -135,765 C-135,725 -147,690 -147,640 C-148,605 -145,573 -128,560 C-105,544 -60,541 0,541 Z" class="g-sketch" transform="translate(5 6)" vector-effect="non-scaling-stroke"/>
+<path d="M0,541 C60,541 105,544 128,560 C145,573 148,605 147,640 C147,690 135,725 135,765 C135,800 198,840 198,900 C198,990 130,1051 0,1051 C-130,1051 -198,990 -198,900 C-198,840 -135,800 -135,765 C-135,725 -147,690 -147,640 C-148,605 -145,573 -128,560 C-105,544 -60,541 0,541 Z" class="g-top"/>
+<g clip-path="url(#bodyClip)" class="g-grain">
+<path d="M-196,540 C-198,700 -194,880 -197.0,1055" vector-effect="non-scaling-stroke"/>
+<path d="M-183,540 C-180.5,700 -185.5,880 -181.75,1055" vector-effect="non-scaling-stroke"/>
+<path d="M-170,540 C-172,700 -168,880 -171.0,1055" vector-effect="non-scaling-stroke"/>
+<path d="M-157,540 C-154.5,700 -159.5,880 -155.75,1055" vector-effect="non-scaling-stroke"/>
+<path d="M-144,540 C-146,700 -142,880 -145.0,1055" vector-effect="non-scaling-stroke"/>
+<path d="M-131,540 C-128.5,700 -133.5,880 -129.75,1055" vector-effect="non-scaling-stroke"/>
+<path d="M-118,540 C-120,700 -116,880 -119.0,1055" vector-effect="non-scaling-stroke"/>
+<path d="M-105,540 C-102.5,700 -107.5,880 -103.75,1055" vector-effect="non-scaling-stroke"/>
+<path d="M-92,540 C-94,700 -90,880 -93.0,1055" vector-effect="non-scaling-stroke"/>
+<path d="M-79,540 C-76.5,700 -81.5,880 -77.75,1055" vector-effect="non-scaling-stroke"/>
+<path d="M-66,540 C-68,700 -64,880 -67.0,1055" vector-effect="non-scaling-stroke"/>
+<path d="M-53,540 C-50.5,700 -55.5,880 -51.75,1055" vector-effect="non-scaling-stroke"/>
+<path d="M-40,540 C-42,700 -38,880 -41.0,1055" vector-effect="non-scaling-stroke"/>
+<path d="M-27,540 C-24.5,700 -29.5,880 -25.75,1055" vector-effect="non-scaling-stroke"/>
+<path d="M-14,540 C-16,700 -12,880 -15.0,1055" vector-effect="non-scaling-stroke"/>
+<path d="M-1,540 C1.5,700 -3.5,880 0.25,1055" vector-effect="non-scaling-stroke"/>
+<path d="M12,540 C10,700 14,880 11.0,1055" vector-effect="non-scaling-stroke"/>
+<path d="M25,540 C27.5,700 22.5,880 26.25,1055" vector-effect="non-scaling-stroke"/>
+<path d="M38,540 C36,700 40,880 37.0,1055" vector-effect="non-scaling-stroke"/>
+<path d="M51,540 C53.5,700 48.5,880 52.25,1055" vector-effect="non-scaling-stroke"/>
+<path d="M64,540 C62,700 66,880 63.0,1055" vector-effect="non-scaling-stroke"/>
+<path d="M77,540 C79.5,700 74.5,880 78.25,1055" vector-effect="non-scaling-stroke"/>
+<path d="M90,540 C88,700 92,880 89.0,1055" vector-effect="non-scaling-stroke"/>
+<path d="M103,540 C105.5,700 100.5,880 104.25,1055" vector-effect="non-scaling-stroke"/>
+<path d="M116,540 C114,700 118,880 115.0,1055" vector-effect="non-scaling-stroke"/>
+<path d="M129,540 C131.5,700 126.5,880 130.25,1055" vector-effect="non-scaling-stroke"/>
+<path d="M142,540 C140,700 144,880 141.0,1055" vector-effect="non-scaling-stroke"/>
+<path d="M155,540 C157.5,700 152.5,880 156.25,1055" vector-effect="non-scaling-stroke"/>
+<path d="M168,540 C166,700 170,880 167.0,1055" vector-effect="non-scaling-stroke"/>
+<path d="M181,540 C183.5,700 178.5,880 182.25,1055" vector-effect="non-scaling-stroke"/>
+<path d="M194,540 C192,700 196,880 193.0,1055" vector-effect="non-scaling-stroke"/>
+</g>
+<g clip-path="url(#bodyClip)"><path d="M0,541 C60,541 105,544 128,560 C145,573 148,605 147,640 C147,690 135,725 135,765 C135,800 198,840 198,900 C198,990 130,1051 0,1051 C-130,1051 -198,990 -198,900 C-198,840 -135,800 -135,765 C-135,725 -147,690 -147,640 C-148,605 -145,573 -128,560 C-105,544 -60,541 0,541 Z" class="g-purf" vector-effect="non-scaling-stroke"/><path d="M0,541 C60,541 105,544 128,560 C145,573 148,605 147,640 C147,690 135,725 135,765 C135,800 198,840 198,900 C198,990 130,1051 0,1051 C-130,1051 -198,990 -198,900 C-198,840 -135,800 -135,765 C-135,725 -147,690 -147,640 C-148,605 -145,573 -128,560 C-105,544 -60,541 0,541 Z" class="g-bind" vector-effect="non-scaling-stroke"/></g>
+<path d="M0,541 C60,541 105,544 128,560 C145,573 148,605 147,640 C147,690 135,725 135,765 C135,800 198,840 198,900 C198,990 130,1051 0,1051 C-130,1051 -198,990 -198,900 C-198,840 -135,800 -135,765 C-135,725 -147,690 -147,640 C-148,605 -145,573 -128,560 C-105,544 -60,541 0,541 Z" class="g-ink" vector-effect="non-scaling-stroke"/>
+<circle cx="0" cy="685" r="62.5" class="g-ring" vector-effect="non-scaling-stroke"/>
+<circle cx="0" cy="685" r="58.5" class="g-herring"/>
+<circle cx="0" cy="685" r="54.5" class="g-ring" vector-effect="non-scaling-stroke"/>
+<circle cx="0" cy="685" r="50" class="g-hole g-ink" vector-effect="non-scaling-stroke"/>
+<path d="M62.8,668.2 A65,65 0 0 1 -5.7,749.8 C10,790 50,814 84,806 C114,798 120,742 102,706 C92,686 78,672 62.8,668.2 Z" class="g-guard g-ink-thin" vector-effect="non-scaling-stroke"/>
+<path d="M-21.5,185 L21.5,185 L29,627 L-29,627 Z" class="g-board g-ink" vector-effect="non-scaling-stroke"/>
+<line x1="-22.1" y1="221.2" x2="22.1" y2="221.2" class="g-fret" vector-effect="non-scaling-stroke"/>
+<line x1="-22.7" y1="255.4" x2="22.7" y2="255.4" class="g-fret" vector-effect="non-scaling-stroke"/>
+<line x1="-23.2" y1="287.6" x2="23.2" y2="287.6" class="g-fret" vector-effect="non-scaling-stroke"/>
+<line x1="-23.8" y1="318.1" x2="23.8" y2="318.1" class="g-fret" vector-effect="non-scaling-stroke"/>
+<line x1="-24.2" y1="346.8" x2="24.2" y2="346.8" class="g-fret" vector-effect="non-scaling-stroke"/>
+<line x1="-24.7" y1="373.9" x2="24.7" y2="373.9" class="g-fret" vector-effect="non-scaling-stroke"/>
+<line x1="-25.1" y1="399.5" x2="25.1" y2="399.5" class="g-fret" vector-effect="non-scaling-stroke"/>
+<line x1="-25.5" y1="423.7" x2="25.5" y2="423.7" class="g-fret" vector-effect="non-scaling-stroke"/>
+<line x1="-25.9" y1="446.5" x2="25.9" y2="446.5" class="g-fret" vector-effect="non-scaling-stroke"/>
+<line x1="-26.3" y1="468" x2="26.3" y2="468" class="g-fret" vector-effect="non-scaling-stroke"/>
+<line x1="-26.6" y1="488.3" x2="26.6" y2="488.3" class="g-fret" vector-effect="non-scaling-stroke"/>
+<line x1="-27" y1="507.5" x2="27" y2="507.5" class="g-fret" vector-effect="non-scaling-stroke"/>
+<line x1="-27.3" y1="525.6" x2="27.3" y2="525.6" class="g-fret" vector-effect="non-scaling-stroke"/>
+<line x1="-27.6" y1="542.7" x2="27.6" y2="542.7" class="g-fret" vector-effect="non-scaling-stroke"/>
+<line x1="-27.8" y1="558.8" x2="27.8" y2="558.8" class="g-fret" vector-effect="non-scaling-stroke"/>
+<line x1="-28.1" y1="574" x2="28.1" y2="574" class="g-fret" vector-effect="non-scaling-stroke"/>
+<line x1="-28.3" y1="588.4" x2="28.3" y2="588.4" class="g-fret" vector-effect="non-scaling-stroke"/>
+<line x1="-28.6" y1="602" x2="28.6" y2="602" class="g-fret" vector-effect="non-scaling-stroke"/>
+<line x1="-28.8" y1="614.8" x2="28.8" y2="614.8" class="g-fret" vector-effect="non-scaling-stroke"/>
+<line x1="-29" y1="626.8" x2="29" y2="626.8" class="g-fret" vector-effect="non-scaling-stroke"/>
+<circle cx="0" cy="271.5" r="3.2" class="g-dot"/>
+<circle cx="0" cy="332.4" r="3.2" class="g-dot"/>
+<circle cx="0" cy="386.7" r="3.2" class="g-dot"/>
+<circle cx="0" cy="435.1" r="3.2" class="g-dot"/>
+<circle cx="0" cy="550.7" r="3.2" class="g-dot"/>
+<circle cx="0" cy="581.2" r="3.2" class="g-dot"/>
+<circle cx="0" cy="608.4" r="3.2" class="g-dot"/>
+<circle cx="-9" cy="497.9" r="3.2" class="g-dot"/><circle cx="9" cy="497.9" r="3.2" class="g-dot"/>
+<path d="M-41,0 L41,0 Q45,0 44.6,4 L38,160 C36,175 24,178 21.5,185 L-21.5,185 C-24,178 -36,175 -38,160 L-44.6,4 Q-45,0 -41,0 Z" class="g-head g-ink" vector-effect="non-scaling-stroke"/>
+<line x1="-38.28125" y1="145" x2="-57.28125" y2="145" class="g-shaft" vector-effect="non-scaling-stroke"/>
+<ellipse cx="-57.28125" cy="145" rx="8" ry="11" class="g-button g-ink-thin" vector-effect="non-scaling-stroke"/>
+<circle cx="-24" cy="145" r="5" class="g-bush g-ink-thin" vector-effect="non-scaling-stroke"/>
+<line x1="-39.03125" y1="105" x2="-58.03125" y2="105" class="g-shaft" vector-effect="non-scaling-stroke"/>
+<ellipse cx="-58.03125" cy="105" rx="8" ry="11" class="g-button g-ink-thin" vector-effect="non-scaling-stroke"/>
+<circle cx="-24" cy="105" r="5" class="g-bush g-ink-thin" vector-effect="non-scaling-stroke"/>
+<line x1="-39.78125" y1="65" x2="-58.78125" y2="65" class="g-shaft" vector-effect="non-scaling-stroke"/>
+<ellipse cx="-58.78125" cy="65" rx="8" ry="11" class="g-button g-ink-thin" vector-effect="non-scaling-stroke"/>
+<circle cx="-24" cy="65" r="5" class="g-bush g-ink-thin" vector-effect="non-scaling-stroke"/>
+<line x1="39.78125" y1="65" x2="58.78125" y2="65" class="g-shaft" vector-effect="non-scaling-stroke"/>
+<ellipse cx="58.78125" cy="65" rx="8" ry="11" class="g-button g-ink-thin" vector-effect="non-scaling-stroke"/>
+<circle cx="24" cy="65" r="5" class="g-bush g-ink-thin" vector-effect="non-scaling-stroke"/>
+<line x1="39.03125" y1="105" x2="58.03125" y2="105" class="g-shaft" vector-effect="non-scaling-stroke"/>
+<ellipse cx="58.03125" cy="105" rx="8" ry="11" class="g-button g-ink-thin" vector-effect="non-scaling-stroke"/>
+<circle cx="24" cy="105" r="5" class="g-bush g-ink-thin" vector-effect="non-scaling-stroke"/>
+<line x1="38.28125" y1="145" x2="57.28125" y2="145" class="g-shaft" vector-effect="non-scaling-stroke"/>
+<ellipse cx="57.28125" cy="145" rx="8" ry="11" class="g-button g-ink-thin" vector-effect="non-scaling-stroke"/>
+<circle cx="24" cy="145" r="5" class="g-bush g-ink-thin" vector-effect="non-scaling-stroke"/>
+<rect x="-22.5" y="182.5" width="45" height="5" rx="1" class="g-bone g-ink-thin" vector-effect="non-scaling-stroke"/>
+<path d="M-76,822 Q-76,816 -70,816 L70,816 Q76,816 76,822 L76,838 Q76,842 70,842 C40,842 28,853 0,853 C-28,853 -40,842 -70,842 Q-76,842 -76,838 Z" class="g-bridge g-ink" vector-effect="non-scaling-stroke"/>
+<polygon points="-38,831.5 38,826 38,829 -38,834.5" class="g-bone"/>
+<circle cx="-26.5" cy="840" r="3" class="g-pin g-ink-thin" vector-effect="non-scaling-stroke"/>
+<circle cx="-15.9" cy="840" r="3" class="g-pin g-ink-thin" vector-effect="non-scaling-stroke"/>
+<circle cx="-5.3" cy="840" r="3" class="g-pin g-ink-thin" vector-effect="non-scaling-stroke"/>
+<circle cx="5.3" cy="840" r="3" class="g-pin g-ink-thin" vector-effect="non-scaling-stroke"/>
+<circle cx="15.9" cy="840" r="3" class="g-pin g-ink-thin" vector-effect="non-scaling-stroke"/>
+<circle cx="26.5" cy="840" r="3" class="g-pin g-ink-thin" vector-effect="non-scaling-stroke"/>
+<polyline points="-24,145 -17.5,185 -26.5,832.1 -26.5,840" class="g-wound" stroke-width="1.6" vector-effect="non-scaling-stroke"/>
+<polyline points="-24,105 -10.5,185 -15.9,831.4 -15.9,840" class="g-wound" stroke-width="1.35" vector-effect="non-scaling-stroke"/>
+<polyline points="-24,65 -3.5,185 -5.3,830.6 -5.3,840" class="g-wound" stroke-width="1.15" vector-effect="non-scaling-stroke"/>
+<polyline points="24,65 3.5,185 5.3,829.8 5.3,840" class="g-wound" stroke-width="1.0" vector-effect="non-scaling-stroke"/>
+<polyline points="24,105 10.5,185 15.9,829 15.9,840" class="g-plain" stroke-width="0.8" vector-effect="non-scaling-stroke"/>
+<polyline points="24,145 17.5,185 26.5,828.3 26.5,840" class="g-plain" stroke-width="0.7" vector-effect="non-scaling-stroke"/>
+<circle cx="-24" cy="145" r="2.2" class="g-post"/>
+<circle cx="-24" cy="105" r="2.2" class="g-post"/>
+<circle cx="-24" cy="65" r="2.2" class="g-post"/>
+<circle cx="24" cy="65" r="2.2" class="g-post"/>
+<circle cx="24" cy="105" r="2.2" class="g-post"/>
+<circle cx="24" cy="145" r="2.2" class="g-post"/>
+</g>
+<g class="g-lead">
+<polyline points="295.4,95.6 196,96 184,96"/>
+<circle cx="295.4" cy="95.6" r="3" class="g-anchor"/>
+<polyline points="323.8,153.2 196,160 184,160"/>
+<circle cx="323.8" cy="153.2" r="3" class="g-anchor"/>
+<polyline points="322.7,344 196,330 184,330"/>
+<circle cx="322.7" cy="344" r="3" class="g-anchor"/>
+<polyline points="306.9,524 196,520 184,520"/>
+<circle cx="306.9" cy="524" r="3" class="g-anchor"/>
+<polyline points="320.9,628.4 196,640 184,640"/>
+<circle cx="320.9" cy="628.4" r="3" class="g-anchor"/>
+<polyline points="365.9,34.4 484,36 496,36"/>
+<circle cx="365.9" cy="34.4" r="3" class="g-anchor"/>
+<polyline points="356.6,227.1 484,220 496,220"/>
+<circle cx="356.6" cy="227.1" r="3" class="g-anchor"/>
+<polyline points="340,333.3 484,300 496,300"/>
+<circle cx="340" cy="333.3" r="3" class="g-anchor"/>
+<polyline points="403.4,573 484,540 496,540"/>
+<circle cx="403.4" cy="573" r="3" class="g-anchor"/>
+<polyline points="363,615.1 484,620 496,620"/>
+<circle cx="363" cy="615.1" r="3" class="g-anchor"/>
+<polyline points="458.8,711.2 484,705 496,705"/>
+<circle cx="458.8" cy="711.2" r="3" class="g-anchor"/>
+</g>
+<text x="178" y="101" text-anchor="end"><tspan class="callout-title" x="178">Tuning pegs</tspan><tspan class="callout-sub" x="178" dy="16">turn to tune each string</tspan></text>
+<text x="178" y="165" text-anchor="end"><tspan class="callout-title" x="178">Nut</tspan><tspan class="callout-sub" x="178" dy="16">sets string spacing</tspan></text>
+<text x="178" y="335" text-anchor="end"><tspan class="callout-title" x="178">Neck</tspan><tspan class="callout-sub" x="178" dy="16">fretboard on top</tspan></text>
+<text x="178" y="525" text-anchor="end"><tspan class="callout-title" x="178">Soundhole</tspan><tspan class="callout-sub" x="178" dy="16">where the tone projects</tspan></text>
+<text x="178" y="645" text-anchor="end"><tspan class="callout-title" x="178">Bridge pins</tspan><tspan class="callout-sub" x="178" dy="16">lock the string ends in</tspan></text>
+<text x="502" y="41" text-anchor="start"><tspan class="callout-title" x="502">Headstock</tspan><tspan class="callout-sub" x="502" dy="16">holds the tuners</tspan></text>
+<text x="502" y="225" text-anchor="start"><tspan class="callout-title" x="502">Frets</tspan><tspan class="callout-sub" x="502" dy="16">press just behind one</tspan></text>
+<text x="502" y="305" text-anchor="start"><tspan class="callout-title" x="502">Fret markers</tspan><tspan class="callout-sub" x="502" dy="16">dots at 3, 5, 7, 9, 12</tspan></text>
+<text x="502" y="545" text-anchor="start"><tspan class="callout-title" x="502">Pickguard</tspan><tspan class="callout-sub" x="502" dy="16">takes the pick scratches</tspan></text>
+<text x="502" y="625" text-anchor="start"><tspan class="callout-title" x="502">Saddle</tspan><tspan class="callout-sub" x="502" dy="16">sets the string height</tspan></text>
+<text x="502" y="710" text-anchor="start"><tspan class="callout-title" x="502">Body</tspan><tspan class="callout-sub" x="502" dy="16">the spruce top vibrates</tspan></text>
+</svg>
 
-    <!-- callouts -->
-    <g stroke="#B9AE9C" stroke-width="1">
-      <path d="M310,20 L470,20"/><circle cx="310" cy="20" r="3" fill="#C9873F"/>
-      <path d="M283,60 L60,95"/><circle cx="283" cy="60" r="3" fill="#C9873F"/>
-      <path d="M335,170 L560,150"/><circle cx="335" cy="170" r="3" fill="#C9873F"/>
-      <path d="M275,300 L60,285"/><circle cx="275" cy="300" r="3" fill="#C9873F"/>
-      <path d="M368,345 L560,345"/><circle cx="368" cy="345" r="3" fill="#C9873F"/>
-      <path d="M300,406 L60,430"/><circle cx="300" cy="406" r="3" fill="#C9873F"/>
-    </g>
-    <text x="475" y="24"><tspan class="callout-title" x="475" dy="0">Headstock</tspan><tspan class="callout-sub" x="475" dy="14">holds the tuning pegs</tspan></text>
-    <text x="55" y="100" text-anchor="end"><tspan class="callout-title" x="55" dy="0">Nut</tspan><tspan class="callout-sub" x="55" dy="14">meets neck &amp; headstock</tspan></text>
-    <text x="565" y="154"><tspan class="callout-title" x="565" dy="0">Neck &amp; frets</tspan><tspan class="callout-sub" x="565" dy="14">press behind the fret bar</tspan></text>
-    <text x="55" y="289" text-anchor="end"><tspan class="callout-title" x="55" dy="0">Soundhole</tspan><tspan class="callout-sub" x="55" dy="14">where the tone projects</tspan></text>
-    <text x="565" y="349"><tspan class="callout-title" x="565" dy="0">Pickguard</tspan><tspan class="callout-sub" x="565" dy="14">shields the top from pick strikes</tspan></text>
-    <text x="55" y="434" text-anchor="end"><tspan class="callout-title" x="55" dy="0">Bridge &amp; saddle</tspan><tspan class="callout-sub" x="55" dy="14">anchors the strings</tspan></text>
-  </svg>
+
+  </div>
 </section>
 
 <hr class="divider">
