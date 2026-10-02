@@ -152,6 +152,8 @@
   .chord-card:hover{border-color:var(--wood); transform:translateY(-2px);}
   .chord-card.open{border-color:var(--sage); border-width:2px;}
   .chord-card svg{width:100%; height:auto; max-width:110px;}
+  .finger-num{font-family:'Fraunces',serif; font-weight:700; font-size:8.6px; fill:#FFFFFF; text-anchor:middle;}
+  .chord-key{font-size:0.85rem; color:#8a7a66; margin:-16px 0 22px;}
   .chord-card .name{font-family:'Fraunces',serif; font-weight:600; font-size:1.1rem; margin-top:6px; display:block;}
   .chord-note{
     grid-column:1/-1; background:var(--card); border-left:3px solid var(--sage);
@@ -502,6 +504,7 @@
   <h2>Six chords, click to learn</h2>
   <p class="lede lede-def">A chord is several notes played at the same time. On guitar, your fretting hand (i.e. your left hand if you're right-handed, and vice versa) holds down a few strings at set frets, then you strum, and the strings ring together as one fuller sound. Each chord has a name, like G or Am, and most songs are just a handful of chords played in order.</p>
   <p class="lede">These cover a huge share of songs you already know. Tap a card for how to place your fingers.</p>
+  <p class="chord-key">Numbers on the dots are fingers: 1 index, 2 middle, 3 ring, 4 pinky. ○ play the string open, ✕ don't play it.</p>
   <div class="chord-grid" id="chordGrid"></div>
 </section>
 
@@ -546,25 +549,26 @@
 
 <script>
 (function(){
-  // chord data: fret number per string (low E to high e), null = muted, 0 = open
+  // chord data: fret number per string (low E to high e), null = muted, 0 = open;
+  // fingers: 1 index, 2 middle, 3 ring, 4 pinky (0 = no finger)
   const chords = [
-    {name:"Em", frets:[0,2,2,0,0,0]},
-    {name:"C",  frets:[null,3,2,0,1,0]},
-    {name:"G",  frets:[3,2,0,0,0,3]},
-    {name:"D",  frets:[null,null,0,2,3,2]},
-    {name:"A",  frets:[null,0,2,2,2,0]},
-    {name:"Am", frets:[null,0,2,2,1,0]},
+    {name:"Em", frets:[0,2,2,0,0,0],          fingers:[0,2,3,0,0,0]},
+    {name:"C",  frets:[null,3,2,0,1,0],       fingers:[0,3,2,0,1,0]},
+    {name:"G",  frets:[3,2,0,0,0,3],          fingers:[2,1,0,0,0,3]},
+    {name:"D",  frets:[null,null,0,2,3,2],    fingers:[0,0,0,1,3,2]},
+    {name:"A",  frets:[null,0,2,2,2,0],       fingers:[0,0,1,2,3,0]},
+    {name:"Am", frets:[null,0,2,2,1,0],       fingers:[0,0,2,3,1,0]},
   ];
   const tips = {
-    Em:"Rest your middle and ring fingers on the A and D strings, second fret. Everything else stays open. The easiest shape to start with.",
+    Em:"Middle finger on the A string and ring finger on the D string, both at the 2nd fret. Everything else stays open. The easiest shape to start with.",
     C:"Ring finger on the A string (3rd fret), middle on the D string (2nd fret), index on the B string (1st fret). Leave the low E string unplayed.",
-    G:"Ring finger low E (3rd fret), index A string (2nd fret), pinky high E (3rd fret). Takes a stretch — go slow.",
-    D:"Index on the G string (2nd fret), middle on high E (2nd fret), ring on B string (3rd fret). Only strum the top four strings.",
-    A:"Index, middle and ring fingers all press the 2nd fret across D, G and B strings. Leave low E unplayed.",
-    Am:"Same shape as A, shifted: index on B string 1st fret, middle on D 2nd fret, ring on G 2nd fret."
+    G:"Middle finger on low E (3rd fret), index on the A string (2nd fret), ring finger on high e (3rd fret). Takes a stretch, so go slow.",
+    D:"Index on the G string (2nd fret), middle on high e (2nd fret), ring on the B string (3rd fret). Only strum the top four strings.",
+    A:"Index on D, middle on G, ring on B, all at the 2nd fret, squeezed in side by side. Leave low E unplayed.",
+    Am:"Index on the B string (1st fret), middle on the D string (2nd fret), ring on the G string (2nd fret). It's the E major shape moved over one string. Leave low E unplayed."
   };
 
-  function fretSVG(frets){
+  function fretSVG(frets,fingers){
     const strings=6, fretsShown=4;
     const w=100,h=120, left=14, top=14, sw=(w-2*left)/(strings-1), fh=(h-top-10)/fretsShown;
     let s=`<svg viewBox="0 0 ${w} ${h}">`;
@@ -586,7 +590,8 @@
         s+=`<circle cx="${x}" cy="${top-7}" r="3.4" fill="none" stroke="#7A8B6F" stroke-width="1.4"/>`;
       } else {
         const y=top+(f-0.5)*fh;
-        s+=`<circle cx="${x}" cy="${y}" r="5.4" fill="#C9873F"/>`;
+        s+=`<circle cx="${x}" cy="${y}" r="6.6" fill="#C9873F"/>`;
+        if(fingers[i]) s+=`<text x="${x}" y="${y+3.1}" class="finger-num">${fingers[i]}</text>`;
       }
     });
     s+="</svg>";
@@ -597,7 +602,7 @@
   chords.forEach(c=>{
     const card=document.createElement('div');
     card.className='chord-card';
-    card.innerHTML=fretSVG(c.frets)+`<span class="name">${c.name}</span>`;
+    card.innerHTML=fretSVG(c.frets,c.fingers)+`<span class="name">${c.name}</span>`;
     card.addEventListener('click',()=>{
       document.querySelectorAll('.chord-card').forEach(el=>{if(el!==card)el.classList.remove('open');});
       document.querySelectorAll('.chord-note').forEach(n=>n.remove());
