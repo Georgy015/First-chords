@@ -154,6 +154,16 @@
   .chord-card svg{width:100%; height:auto; max-width:110px;}
   .finger-num{font-family:'Fraunces',serif; font-weight:700; font-size:8.6px; fill:#FFFFFF; text-anchor:middle;}
   .chord-key{font-size:0.85rem; color:#8a7a66; margin:-16px 0 22px;}
+  .chord-play{
+    margin:10px auto 0; display:inline-flex; align-items:center; gap:7px;
+    font:600 0.82rem 'Inter',system-ui,sans-serif; color:var(--ink);
+    background:var(--paper); border:1.4px solid var(--rule); border-radius:999px;
+    padding:6px 14px 6px 11px; cursor:pointer; transition:background .15s, border-color .15s, color .15s;
+  }
+  .chord-play .tri{width:0; height:0; border-style:solid; border-width:5px 0 5px 8px; border-color:transparent transparent transparent var(--wood);}
+  .chord-play:hover{border-color:var(--wood);}
+  .chord-card.playing .chord-play{background:var(--wood); border-color:var(--wood); color:#FFFFFF;}
+  .chord-card.playing .chord-play .tri{border-left-color:#FFFFFF;}
   .chord-card .name{font-family:'Fraunces',serif; font-weight:600; font-size:1.1rem; margin-top:6px; display:block;}
   .chord-note{
     grid-column:1/-1; background:var(--card); border-left:3px solid var(--sage);
@@ -602,7 +612,16 @@
   chords.forEach(c=>{
     const card=document.createElement('div');
     card.className='chord-card';
-    card.innerHTML=fretSVG(c.frets,c.fingers)+`<span class="name">${c.name}</span>`;
+    card.innerHTML=fretSVG(c.frets,c.fingers)+`<span class="name">${c.name}</span>`
+      +`<button type="button" class="chord-play" id="play-${c.name}" aria-label="Play the ${c.name} chord"><span class="tri" aria-hidden="true"></span>Play</button>`;
+    const btn=card.querySelector('.chord-play'); let t=null;
+    btn.addEventListener('click',e=>{
+      e.stopPropagation();
+      playChord(c).then(dur=>{
+        card.classList.add('playing'); clearTimeout(t);
+        t=setTimeout(()=>card.classList.remove('playing'),dur*1000);
+      });
+    });
     card.addEventListener('click',()=>{
       document.querySelectorAll('.chord-card').forEach(el=>{if(el!==card)el.classList.remove('open');});
       document.querySelectorAll('.chord-note').forEach(n=>n.remove());
@@ -671,9 +690,13 @@
     }
     return ir;
   }
-  function play(freq){
+  function ctx(){
     if(!actx) actx=new (window.AudioContext||window.webkitAudioContext)();
     if(actx.state==='suspended') actx.resume();
+    return actx;
+  }
+  function play(freq,delay=0,level=1){
+    ctx();
     const buf=cache[freq]||(cache[freq]=pluck(freq));
     const src=actx.createBufferSource(); src.buffer=buf;
     // steel-string top end kept clear, with a strong guitar body underneath
@@ -682,12 +705,43 @@
     const top=actx.createBiquadFilter(); top.type='peaking'; top.frequency.value=200; top.Q.value=1.0; top.gain.value=5;
     const warm=actx.createBiquadFilter(); warm.type='lowshelf'; warm.frequency.value=350; warm.gain.value=3;
     const sparkle=actx.createBiquadFilter(); sparkle.type='peaking'; sparkle.frequency.value=2800; sparkle.Q.value=0.8; sparkle.gain.value=1.5;
+    const lvl=actx.createGain(); lvl.gain.value=level;
     const dry=actx.createGain(); dry.gain.value=1.3;
     const wet=actx.createGain(); wet.gain.value=0.45;
     if(!room){room=actx.createConvolver(); room.buffer=roomIR(); room.connect(wet); wet.connect(actx.destination);}
-    src.connect(tone).connect(air).connect(top).connect(warm).connect(sparkle).connect(dry).connect(actx.destination);
-    sparkle.connect(room);
-    src.start();
+    src.connect(tone).connect(air).connect(top).connect(warm).connect(sparkle).connect(lvl).connect(dry).connect(actx.destination);
+    lvl.connect(room);
+    src.start(actx.currentTime+delay);
+  }
+
+  // chord sounds: plays a recording from sounds/chords/<name>.(mp3|m4a|wav|ogg) when one is
+  // published with the page, otherwise a strum built from the tuning-string sound
+  const OPEN=[82.41,110,146.83,196,246.94,329.63];
+  const recordings={};
+  async function loadRecording(name){
+    if(name in recordings) return recordings[name];
+    recordings[name]=null;
+    for(const ext of ['mp3','m4a','wav','ogg']){
+      try{
+        const r=await fetch(`sounds/chords/${name.toLowerCase()}.${ext}`);
+        if(!r.ok) continue;
+        recordings[name]=await ctx().decodeAudioData(await r.arrayBuffer());
+        break;
+      }catch(e){}
+    }
+    return recordings[name];
+  }
+  async function playChord(c){
+    ctx();
+    const rec=await loadRecording(c.name);
+    if(rec){
+      const src=actx.createBufferSource(); src.buffer=rec; src.connect(actx.destination); src.start();
+      return rec.duration;
+    }
+    // downstroke: low string to high, about 30 ms apart
+    let k=0;
+    c.frets.forEach((f,i)=>{ if(f===null) return; play(OPEN[i]*Math.pow(2,f/12),k*0.03,0.42); k++; });
+    return 2.2;
   }
   document.querySelectorAll('.string-row').forEach(row=>{
     let t=null;
