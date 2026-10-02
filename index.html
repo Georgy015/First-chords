@@ -592,43 +592,65 @@
 
   // tuning: plucked-string synthesis (Karplus-Strong), voiced bright like a steel-string acoustic
   let actx=null; const cache={};
-  function pluck(freq){
-    const sr=actx.sampleRate, len=Math.floor(sr*2.1), out=new Float32Array(len);
+  // one vibrating string: Karplus-Strong loop with a fractional-delay allpass for exact pitch
+  function ksVoice(sr,freq,len,rho,pos,bright,amp){
+    const out=new Float32Array(len);
     const D=sr/freq-0.5, N=Math.floor(D), frac=D-N, C=(1-frac)/(1+frac);
-    // bright, pick-struck excitation: lightly filtered noise with a pluck-position comb
     const exc=new Float32Array(N); let lp=0;
-    for(let i=0;i<N;i++){lp+=0.85*((Math.random()*2-1)-lp); exc[i]=lp;}
-    const pos=Math.max(1,Math.round(N*0.11));
-    for(let i=N-1;i>=pos;i--) exc[i]-=exc[i-pos];
+    for(let i=0;i<N;i++){lp+=bright*((Math.random()*2-1)-lp); exc[i]=lp;}
+    const p=Math.max(1,Math.round(N*pos));
+    for(let i=N-1;i>=p;i--) exc[i]-=exc[i-p];
     let peak=0; for(let i=0;i<N;i++) peak=Math.max(peak,Math.abs(exc[i]));
-    const rho=0.9996; let apX=0, apY=0;
+    let apX=0, apY=0;
     for(let n=0;n<len;n++){
       const a=n>=N?out[n-N]:0, b=n>N?out[n-N-1]:0;
       const v=rho*0.5*(a+b);
       const y=C*v+apX-C*apY; apX=v; apY=y;
-      out[n]=y+(n<N?exc[n]/peak*0.6:0);
+      out[n]=y+(n<N?exc[n]/peak*amp:0);
     }
+    return out;
+  }
+  function pluck(freq){
+    const sr=actx.sampleRate, len=Math.floor(sr*2.1);
+    // two vibration planes of a steel string, plucked over the soundhole for a full tone
+    const a=ksVoice(sr,freq,len,0.9997,0.21,0.7,0.6);
+    const b=ksVoice(sr,freq,len,0.9993,0.27,0.55,0.45);
+    const L=new Float32Array(len), R=new Float32Array(len);
     // shape to about 2 seconds: natural decay, then a gentle fade-out
     const fadeStart=sr*1.6;
     for(let n=0;n<len;n++){
-      let g=Math.exp(-n/(sr*1.3));
+      let g=Math.exp(-n/(sr*1.5));
       if(n>fadeStart) g*=Math.max(0,1-(n-fadeStart)/(len-fadeStart));
-      out[n]*=g;
+      L[n]=(a[n]*0.62+b[n]*0.38)*g; R[n]=(a[n]*0.38+b[n]*0.62)*g;
     }
-    const buf=actx.createBuffer(1,len,sr); buf.copyToChannel(out,0); return buf;
+    const buf=actx.createBuffer(2,len,sr); buf.copyToChannel(L,0); buf.copyToChannel(R,1); return buf;
+  }
+  let room=null;
+  function roomIR(){
+    // short, soft room: decaying stereo noise, darker as it fades
+    const sr=actx.sampleRate, len=Math.floor(sr*0.9), ir=actx.createBuffer(2,len,sr);
+    for(let c=0;c<2;c++){
+      const d=ir.getChannelData(c); let lp=0;
+      for(let i=0;i<len;i++){const k=0.5-0.4*i/len; lp+=k*((Math.random()*2-1)-lp); d[i]=lp*Math.exp(-i/(sr*0.22));}
+    }
+    return ir;
   }
   function play(freq){
     if(!actx) actx=new (window.AudioContext||window.webkitAudioContext)();
     if(actx.state==='suspended') actx.resume();
     const buf=cache[freq]||(cache[freq]=pluck(freq));
     const src=actx.createBufferSource(); src.buffer=buf;
-    // open steel-string top end, a little pick presence, and guitar body resonance
-    const tone=actx.createBiquadFilter(); tone.type='lowpass'; tone.frequency.value=7500; tone.Q.value=0.5;
-    const shine=actx.createBiquadFilter(); shine.type='peaking'; shine.frequency.value=3200; shine.Q.value=0.9; shine.gain.value=4;
-    const body1=actx.createBiquadFilter(); body1.type='peaking'; body1.frequency.value=105; body1.Q.value=1.4; body1.gain.value=5;
-    const body2=actx.createBiquadFilter(); body2.type='peaking'; body2.frequency.value=220; body2.Q.value=1.2; body2.gain.value=2;
-    const vol=actx.createGain(); vol.gain.value=0.75;
-    src.connect(tone).connect(shine).connect(body1).connect(body2).connect(vol).connect(actx.destination);
+    // steel-string top end kept clear, with a strong guitar body underneath
+    const tone=actx.createBiquadFilter(); tone.type='lowpass'; tone.frequency.value=6000; tone.Q.value=0.4;
+    const air=actx.createBiquadFilter(); air.type='peaking'; air.frequency.value=100; air.Q.value=1.2; air.gain.value=7;
+    const top=actx.createBiquadFilter(); top.type='peaking'; top.frequency.value=200; top.Q.value=1.0; top.gain.value=5;
+    const warm=actx.createBiquadFilter(); warm.type='lowshelf'; warm.frequency.value=350; warm.gain.value=3;
+    const sparkle=actx.createBiquadFilter(); sparkle.type='peaking'; sparkle.frequency.value=2800; sparkle.Q.value=0.8; sparkle.gain.value=1.5;
+    const dry=actx.createGain(); dry.gain.value=1.3;
+    const wet=actx.createGain(); wet.gain.value=0.45;
+    if(!room){room=actx.createConvolver(); room.buffer=roomIR(); room.connect(wet); wet.connect(actx.destination);}
+    src.connect(tone).connect(air).connect(top).connect(warm).connect(sparkle).connect(dry).connect(actx.destination);
+    sparkle.connect(room);
     src.start();
   }
   document.querySelectorAll('.string-row').forEach(row=>{
