@@ -590,18 +590,18 @@
     grid.appendChild(card);
   });
 
-  // tuning: plucked-string synthesis (Karplus-Strong), voiced soft like a nylon string
+  // tuning: plucked-string synthesis (Karplus-Strong), voiced bright like a steel-string acoustic
   let actx=null; const cache={};
   function pluck(freq){
     const sr=actx.sampleRate, len=Math.floor(sr*2.1), out=new Float32Array(len);
     const D=sr/freq-0.5, N=Math.floor(D), frac=D-N, C=(1-frac)/(1+frac);
-    // soft, finger-plucked excitation: low-passed noise with a pluck-position comb
+    // bright, pick-struck excitation: lightly filtered noise with a pluck-position comb
     const exc=new Float32Array(N); let lp=0;
-    for(let i=0;i<N;i++){lp+=0.35*((Math.random()*2-1)-lp); exc[i]=lp;}
-    const pos=Math.max(1,Math.round(N*0.18));
+    for(let i=0;i<N;i++){lp+=0.85*((Math.random()*2-1)-lp); exc[i]=lp;}
+    const pos=Math.max(1,Math.round(N*0.11));
     for(let i=N-1;i>=pos;i--) exc[i]-=exc[i-pos];
     let peak=0; for(let i=0;i<N;i++) peak=Math.max(peak,Math.abs(exc[i]));
-    const rho=0.9985; let apX=0, apY=0;
+    const rho=0.9996; let apX=0, apY=0;
     for(let n=0;n<len;n++){
       const a=n>=N?out[n-N]:0, b=n>N?out[n-N-1]:0;
       const v=rho*0.5*(a+b);
@@ -611,7 +611,7 @@
     // shape to about 2 seconds: natural decay, then a gentle fade-out
     const fadeStart=sr*1.6;
     for(let n=0;n<len;n++){
-      let g=Math.exp(-n/(sr*0.9));
+      let g=Math.exp(-n/(sr*1.3));
       if(n>fadeStart) g*=Math.max(0,1-(n-fadeStart)/(len-fadeStart));
       out[n]*=g;
     }
@@ -622,12 +622,13 @@
     if(actx.state==='suspended') actx.resume();
     const buf=cache[freq]||(cache[freq]=pluck(freq));
     const src=actx.createBufferSource(); src.buffer=buf;
-    // warm nylon tone and a hint of guitar body resonance
-    const tone=actx.createBiquadFilter(); tone.type='lowpass'; tone.frequency.value=2600; tone.Q.value=0.5;
+    // open steel-string top end, a little pick presence, and guitar body resonance
+    const tone=actx.createBiquadFilter(); tone.type='lowpass'; tone.frequency.value=7500; tone.Q.value=0.5;
+    const shine=actx.createBiquadFilter(); shine.type='peaking'; shine.frequency.value=3200; shine.Q.value=0.9; shine.gain.value=4;
     const body1=actx.createBiquadFilter(); body1.type='peaking'; body1.frequency.value=105; body1.Q.value=1.4; body1.gain.value=5;
-    const body2=actx.createBiquadFilter(); body2.type='peaking'; body2.frequency.value=220; body2.Q.value=1.2; body2.gain.value=3;
-    const vol=actx.createGain(); vol.gain.value=0.9;
-    src.connect(tone).connect(body1).connect(body2).connect(vol).connect(actx.destination);
+    const body2=actx.createBiquadFilter(); body2.type='peaking'; body2.frequency.value=220; body2.Q.value=1.2; body2.gain.value=2;
+    const vol=actx.createGain(); vol.gain.value=0.75;
+    src.connect(tone).connect(shine).connect(body1).connect(body2).connect(vol).connect(actx.destination);
     src.start();
   }
   document.querySelectorAll('.string-row').forEach(row=>{
