@@ -159,6 +159,13 @@
   }
   .chord-note.show{display:block;}
 
+  /* tips */
+  .tips{display:grid; grid-template-columns:1fr 1fr; gap:16px;}
+  @media (max-width:560px){.tips{grid-template-columns:1fr;}}
+  .tip{background:var(--card); border:1.4px solid var(--rule); border-radius:10px; padding:16px 18px; min-width:0;}
+  .tip h3{font-size:1.05rem; margin:0 0 6px;}
+  .tip p{margin:0; font-size:0.9rem; line-height:1.5; color:#4a3d30;}
+
   /* strumming */
   .strum-pattern{display:flex; gap:10px; margin-top:14px; flex-wrap:wrap;}
   .beat{
@@ -496,6 +503,21 @@
   <p class="lede lede-def">A chord is several notes played at the same time. On guitar, your fretting hand (i.e. your left hand if you're right-handed, and vice versa) holds down a few strings at set frets, then you strum, and the strings ring together as one fuller sound. Each chord has a name, like G or Am, and most songs are just a handful of chords played in order.</p>
   <p class="lede">These cover a huge share of songs you already know. Tap a card for how to place your fingers.</p>
   <div class="chord-grid" id="chordGrid"></div>
+</section>
+
+<hr class="divider">
+
+<section class="wrap">
+  <h2>Hints and tips</h2>
+  <p class="lede">A few habits that make the first weeks easier.</p>
+  <div class="tips">
+    <div class="tip"><h3>Short sessions, often</h3><p>Ten to fifteen minutes every day builds more than one long session a week.</p></div>
+    <div class="tip"><h3>Sore fingertips are normal</h3><p>They toughen up in a week or two. Stop if anything hurts sharply.</p></div>
+    <div class="tip"><h3>Press just behind the fret</h3><p>Put your fingertip right next to the metal fret, not in the middle of the gap. You need less pressure and get less buzzing.</p></div>
+    <div class="tip"><h3>Play on your fingertips</h3><p>Keep your fingers arched so they don't touch and mute the strings next to them.</p></div>
+    <div class="tip"><h3>Check each string</h3><p>Hold the chord and pick one string at a time. If one buzzes or sounds dead, adjust that finger.</p></div>
+    <div class="tip"><h3>Practise the changes</h3><p>Switch back and forth between two chords, like Em to G, for a minute. Slow and clean beats fast and messy.</p></div>
+  </div>
 </section>
 
 <hr class="divider">
