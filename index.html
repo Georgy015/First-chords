@@ -114,14 +114,31 @@
 
   /* tuning */
   .strings{display:flex; flex-direction:column; gap:8px; margin-top:8px;}
-  .string-row{display:flex; align-items:center; gap:14px;}
+  .string-row{
+    display:flex; align-items:center; gap:14px; width:100%; padding:4px 6px; margin:0 -6px;
+    background:none; border:none; border-radius:8px; cursor:pointer; text-align:left;
+    font:inherit; color:inherit; transition:background .15s;
+  }
+  .string-row:hover{background:#F2EBDC;}
   .string-row .note{
     width:38px; height:38px; border-radius:50%; border:1.6px solid var(--ink);
     display:flex; align-items:center; justify-content:center; font-family:'Fraunces',serif;
-    font-weight:600; font-size:1rem; flex-shrink:0; background:var(--card);
+    font-weight:600; font-size:1rem; flex-shrink:0; background:var(--card); position:relative;
+    transition:background .15s, color .15s, border-color .15s;
   }
-  .string-row .line{height:2px; background:var(--rule); flex:1; position:relative;}
-  .string-row .label{font-size:0.85rem; color:#8a7a66; width:64px; flex-shrink:0;}
+  .string-row:hover .note{border-color:var(--wood);}
+  .string-row .line{height:var(--gauge,2px); background:var(--rule); flex:1; border-radius:2px; transition:background .2s;}
+  .string-row .label{font-size:0.85rem; color:#8a7a66; width:104px; flex-shrink:0;}
+  .string-row .play{width:0; height:0; border-style:solid; border-width:6px 0 6px 10px; border-color:transparent transparent transparent #B9AE9C; flex-shrink:0; transition:border-color .15s;}
+  .string-row:hover .play{border-left-color:var(--wood);}
+  .string-row.ringing .note{background:var(--wood); color:#FFFFFF; border-color:var(--wood);}
+  .string-row.ringing .line{background:var(--wood); animation:ring 2s ease-out;}
+  .string-row.ringing .play{border-left-color:var(--wood);}
+  @keyframes ring{
+    0%{box-shadow:0 0 0 3px rgba(201,135,63,.45);}
+    100%{box-shadow:0 0 0 0 rgba(201,135,63,0);}
+  }
+  @media (max-width:560px){.string-row .label{width:auto;}}
 
   /* chords */
   .chord-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:16px;}
@@ -172,7 +189,7 @@
   }
   .cta:hover{background:#b5762f;}
   :focus-visible{outline:2px solid var(--sage); outline-offset:2px;}
-  @media (prefers-reduced-motion:reduce){*{transition:none !important;}}
+  @media (prefers-reduced-motion:reduce){*{transition:none !important; animation:none !important;}}
 </style>
 </head>
 <body>
@@ -460,14 +477,14 @@
 
 <section class="wrap">
   <h2>Tune up first</h2>
-  <p class="lede">Standard tuning, low string to high. Match each one with a tuner before you play anything.</p>
+  <p class="lede">Standard tuning, low string to high. Tap a string to hear its note, then match your guitar to it by ear or with a tuner.</p>
   <div class="strings">
-    <div class="string-row"><div class="note">E</div><div class="line"></div><div class="label">string 6 · thick</div></div>
-    <div class="string-row"><div class="note">A</div><div class="line"></div><div class="label">string 5</div></div>
-    <div class="string-row"><div class="note">D</div><div class="line"></div><div class="label">string 4</div></div>
-    <div class="string-row"><div class="note">G</div><div class="line"></div><div class="label">string 3</div></div>
-    <div class="string-row"><div class="note">B</div><div class="line"></div><div class="label">string 2</div></div>
-    <div class="string-row"><div class="note">E</div><div class="line"></div><div class="label">string 1 · thin</div></div>
+<button type="button" class="string-row" id="str6" data-freq="82.41" style="--gauge:3px" aria-label="Play low E, string 6"><span class="note">E</span><span class="line"></span><span class="label">string 6 · thick</span><span class="play" aria-hidden="true"></span></button>
+    <button type="button" class="string-row" id="str5" data-freq="110.0" style="--gauge:2.6px" aria-label="Play A, string 5"><span class="note">A</span><span class="line"></span><span class="label">string 5</span><span class="play" aria-hidden="true"></span></button>
+    <button type="button" class="string-row" id="str4" data-freq="146.83" style="--gauge:2.2px" aria-label="Play D, string 4"><span class="note">D</span><span class="line"></span><span class="label">string 4</span><span class="play" aria-hidden="true"></span></button>
+    <button type="button" class="string-row" id="str3" data-freq="196.0" style="--gauge:1.8px" aria-label="Play G, string 3"><span class="note">G</span><span class="line"></span><span class="label">string 3</span><span class="play" aria-hidden="true"></span></button>
+    <button type="button" class="string-row" id="str2" data-freq="246.94" style="--gauge:1.4px" aria-label="Play B, string 2"><span class="note">B</span><span class="line"></span><span class="label">string 2</span><span class="play" aria-hidden="true"></span></button>
+    <button type="button" class="string-row" id="str1" data-freq="329.63" style="--gauge:1.2px" aria-label="Play high e, string 1"><span class="note">e</span><span class="line"></span><span class="label">string 1 · thin</span><span class="play" aria-hidden="true"></span></button>
   </div>
 </section>
 
@@ -571,6 +588,55 @@
       }
     });
     grid.appendChild(card);
+  });
+
+  // tuning: plucked-string synthesis (Karplus-Strong), voiced soft like a nylon string
+  let actx=null; const cache={};
+  function pluck(freq){
+    const sr=actx.sampleRate, len=Math.floor(sr*2.1), out=new Float32Array(len);
+    const D=sr/freq-0.5, N=Math.floor(D), frac=D-N, C=(1-frac)/(1+frac);
+    // soft, finger-plucked excitation: low-passed noise with a pluck-position comb
+    const exc=new Float32Array(N); let lp=0;
+    for(let i=0;i<N;i++){lp+=0.35*((Math.random()*2-1)-lp); exc[i]=lp;}
+    const pos=Math.max(1,Math.round(N*0.18));
+    for(let i=N-1;i>=pos;i--) exc[i]-=exc[i-pos];
+    let peak=0; for(let i=0;i<N;i++) peak=Math.max(peak,Math.abs(exc[i]));
+    const rho=0.9985; let apX=0, apY=0;
+    for(let n=0;n<len;n++){
+      const a=n>=N?out[n-N]:0, b=n>N?out[n-N-1]:0;
+      const v=rho*0.5*(a+b);
+      const y=C*v+apX-C*apY; apX=v; apY=y;
+      out[n]=y+(n<N?exc[n]/peak*0.6:0);
+    }
+    // shape to about 2 seconds: natural decay, then a gentle fade-out
+    const fadeStart=sr*1.6;
+    for(let n=0;n<len;n++){
+      let g=Math.exp(-n/(sr*0.9));
+      if(n>fadeStart) g*=Math.max(0,1-(n-fadeStart)/(len-fadeStart));
+      out[n]*=g;
+    }
+    const buf=actx.createBuffer(1,len,sr); buf.copyToChannel(out,0); return buf;
+  }
+  function play(freq){
+    if(!actx) actx=new (window.AudioContext||window.webkitAudioContext)();
+    if(actx.state==='suspended') actx.resume();
+    const buf=cache[freq]||(cache[freq]=pluck(freq));
+    const src=actx.createBufferSource(); src.buffer=buf;
+    // warm nylon tone and a hint of guitar body resonance
+    const tone=actx.createBiquadFilter(); tone.type='lowpass'; tone.frequency.value=2600; tone.Q.value=0.5;
+    const body1=actx.createBiquadFilter(); body1.type='peaking'; body1.frequency.value=105; body1.Q.value=1.4; body1.gain.value=5;
+    const body2=actx.createBiquadFilter(); body2.type='peaking'; body2.frequency.value=220; body2.Q.value=1.2; body2.gain.value=3;
+    const vol=actx.createGain(); vol.gain.value=0.9;
+    src.connect(tone).connect(body1).connect(body2).connect(vol).connect(actx.destination);
+    src.start();
+  }
+  document.querySelectorAll('.string-row').forEach(row=>{
+    let t=null;
+    row.addEventListener('click',()=>{
+      try{play(parseFloat(row.dataset.freq));}catch(e){}
+      row.classList.remove('ringing'); void row.offsetWidth; row.classList.add('ringing');
+      clearTimeout(t); t=setTimeout(()=>row.classList.remove('ringing'),2000);
+    });
   });
 
   // strum pattern
