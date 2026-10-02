@@ -592,29 +592,33 @@
 
   // tuning: plucked-string synthesis (Karplus-Strong), voiced bright like a steel-string acoustic
   let actx=null; const cache={};
-  // one vibrating string: Karplus-Strong loop with a fractional-delay allpass for exact pitch
-  function ksVoice(sr,freq,len,rho,pos,bright,amp){
+  // one vibrating string: Karplus-Strong loop with a 3-tap damping filter and a
+  // fractional-delay allpass for exact pitch. damp (0..0.25) sets how fast the
+  // high overtones die away; thick strings get more so they sound warm, not wiry.
+  function ksVoice(sr,freq,len,rho,pos,bright,damp,amp){
     const out=new Float32Array(len);
-    const D=sr/freq-0.5, N=Math.floor(D), frac=D-N, C=(1-frac)/(1+frac);
-    const exc=new Float32Array(N); let lp=0;
-    for(let i=0;i<N;i++){lp+=bright*((Math.random()*2-1)-lp); exc[i]=lp;}
+    const D=sr/freq, N=Math.floor(D-0.5), frac=D-N, C=(1-frac)/(1+frac);
+    const exc=new Float32Array(N+1); let lp=0;
+    for(let i=0;i<=N;i++){lp+=bright*((Math.random()*2-1)-lp); exc[i]=lp;}
     const p=Math.max(1,Math.round(N*pos));
-    for(let i=N-1;i>=p;i--) exc[i]-=exc[i-p];
-    let peak=0; for(let i=0;i<N;i++) peak=Math.max(peak,Math.abs(exc[i]));
-    let apX=0, apY=0;
+    for(let i=N;i>=p;i--) exc[i]-=exc[i-p];
+    let peak=0; for(let i=0;i<=N;i++) peak=Math.max(peak,Math.abs(exc[i]));
+    let apX=0, apY=0; const mid=1-2*damp;
     for(let n=0;n<len;n++){
-      const a=n>=N?out[n-N]:0, b=n>N?out[n-N-1]:0;
-      const v=rho*0.5*(a+b);
+      const a=n>=N-1?out[n-N+1]:0, b=n>=N?out[n-N]:0, c=n>N?out[n-N-1]:0;
+      const v=rho*(damp*a+mid*b+damp*c);
       const y=C*v+apX-C*apY; apX=v; apY=y;
-      out[n]=y+(n<N?exc[n]/peak*amp:0);
+      out[n]=y+(n<=N?exc[n]/peak*amp:0);
     }
     return out;
   }
   function pluck(freq){
     const sr=actx.sampleRate, len=Math.floor(sr*2.1);
     // two vibration planes of a steel string, plucked over the soundhole for a full tone
-    const a=ksVoice(sr,freq,len,0.9997,0.21,0.7,0.6);
-    const b=ksVoice(sr,freq,len,0.9993,0.27,0.55,0.45);
+    const damp=Math.min(0.25,0.25*98/freq);
+    const bright=Math.min(0.6,0.12*Math.pow(freq/82,1.1));
+    const a=ksVoice(sr,freq,len,0.9997,0.21,bright,damp,0.6);
+    const b=ksVoice(sr,freq,len,0.9993,0.27,bright*0.8,damp,0.45);
     const L=new Float32Array(len), R=new Float32Array(len);
     // shape to about 2 seconds: natural decay, then a gentle fade-out
     const fadeStart=sr*1.6;
@@ -623,6 +627,9 @@
       if(n>fadeStart) g*=Math.max(0,1-(n-fadeStart)/(len-fadeStart));
       L[n]=(a[n]*0.62+b[n]*0.38)*g; R[n]=(a[n]*0.38+b[n]*0.62)*g;
     }
+    // even out loudness across strings
+    let pk=0; for(let n=0;n<len;n++) pk=Math.max(pk,Math.abs(L[n]),Math.abs(R[n]));
+    const k=0.32/pk; for(let n=0;n<len;n++){L[n]*=k; R[n]*=k;}
     const buf=actx.createBuffer(2,len,sr); buf.copyToChannel(L,0); buf.copyToChannel(R,1); return buf;
   }
   let room=null;
