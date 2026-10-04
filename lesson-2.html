@@ -139,7 +139,7 @@
   <div class="sub" id="songs">
     <p class="sub-n">2.4</p>
     <h3 class="sub-h">Songs to play</h3>
-    <p class="lede">Three well-known songs that use the chords you know, from C, G and Am to the new E and Dm. New chords are outlined in orange. Tap any chord to hear it.</p>
+    <p class="lede">Four well-known songs that use the chords you know, from C, G and Am to the new E and Dm. New chords are outlined in orange. Tap any chord to hear it.</p>
     <div id="songList"></div>
   </div>
 
@@ -294,6 +294,10 @@
      secs:[['Verse',['C','G','Am','G','Dm','Am'],'× 2'],['Chorus',['D','G','Am','Am'],'× 2']],
      strum:'gentle downstrokes, about 95 BPM. The record is fingerpicked',
      note:'Dm in the verse, D in the chorus: a real song that puts this lesson\'s minor and major pair to work.'},
+    {title:'The One I Love',artist:'R.E.M.',year:1987,chords:['Em','D','G','Am','C'],
+     secs:[['Verse',['Em','D','Em','Em','Em','D','Em','Em','G','D','Am','C','Em','D','Em','Em'],null],['Chorus',['Em','D Em','Em'],'× 2']],
+     strum:'in the chorus, two downstrokes on Em, one down on D, one down on Em, then down-up-down on Em',
+     note:'Simplified: the record uses Dsus2 and Em7, played here as plain D and Em. The Em–D–Em move is the heart of the song, so keep it relaxed and let the open strings ring.'},
   ];
   const songList=document.getElementById('songList');
   const chipBtn=(c,cls)=>`<button type="button" class="${cls}${cls==='chip'&&NEW.includes(c)?' new':''}" data-chord="${c}" aria-label="Play ${c}">${c}</button>`;
