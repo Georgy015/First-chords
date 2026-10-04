@@ -40,7 +40,7 @@
     --line:#6E6152; --rule:#3E352D; --hover:#302822; --miss:#5C5146;
     --wood:#D99A52; --wood-deep:#E6AC68; --sage:#9DB08F; --on-accent:#1C1714; color-scheme:dark;
   }
-  html{scroll-padding-top:env(safe-area-inset-top,0px);}
+  html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 20px); scroll-behavior:smooth;}
   *{box-sizing:border-box;}
   [hidden]{display:none !important;}
   body{
@@ -63,6 +63,17 @@
   .lede{color:var(--muted); margin:0 0 28px; font-size:0.98rem; line-height:1.55; max-width:62ch;}
   .lede strong{color:var(--ink); font-weight:600;}
   .lede-def{color:var(--ink); margin-bottom:12px;}
+
+  /* jump-to-section bar */
+  .jump{position:sticky; top:env(safe-area-inset-top,0px); z-index:10; background:var(--paper); border-bottom:1px solid var(--rule);}
+  .jump-inner{max-width:720px; margin:0 auto; padding:10px 24px; display:flex; gap:6px; overflow-x:auto; scrollbar-width:none;}
+  .jump-inner::-webkit-scrollbar{display:none;}
+  .jump a{flex:0 0 auto; font-size:0.85rem; font-weight:500; color:var(--muted); text-decoration:none; padding:6px 12px; border-radius:999px; border:1.4px solid transparent; transition:background .15s, color .15s, border-color .15s;}
+  .jump a:hover{color:var(--ink); border-color:var(--rule);}
+  .jump a[aria-current="true"]{background:var(--ink); color:var(--paper);}
+  @media (max-width:560px){.jump-inner{padding:8px 16px;}}
+  .saved-note{font-size:0.75rem; font-weight:500; letter-spacing:0; text-transform:none; color:var(--sage); margin-left:6px;}
+  @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto;}}
 
   /* anatomy: proportioned dreadnought, drawn in millimetres */
   .anatomy-wrap{margin:8px -8px 0;}
@@ -331,9 +342,19 @@
   <p>Maybe you want to impress a girlfriend or boyfriend, or you just want a deeper dive into music. We've all been there.</p>
   <p>What you'll find here is a gentle start on acoustic guitar. Learn the parts, tune up, play six chords, build a steady strum, then play ten real songs, all at your own pace.</p>
 </div>
+<nav class="jump" aria-label="Jump to a section">
+  <div class="jump-inner">
+    <a href="#parts">Parts</a>
+    <a href="#tuning">Tuning</a>
+    <a href="#chords">Chords</a>
+    <a href="#tips">Tips</a>
+    <a href="#strumming">Strumming</a>
+    <a href="#songs">Songs</a>
+  </div>
+</nav>
 <svg class="torn" viewBox="0 0 720 14" preserveAspectRatio="none"><path d="M0,7 Q30,2 60,8 T120,6 T180,9 T240,5 T300,8 T360,6 T420,9 T480,5 T540,8 T600,6 T660,9 T720,6" stroke-width="1.4" fill="none"/></svg>
 
-<section class="wrap">
+<section class="wrap" id="parts">
   <h2>The parts you'll hear about</h2>
   <p class="lede">Just enough vocabulary to follow along.</p>
   <div class="anatomy-wrap">
@@ -608,7 +629,7 @@
 
 <hr class="divider">
 
-<section class="wrap">
+<section class="wrap" id="tuning">
   <h2>Tune up first</h2>
   <p class="lede">Standard tuning, low string to high. Tap a string to hear its note, then match your guitar to it by ear or with a tuner.</p>
   <div class="strings">
@@ -623,7 +644,7 @@
 
 <hr class="divider">
 
-<section class="wrap">
+<section class="wrap" id="chords">
   <h2>Six chords, click to learn</h2>
   <p class="lede lede-def">A chord is several notes played at the same time. On guitar, your fretting hand (i.e. your left hand if you're right-handed, and vice versa) holds down a few strings at set frets, then you strum, and the strings ring together as one fuller sound. Each chord has a name, like G or Am, and most songs are just a handful of chords played in order.</p>
   <p class="lede">These cover a huge share of songs you already know. <strong>Tap a card to see how to place your fingers.</strong></p>
@@ -633,7 +654,7 @@
 
 <hr class="divider">
 
-<section class="wrap">
+<section class="wrap" id="tips">
   <h2>Hints and tips</h2>
   <p class="lede">A few habits that make the first weeks easier.</p>
   <div class="tips">
@@ -653,7 +674,7 @@
   <p class="lede">Strumming is built in stages. Get steady with downstrokes first, then learn upstrokes on their own, then join them together. The full pattern is the goal at the end. Throughout, your strumming hand swings down and up like a pendulum, in time with the count, even on the slots where it skips the strings.</p>
   <div class="strum-box">
     <div>
-      <p class="ctl-label" id="patLabel">Your path</p>
+      <p class="ctl-label" id="patLabel">Your path<span class="saved-note" id="savedNote" hidden>Picked up where you left off</span></p>
       <ol class="steps" aria-labelledby="patLabel" id="patternPick">
         <li><button type="button" id="pat-down" data-pat="down" aria-pressed="true"><span class="step-n">Step 1</span><span class="step-t">Downstrokes</span><span class="step-d">One strum on each beat</span></button></li>
         <li><button type="button" id="pat-up" data-pat="up" aria-pressed="false"><span class="step-n">Step 2</span><span class="step-t">Upstrokes</span><span class="step-d">Strum only on the way up</span></button></li>
@@ -680,7 +701,7 @@
 
 <hr class="divider">
 
-<section class="wrap">
+<section class="wrap" id="songs">
   <h2>Songs you can play right now</h2>
   <p class="lede">Once the chords above feel steady, try these. Every song uses only the six chords from this guide, so start with the ones that need the fewest. Tap a song title to see its chords bar by bar, and tap any chord to hear it.</p>
   <ol class="songs" id="songList">
@@ -1136,6 +1157,37 @@
       playChord(c).then(d=>{ch.classList.add('sounding'); clearTimeout(t); t=setTimeout(()=>ch.classList.remove('sounding'),Math.min(d,1.5)*1000);});
     });
   });
+
+  // remember the learner's strumming step, chord and speed on this device
+  const SAVE_KEY='firstchords.strum.v1';
+  function saveStrum(){ try{ localStorage.setItem(SAVE_KEY,JSON.stringify({pat:state.pat,chord:state.chord,bpm:state.bpm})); }catch(e){} }
+  try{
+    const s=JSON.parse(localStorage.getItem(SAVE_KEY)||'null');
+    if(s && PATTERNS[s.pat]){
+      state.pat=s.pat; renderPattern();
+      if(chords.some(c=>c.name===s.chord)){ state.chord=s.chord; chordPick.querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed',x.textContent===s.chord)); }
+      const bpm=Math.min(120,Math.max(60,+s.bpm||80)); state.bpm=bpm; tempo.value=bpm; tempoOut.textContent=bpm+' BPM';
+      if(s.pat!=='down'||s.chord!=='G'||bpm!==80) document.getElementById('savedNote').hidden=false;
+    }
+  }catch(e){}
+  document.getElementById('patternPick').addEventListener('click',()=>setTimeout(saveStrum));
+  document.getElementById('patternNote').addEventListener('click',()=>setTimeout(saveStrum));
+  chordPick.addEventListener('click',()=>setTimeout(saveStrum));
+  tempo.addEventListener('change',saveStrum);
+  document.getElementById('songList').addEventListener('click',e=>{ if(e.target.closest('.practise')) setTimeout(saveStrum); });
+
+  // highlight the section you're reading in the jump bar
+  const jumpLinks=[...document.querySelectorAll('.jump a')];
+  const secs=jumpLinks.map(a=>document.querySelector(a.getAttribute('href')));
+  function markCurrent(){
+    const y=window.scrollY+120; let cur=-1;
+    secs.forEach((s,i)=>{ if(s && s.offsetTop<=y) cur=i; });
+    jumpLinks.forEach((a,i)=>{
+      if(i===cur){ if(a.getAttribute('aria-current')!=='true'){ a.setAttribute('aria-current','true'); const bar=a.parentElement; if(a.offsetLeft<bar.scrollLeft||a.offsetLeft+a.offsetWidth>bar.scrollLeft+bar.clientWidth) bar.scrollLeft=a.offsetLeft-16; } }
+      else a.removeAttribute('aria-current');
+    });
+  }
+  window.addEventListener('scroll',markCurrent,{passive:true}); markCurrent();
 })();
 </script>
 </body>
