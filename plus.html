@@ -174,6 +174,21 @@
   .soon-list li{border:1.4px dashed var(--rule); border-radius:10px; padding:12px 14px; font-size:0.88rem; color:var(--muted);}
   .soon-list strong{display:block; font-family:'Fraunces',serif; color:var(--ink); font-size:0.98rem;}
 
+  /* practice task */
+  .practice{border-color:var(--wood);}
+  .finger-map{list-style:none; margin:0; padding:0; display:flex; flex-wrap:wrap; gap:8px;}
+  .finger-map li{display:flex; align-items:center; gap:8px; font-size:0.85rem; color:var(--ink-2); background:var(--paper); border:1.4px solid var(--rule); border-radius:999px; padding:4px 12px 4px 4px;}
+  .finger-map b{display:inline-flex; align-items:center; justify-content:center; width:24px; height:24px; border-radius:50%; background:var(--wood); color:var(--on-accent); font-family:'Fraunces',serif; font-size:0.85rem;}
+  .finger-map li:first-child b{background:none; color:var(--sage); border:1.6px solid var(--sage);}
+  .steps-list{margin:0; padding-left:1.2em; display:grid; gap:4px; font-size:0.9rem; color:var(--ink-2); line-height:1.5;}
+  .tempo-row{display:flex; align-items:center; gap:10px;}
+  .tempo-row label{font-size:0.85rem; color:var(--muted);}
+  .tempo-row input{flex:1; accent-color:var(--wood);}
+  .tempo-row output{font-family:'Fraunces',serif; font-weight:600; font-variant-numeric:tabular-nums; min-width:62px; text-align:right;}
+  .tab-col .fing{font-family:'Inter',sans-serif; font-size:0.72rem; font-weight:600; color:var(--wood);}
+  .tab.has-fingers .tab-labels,.tab.has-fingers .tab-col{grid-template-rows:repeat(6,26px) 22px;}
+  .tab-labels .fl{font-family:'Inter',sans-serif; font-size:0.66rem; font-weight:600; color:var(--wood); text-transform:uppercase; letter-spacing:.04em;}
+
   footer.wrap{padding-block:32px 64px; text-align:center;}
   .made{margin:0; font-size:0.85rem; color:var(--faint);}
   .made strong{color:var(--ink); font-weight:600;}
@@ -257,13 +272,48 @@
     <div class="tab-scroll"><div class="tab" id="tab3"></div></div>
   </div>
 
-  <div class="card">
-    <h3>Where that is on the neck</h3>
-    <p class="fb-readout" id="tabReadout">Tap anything in the tabs above and it lights up here.</p>
-    <div class="fb-scroll"><svg class="fb" id="tabBoard" viewBox="0 0 780 220" role="img" aria-label="Fretboard showing the notes from the tab you tapped"></svg></div>
+  <div class="card practice">
+    <p class="ctl-label">Practice task</p>
+    <h3>One finger per fret</h3>
+    <p class="body-text">These two melodies train your fretting hand to move cleanly between frets. Give each fret its own finger, the same numbers as on the chord cards:</p>
+    <ul class="finger-map" aria-label="Which finger plays which fret">
+      <li><b>0</b><span>open, no finger</span></li>
+      <li><b>1</b><span>fret 1 · index</span></li>
+      <li><b>2</b><span>fret 2 · middle</span></li>
+      <li><b>3</b><span>fret 3 · ring</span></li>
+      <li><b>4</b><span>fret 4–5 · pinky</span></li>
+    </ul>
+    <ol class="steps-list">
+      <li>Start slow, at 60 BPM. Play along and follow the highlight.</li>
+      <li>Press with your fingertip, just behind the fret.</li>
+      <li>Keep the other fingers hovering close to the strings, ready to drop.</li>
+      <li>Lift a finger straight up instead of sliding it.</li>
+      <li>When a melody sounds clean three times in a row, add 10 BPM.</li>
+    </ol>
+    <div class="tempo-row">
+      <label for="pTempo">Speed</label>
+      <input type="range" id="pTempo" min="50" max="140" step="10" value="60">
+      <output for="pTempo" id="pTempoOut">60 BPM</output>
+    </div>
   </div>
 
-  <p class="note-box"><strong>Tab or chord chart?</strong> Chord charts tell you which chord to hold and leave the strumming to you. Tab tells you exactly which strings to play, one at a time or together. Songs often use both: chord charts for strumming parts, tab for riffs and intros.</p>
+  <div class="card">
+    <div class="tab-head">
+      <h3>Twinkle, Twinkle, Little Star</h3>
+      <button type="button" class="btn" id="playTwinkle"><span class="ico" aria-hidden="true"></span><span class="txt">Play along</span></button>
+    </div>
+    <p class="body-text">A traditional tune. The A note sits at the 5th fret, so stretch your pinky up to it and keep your index finger near fret 1.</p>
+    <div class="tab-scroll"><div class="tab" id="tabTwinkle"></div></div>
+  </div>
+
+  <div class="card">
+    <div class="tab-head">
+      <h3>Jingle Bells</h3>
+      <button type="button" class="btn" id="playJingle"><span class="ico" aria-hidden="true"></span><span class="txt">Play along</span></button>
+    </div>
+    <p class="body-text">The chorus, from 1857. Lots of repeated notes: keep your fingers relaxed and let the open e string ring between fretted notes.</p>
+    <div class="tab-scroll"><div class="tab" id="tabJingle"></div></div>
+  </div>
 </section>
 
 <hr class="divider">
@@ -382,13 +432,16 @@
 
   // ---------- tab renderer ----------
   // column = array of [string, fret] pairs
-  function buildTab(el,cols,onCol){
-    let lab='<div class="tab-labels" aria-hidden="true">'+[5,4,3,2,1,0].map(s=>`<span>${LABELS[s]}</span>`).join('')+'</div>';
+  const FINGER=f=>f===0?'–':String(Math.min(f,4));
+  function buildTab(el,cols,onCol,fingers){
+    if(fingers) el.classList.add('has-fingers');
+    let lab='<div class="tab-labels" aria-hidden="true">'+[5,4,3,2,1,0].map(s=>`<span>${LABELS[s]}</span>`).join('')+(fingers?'<span class="fl">finger</span>':'')+'</div>';
     let cells='<div class="tab-cells">';
     cols.forEach((c,i)=>{
       const desc=c.map(([s,f])=>where(s,f)).join(', ');
       cells+=`<button type="button" class="tab-col" data-i="${i}" aria-label="${desc}">`;
       for(const s of [5,4,3,2,1,0]){ const hit=c.find(p=>p[0]===s); cells+=`<span class="tab-cell">${hit?`<span class="num">${hit[1]}</span>`:''}</span>`; }
+      if(fingers) cells+=`<span class="fing">${FINGER(c[0][1])}</span>`;
       cells+='</button>';
     });
     el.innerHTML=lab+cells+'</div>';
@@ -398,40 +451,47 @@
   }
 
   // ---------- Reading tabs ----------
-  const tabBoard=buildBoard(document.getElementById('tabBoard'),{});
-  tabBoard.show('natural',true);
-  const tabReadout=document.getElementById('tabReadout');
-  function showOnBoard(col,label){
-    tabBoard.mark(col); tabBoard.show('natural',true);
-    tabReadout.innerHTML=label?`<strong>${label}</strong> · `+col.map(([s,f])=>where(s,f)).join(', '):
-      col.map(([s,f])=>`<strong>${noteName(s,f)}</strong> · ${where(s,f)}`).join('<br>');
-  }
   function flash(btn){ btn.classList.add('now'); setTimeout(()=>btn.classList.remove('now'),350); }
+  // play-along for a single-note melody: notes = [[string,fret,beats],...]
+  function melody(tabId,btnId,notes,getBpm){
+    const cols=notes.map(([s,f])=>[[s,f]]);
+    const btns=buildTab(document.getElementById(tabId),cols,(i,b)=>{ S.note(notes[i][0],notes[i][1]); flash(b); },true);
+    const btn=document.getElementById(btnId); let timers=[];
+    const stop=()=>{ timers.forEach(clearTimeout); timers=[]; btns.forEach(b=>b.classList.remove('now')); btn.classList.remove('on'); btn.querySelector('.txt').textContent='Play along'; };
+    btn.addEventListener('click',()=>{
+      if(timers.length){ stop(); return; }
+      S.ctx(); const beat=60/getBpm(); let t=0.05;
+      notes.forEach(([s,f,d],i)=>{
+        S.note(s,f,t);
+        timers.push(setTimeout(()=>btns.forEach((b,j)=>b.classList.toggle('now',j===i)),t*1000));
+        t+=d*beat;
+      });
+      timers.push(setTimeout(stop,(t+0.4)*1000));
+      btn.classList.add('on'); btn.querySelector('.txt').textContent='Stop';
+    });
+  }
 
   const T1=[[[0,0]],[[1,0]],[[2,0]],[[3,0]],[[4,0]],[[5,0]]];
-  buildTab(document.getElementById('tab1'),T1,(i,b)=>{ S.note(T1[i][0][0],0); flash(b); showOnBoard(T1[i]); });
+  buildTab(document.getElementById('tab1'),T1,(i,b)=>{ S.note(T1[i][0][0],0); flash(b); });
 
-  // Ode to Joy (Beethoven, public domain) on the top two strings: E E F G G F E D C C D E E D D
-  const ODE=[[5,0],[5,0],[5,1],[5,3],[5,3],[5,1],[5,0],[4,3],[4,1],[4,1],[4,3],[5,0],[5,0],[4,3],[4,3]].map(p=>[p]);
-  const odeBtns=buildTab(document.getElementById('tab2'),ODE,(i,b)=>{ S.note(ODE[i][0][0],ODE[i][0][1]); flash(b); showOnBoard(ODE[i]); });
-  const melodyBtn=document.getElementById('playMelody'); let melodyTimers=[];
-  function stopMelody(){ melodyTimers.forEach(clearTimeout); melodyTimers=[]; odeBtns.forEach(b=>b.classList.remove('now')); melodyBtn.classList.remove('on'); melodyBtn.querySelector('.txt').textContent='Play along'; }
-  melodyBtn.addEventListener('click',()=>{
-    if(melodyTimers.length){ stopMelody(); return; }
-    S.ctx(); const beat=0.5;
-    ODE.forEach((c,i)=>{
-      const [s,f]=c[0];
-      const t=i*beat+(i===13?0.25:0);   // dotted "E. D" near the end
-      S.note(s,f,t+0.05);
-      melodyTimers.push(setTimeout(()=>{ odeBtns.forEach((b,j)=>b.classList.toggle('now',j===i)); showOnBoard(c); },(t+0.05)*1000));
-    });
-    melodyTimers.push(setTimeout(stopMelody,(ODE.length*beat+0.6)*1000));
-    melodyBtn.classList.add('on'); melodyBtn.querySelector('.txt').textContent='Stop';
-  });
+  // note names on the top two strings: C=B1 D=B3 E=e0 F=e1 G=e3 A=e5
+  const N={C:[4,1],D:[4,3],E:[5,0],F:[5,1],G:[5,3],A:[5,5]};
+  const seq=str=>str.trim().split(/\s+/).map(t=>{ const [n,d]=t.split(':'); return [...N[n],d?+d:1]; });
+  // Ode to Joy (Beethoven, public domain)
+  melody('tab2','playMelody',seq('E E F G G F E D C C D E E:1.5 D:0.5 D:2'),()=>100);
 
   const CHORDS3=[{name:'G',frets:[3,2,0,0,0,3]},{name:'C',frets:[null,3,2,0,1,0]},{name:'D',frets:[null,null,0,2,3,2]}];
   const T3=CHORDS3.map(c=>c.frets.map((f,s)=>f===null?null:[s,f]).filter(Boolean));
-  buildTab(document.getElementById('tab3'),T3,(i,b)=>{ S.strum(CHORDS3[i].frets); flash(b); showOnBoard(T3[i],CHORDS3[i].name+' chord'); });
+  buildTab(document.getElementById('tab3'),T3,(i,b)=>{ S.strum(CHORDS3[i].frets); flash(b); });
+
+  // practice task melodies, at the practice speed
+  const pTempo=document.getElementById('pTempo'), pOut=document.getElementById('pTempoOut');
+  pTempo.addEventListener('input',()=>{ pOut.textContent=pTempo.value+' BPM'; });
+  const pBpm=()=>+pTempo.value;
+  // Twinkle, Twinkle, Little Star (traditional), first verse
+  melody('tabTwinkle','playTwinkle',seq('C C G G A A G:2 F F E E D D C:2'),pBpm);
+  // Jingle Bells chorus (James Lord Pierpont, 1857)
+  melody('tabJingle','playJingle',seq('E E E:2 E E E:2 E G C:1.5 D:0.5 E:4 F F F:1.5 F:0.5 F E E E:0.5 E:0.5 E D D E D:2 G:2'),pBpm);
 
   // ---------- The neck ----------
   const FOCUS=[0,1];
