@@ -139,7 +139,7 @@
   <div class="sub" id="songs">
     <p class="sub-n">2.4</p>
     <h3 class="sub-h">Songs to play</h3>
-    <p class="lede">Three well-known songs built on this lesson's chords. New chords are outlined in orange. Tap any chord to hear it.</p>
+    <p class="lede">Three well-known songs that use the chords you know, from C, G and Am to the new E and Dm. New chords are outlined in orange. Tap any chord to hear it.</p>
     <div id="songList"></div>
   </div>
 
@@ -282,15 +282,18 @@
   // 2.4 songs (chord progressions only; lyrics are linked, not reproduced)
   const NEW=['E','Dm'];
   const SONGS=[
-    {title:'Louie Louie',artist:'The Kingsmen',year:1963,chords:['A','D','Em'],
-     secs:[['Whole song',['A D','Em D'],'repeat throughout']],strum:'Down-up on each chord, two beats each, about 115 BPM',
-     note:'The famous riff is just these three chords: A A A, D D, Em Em, D D.'},
-    {title:'Wild Thing',artist:'The Troggs',year:1966,chords:['A','D','E'],
-     secs:[['Main riff',['A D','E D'],'repeat throughout']],strum:'Big downstrokes, two beats per chord, about 105 BPM',
-     note:'A good one for the E chord: strum all six strings and let it ring.'},
-    {title:'Drunken Sailor',artist:'Traditional sea shanty',year:null,chords:['Dm','C'],
-     secs:[['Verse and chorus',['Dm','Dm','C','C','Dm','Dm','C Dm','Dm'],'repeat']],strum:'Downstrokes on every beat, about 100 BPM, with a strong first beat',
-     note:'Only two chords, and a fun, steady way to get Dm into your hand.'},
+    {title:'Rock Around the Clock',artist:'Bill Haley & His Comets',year:1954,chords:['A','D','E'],
+     secs:[['Every verse (12-bar blues)',['A','A','A','A','D','D','A','A','E','D','A','E'],'repeat']],
+     strum:'Step 3, down and up. Start around 80 BPM; the record is much faster',
+     note:'The classic 12-bar blues: A for four bars, D for two, back to A, then E and D to turn around. Hundreds of rock and roll songs use this exact pattern.'},
+    {title:'Greensleeves',artist:'Traditional English tune',year:null,chords:['Am','C','G','Em','E'],
+     secs:[['Verse',['Am','C','G','Em','Am','Am','E','E'],'× 2'],['Chorus',['C','C','G','Em','Am','E','Am','Am'],'× 2']],
+     strum:'counts in threes, one strong downstroke then two light ones, about 90 BPM',
+     note:'Listen for Em and E side by side: the same shape, one finger apart, and you can hear the change you learned in 2.2.'},
+    {title:'Dust in the Wind',artist:'Kansas',year:1977,chords:['C','G','Am','Dm','D'],
+     secs:[['Verse',['C','G','Am','G','Dm','Am'],'× 2'],['Chorus',['D','G','Am','Am'],'× 2']],
+     strum:'gentle downstrokes, about 95 BPM. The record is fingerpicked',
+     note:'Dm in the verse, D in the chorus: a real song that puts this lesson\'s minor and major pair to work.'},
   ];
   const songList=document.getElementById('songList');
   const chipBtn=(c,cls)=>`<button type="button" class="${cls}${cls==='chip'&&NEW.includes(c)?' new':''}" data-chord="${c}" aria-label="Play ${c}">${c}</button>`;
