@@ -137,7 +137,7 @@
 
   <div class="next-lesson">
     <p><strong>Finished Lesson 1?</strong>When the three melodies sound clean at 80 BPM, your fretting hand is ready for new chord shapes.</p>
-    <a class="btn-next" href="lesson-2.html" id="toLesson2">Ready for Lesson 2 <span aria-hidden="true">→</span></a>
+    <a class="btn-next" href="lesson-2.html" data-preview="https://claude.ai/artifact/H55Xusr4nZDNbwJnQWrYfG" id="toLesson2">Ready for Lesson 2 <span aria-hidden="true">→</span></a>
   </div>
 </section>
 
@@ -263,6 +263,9 @@
   const seq3=str=>str.trim().split(/\s+/).map(t=>{ const [n,d]=t.split(':'); return [...N3[n],d?+d:1]; });
   melody('tabMary','playMary',seq3('B A G A B B B:2 A A A:2 B D D:2 B A G A B B B B A A B A G:4'),pBpm);
 
+
+  // In the claude.ai preview each lesson lives at its own link; on the real site plain relative links work.
+  if(window.self!==window.top){ document.querySelectorAll('a[data-preview]').forEach(a=>{ a.href=a.dataset.preview; a.target='_blank'; a.rel='noopener'; }); }
   // ---------- jump bar highlight ----------
   const links=[...document.querySelectorAll('.jump a')], secs=links.map(a=>document.querySelector(a.getAttribute('href')));
   function mark(){ const y=scrollY+120; let cur=-1; secs.forEach((s,i)=>{ if(s.offsetTop<=y) cur=i; }); links.forEach((a,i)=>i===cur?a.setAttribute('aria-current','true'):a.removeAttribute('aria-current')); }

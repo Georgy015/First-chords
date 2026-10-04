@@ -65,7 +65,7 @@
 <body>
 
 <div class="topbar">
-  <a class="back" href="plus.html">← Lesson 1</a>
+  <a class="back" href="plus.html" data-preview="https://claude.ai/artifact/MjpbvaH17UeMD9Yzjv74pP">← Lesson 1</a>
   <span class="plus-badge">Plus</span>
 </div>
 
@@ -145,7 +145,7 @@
 
   <div class="next-lesson">
     <p><strong>Lesson 3 is on its way</strong>Next up: the capo, and how it moves these same shapes higher.</p>
-    <a class="btn-next" href="plus.html" id="backLesson1"><span aria-hidden="true">←</span> Back to Lesson 1</a>
+    <a class="btn-next" href="plus.html" data-preview="https://claude.ai/artifact/MjpbvaH17UeMD9Yzjv74pP" id="backLesson1"><span aria-hidden="true">←</span> Back to Lesson 1</a>
   </div>
 </section>
 
@@ -315,6 +315,9 @@
     playChord(b.dataset.chord); b.classList.add('sounding'); setTimeout(()=>b.classList.remove('sounding'),1200);
   });
 
+
+  // In the claude.ai preview each lesson lives at its own link; on the real site plain relative links work.
+  if(window.self!==window.top){ document.querySelectorAll('a[data-preview]').forEach(a=>{ a.href=a.dataset.preview; a.target='_blank'; a.rel='noopener'; }); }
   // jump bar highlight
   const links=[...document.querySelectorAll('.jump a')], secs=links.map(a=>document.querySelector(a.getAttribute('href')));
   function mark(){ const y=scrollY+120; let cur=-1; secs.forEach((s,i)=>{ if(s.getBoundingClientRect().top+scrollY<=y) cur=i; }); links.forEach((a,i)=>i===cur?a.setAttribute('aria-current','true'):a.removeAttribute('aria-current')); }
