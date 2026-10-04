@@ -4,16 +4,41 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>First Chords — a starter guide to acoustic guitar</title>
+<meta name="description" content="A free, hands-on starter guide to acoustic guitar: the parts of the guitar, tuning by ear, six first chords with sound, a step-by-step strumming trainer and ten songs you can play.">
+<meta name="theme-color" content="#FAF6EC" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#1C1714" media="(prefers-color-scheme: dark)">
+<meta property="og:type" content="website">
+<meta property="og:title" content="First Chords: from your first chord to your first song">
+<meta property="og:description" content="Learn six chords, build a steady strum and play ten real songs on acoustic guitar. Free, with sound.">
+<meta property="og:image" content="og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M16 3C22 3 28 5.5 28 11C28 17.5 20 26 16 29C12 26 4 17.5 4 11C4 5.5 10 3 16 3Z' fill='%23C9873F'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
+  /* warm workshop paper in light, lamp-lit walnut in dark; illustrations keep their real materials */
   :root{
-    --paper:#FAF6EC; --ink:#3B2E24; --wood:#C9873F; --sage:#7A8B6F;
-    --rule:#D9CFBB; --card:#FFFFFF;
+    --paper:#FAF6EC; --card:#FFFFFF; --ink:#3B2E24; --ink-2:var(--ink-2); --muted:var(--muted); --faint:var(--faint);
+    --line:#B9AE9C; --rule:#D9CFBB; --hover:var(--hover); --miss:var(--miss);
+    --wood:#C9873F; --wood-deep:var(--wood-deep); --sage:#7A8B6F; --on-accent:#FFFFFF;
     box-sizing:border-box;
     padding-top:env(safe-area-inset-top,0px);
     padding-bottom:env(safe-area-inset-bottom,0px);
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --paper:#1C1714; --card:#26201B; --ink:#EFE6D6; --ink-2:#DCCFBC; --muted:#BBAC96; --faint:#A0907A;
+      --line:#6E6152; --rule:#3E352D; --hover:#302822; --miss:#5C5146;
+      --wood:#D99A52; --wood-deep:#E6AC68; --sage:#9DB08F; --on-accent:#1C1714; color-scheme:dark;
+    }
+  }
+  :root[data-theme="dark"]{
+    --paper:#1C1714; --card:#26201B; --ink:#EFE6D6; --ink-2:#DCCFBC; --muted:#BBAC96; --faint:#A0907A;
+    --line:#6E6152; --rule:#3E352D; --hover:#302822; --miss:#5C5146;
+    --wood:#D99A52; --wood-deep:#E6AC68; --sage:#9DB08F; --on-accent:#1C1714; color-scheme:dark;
   }
   html{scroll-padding-top:env(safe-area-inset-top,0px);}
   *{box-sizing:border-box;}
@@ -28,11 +53,12 @@
   section.wrap{padding-block:64px;}
   .hero.wrap{padding-block:88px 56px; text-align:center;}
   .hero h1{font-size:clamp(2.2rem,6vw,3.4rem); line-height:1.08; letter-spacing:-0.01em;}
-  .hero p{font-size:1.05rem; color:#6b5c4c; margin:18px auto 0; max-width:46ch; line-height:1.55;}
+  .hero p{font-size:1.05rem; color:var(--muted); margin:18px auto 0; max-width:46ch; line-height:1.55;}
+  .torn path{stroke:var(--rule);}
   .torn{display:block; width:100%; height:14px; margin:8px auto 0; max-width:720px;}
   .divider{border:none; border-top:1px solid var(--rule); margin:0;}
   h2{font-size:1.7rem; margin-bottom:6px;}
-  .lede{color:#6b5c4c; margin:0 0 28px; font-size:0.98rem; line-height:1.55; max-width:62ch;}
+  .lede{color:var(--muted); margin:0 0 28px; font-size:0.98rem; line-height:1.55; max-width:62ch;}
   .lede strong{color:var(--ink); font-weight:600;}
   .lede-def{color:var(--ink); margin-bottom:12px;}
 
@@ -40,7 +66,7 @@
   .anatomy-wrap{margin:8px -8px 0;}
   .anatomy-diagram{width:100%; max-width:680px; height:auto; display:block; margin:0 auto;}
   .callout-title{font-family:'Fraunces',serif; font-weight:600; font-size:17px; fill:var(--ink);}
-  .callout-sub{font-family:'Inter',sans-serif; font-size:12.5px; fill:#8a7a66;}
+  .callout-sub{font-family:'Inter',sans-serif; font-size:12.5px; fill:var(--faint);}
   @media (max-width:560px){
     .callout-sub{display:none;}
     .callout-title{font-size:22px;}
@@ -70,8 +96,8 @@
   .g-pin{fill:#F6EEDB;}
   .g-wound{fill:none; stroke:#B98E52;}
   .g-plain{fill:none; stroke:#C9C4BA;}
-  .g-lead polyline{fill:none; stroke:#B9AE9C; stroke-width:1;}
-  .g-anchor{fill:var(--wood); stroke:#FFFFFF; stroke-width:1.2;}
+  .g-lead polyline{fill:none; stroke:var(--line); stroke-width:1;}
+  .g-anchor{fill:var(--wood); stroke:var(--paper); stroke-width:1.2;}
 
   /* hand + pick figures */
   .figs{display:grid; grid-template-columns:1fr 1fr; gap:20px; margin-top:40px;}
@@ -79,19 +105,19 @@
   .fig{margin:0; background:var(--card); border:1.4px solid var(--rule); border-radius:10px; padding:16px 16px 18px; min-width:0;}
   .fig-svg{width:100%; height:auto; display:block; max-width:300px; margin:0 auto;}
   .fig h3{font-size:1.1rem; margin:10px 0 6px;}
-  .fig p,.fig ol{margin:0; font-size:0.88rem; line-height:1.5; color:#4a3d30;}
+  .fig p,.fig ol{margin:0; font-size:0.88rem; line-height:1.5; color:var(--ink-2);}
   .fig ol{padding-left:1.2em; display:grid; gap:4px;}
   .h-out{fill:none; stroke:var(--ink); stroke-width:4.4; stroke-linejoin:round;}
   .h-skin{fill:#F3D6B6;}
   .h-crease{fill:none; stroke:#C79E7C; stroke-width:1.3; stroke-linecap:round;}
   .h-nail{fill:#FBEBDD; stroke:#C79E7C; stroke-width:1;}
   .h-badge{fill:var(--wood);}
-  .h-num{font-family:'Fraunces',serif; font-weight:700; font-size:12px; fill:#FFFFFF; text-anchor:middle;}
+  .h-num{font-family:'Fraunces',serif; font-weight:700; font-size:12px; fill:var(--on-accent); text-anchor:middle;}
   .fig-label{font-family:'Fraunces',serif; font-weight:600; font-size:16px; fill:var(--ink);}
-  .fig-sub{font-family:'Inter',sans-serif; font-size:12px; fill:#8a7a66;}
-  .fig-mini{font-family:'Inter',sans-serif; font-size:10.5px; fill:#8a7a66;}
+  .fig-sub{font-family:'Inter',sans-serif; font-size:12px; fill:var(--faint);}
+  .fig-mini{font-family:'Inter',sans-serif; font-size:10.5px; fill:var(--faint);}
   .fig-num{font-variant-numeric:tabular-nums;}
-  .lead{stroke:#B9AE9C; stroke-width:1;}
+  .lead{stroke:var(--line); stroke-width:1;}
   .lead-dot{fill:var(--wood);}
   .p-pick{fill:#B5562F; stroke:var(--ink); stroke-width:1.6; stroke-linejoin:round;}
   .p-shine{fill:none; stroke:#FFFFFF; stroke-width:2; stroke-linecap:round; opacity:.5;}
@@ -107,7 +133,7 @@
   .s-badge{fill:var(--card); stroke:var(--ink); stroke-width:1.6;}
   .s-letter{font-family:'Fraunces',serif; font-weight:600; font-size:17px; fill:var(--ink); text-anchor:middle;}
   .s-ord{font-family:'Fraunces',serif; font-weight:600; font-size:14px; fill:var(--ink);}
-  .s-cap{font-family:'Inter',sans-serif; font-size:11px; fill:#8a7a66; text-anchor:middle;}
+  .s-cap{font-family:'Inter',sans-serif; font-size:11px; fill:var(--faint); text-anchor:middle;}
   .s-cap-l{text-anchor:start;}
   @media (max-width:560px){
     .s-letter{font-size:20px;}
@@ -122,7 +148,7 @@
     background:none; border:none; border-radius:8px; cursor:pointer; text-align:left;
     font:inherit; color:inherit; transition:background .15s;
   }
-  .string-row:hover{background:#F2EBDC;}
+  .string-row:hover{background:var(--hover);}
   .string-row .note{
     width:38px; height:38px; border-radius:50%; border:1.6px solid var(--ink);
     display:flex; align-items:center; justify-content:center; font-family:'Fraunces',serif;
@@ -131,10 +157,10 @@
   }
   .string-row:hover .note{border-color:var(--wood);}
   .string-row .line{height:var(--gauge,2px); background:var(--rule); flex:1; border-radius:2px; transition:background .2s;}
-  .string-row .label{font-size:0.85rem; color:#8a7a66; width:104px; flex-shrink:0;}
-  .string-row .play{width:0; height:0; border-style:solid; border-width:6px 0 6px 10px; border-color:transparent transparent transparent #B9AE9C; flex-shrink:0; transition:border-color .15s;}
+  .string-row .label{font-size:0.85rem; color:var(--faint); width:104px; flex-shrink:0;}
+  .string-row .play{width:0; height:0; border-style:solid; border-width:6px 0 6px 10px; border-color:transparent transparent transparent var(--line); flex-shrink:0; transition:border-color .15s;}
   .string-row:hover .play{border-left-color:var(--wood);}
-  .string-row.ringing .note{background:var(--wood); color:#FFFFFF; border-color:var(--wood);}
+  .string-row.ringing .note{background:var(--wood); color:var(--on-accent); border-color:var(--wood);}
   .string-row.ringing .line{background:var(--wood); animation:ring 2s ease-out;}
   .string-row.ringing .play{border-left-color:var(--wood);}
   @keyframes ring{
@@ -154,8 +180,10 @@
   .chord-card:hover{border-color:var(--wood); transform:translateY(-2px);}
   .chord-card.open{border-color:var(--sage); border-width:2px;}
   .chord-card svg{width:100%; height:auto; max-width:110px;}
-  .finger-num{font-family:'Fraunces',serif; font-weight:700; font-size:8.6px; fill:#FFFFFF; text-anchor:middle;}
-  .chord-key{font-size:0.85rem; color:#8a7a66; margin:-16px 0 22px;}
+  .cd-nut{fill:var(--ink);} .cd-fret{stroke:var(--line); stroke-width:1;} .cd-string{stroke:var(--faint); stroke-width:0.9;}
+  .cd-x{fill:var(--faint); font-size:8px; text-anchor:middle;} .cd-open{fill:none; stroke:var(--sage); stroke-width:1.4;} .cd-dot{fill:var(--wood);}
+  .finger-num{font-family:'Fraunces',serif; font-weight:700; font-size:8.6px; fill:var(--on-accent); text-anchor:middle;}
+  .chord-key{font-size:0.85rem; color:var(--faint); margin:-16px 0 22px;}
   .chord-play{
     margin:10px auto 0; display:inline-flex; align-items:center; gap:7px;
     font:600 0.82rem 'Inter',system-ui,sans-serif; color:var(--ink);
@@ -164,12 +192,14 @@
   }
   .chord-play .tri{width:0; height:0; border-style:solid; border-width:5px 0 5px 8px; border-color:transparent transparent transparent var(--wood);}
   .chord-play:hover{border-color:var(--wood);}
-  .chord-card.playing .chord-play{background:var(--wood); border-color:var(--wood); color:#FFFFFF;}
-  .chord-card.playing .chord-play .tri{border-left-color:#FFFFFF;}
+  .chord-card.playing .chord-play{background:var(--wood); border-color:var(--wood); color:var(--on-accent);}
+  .chord-card.playing .chord-play .tri{border-left-color:var(--on-accent);}
+  .chord-face{display:block; width:100%; background:none; border:none; padding:0; color:inherit; cursor:pointer; font:inherit;}
+  .chord-card:focus-within{border-color:var(--wood);}
   .chord-card .name{font-family:'Fraunces',serif; font-weight:600; font-size:1.1rem; margin-top:6px; display:block;}
   .chord-note{
     grid-column:1/-1; background:var(--card); border-left:3px solid var(--sage);
-    border-radius:6px; padding:14px 18px; font-size:0.92rem; color:#4a3d30; display:none; line-height:1.5;
+    border-radius:6px; padding:14px 18px; font-size:0.92rem; color:var(--ink-2); display:none; line-height:1.5;
   }
   .chord-note.show{display:block;}
 
@@ -178,11 +208,11 @@
   @media (max-width:560px){.tips{grid-template-columns:1fr;}}
   .tip{background:var(--card); border:1.4px solid var(--rule); border-radius:10px; padding:16px 18px; min-width:0;}
   .tip h3{font-size:1.05rem; margin:0 0 6px;}
-  .tip p{margin:0; font-size:0.9rem; line-height:1.5; color:#4a3d30;}
+  .tip p{margin:0; font-size:0.9rem; line-height:1.5; color:var(--ink-2);}
 
   /* strumming */
   .strum-box{background:var(--card); border:1.4px solid var(--rule); border-radius:12px; padding:20px; display:grid; gap:18px;}
-  .ctl-label{font-size:0.75rem; font-weight:600; letter-spacing:.06em; text-transform:uppercase; color:#8a7a66; margin:0 0 8px;}
+  .ctl-label{font-size:0.75rem; font-weight:600; letter-spacing:.06em; text-transform:uppercase; color:var(--faint); margin:0 0 8px;}
   .seg{display:flex; flex-wrap:wrap; gap:8px;}
   .seg button{
     font:500 0.86rem 'Inter',system-ui,sans-serif; color:var(--ink); background:var(--paper);
@@ -202,18 +232,18 @@
     font:inherit; color:var(--ink); transition:background .15s, border-color .15s, color .15s;
   }
   .steps button:hover{border-color:var(--wood);}
-  .steps .step-n{font-size:0.7rem; font-weight:600; letter-spacing:.06em; text-transform:uppercase; color:#8a7a66;}
+  .steps .step-n{font-size:0.7rem; font-weight:600; letter-spacing:.06em; text-transform:uppercase; color:var(--faint);}
   .steps .goal .step-n{color:var(--wood);}
   .steps .step-t{font-family:'Fraunces',serif; font-weight:600; font-size:1rem;}
-  .steps .step-d{font-size:0.78rem; color:#6b5c4c; line-height:1.35;}
+  .steps .step-d{font-size:0.78rem; color:var(--muted); line-height:1.35;}
   .steps button[aria-pressed="true"]{background:var(--ink); border-color:var(--ink); color:var(--paper);}
-  .steps button[aria-pressed="true"] .step-n,.steps button[aria-pressed="true"] .step-d{color:#D9CFBB;}
+  .steps button[aria-pressed="true"] .step-n,.steps button[aria-pressed="true"] .step-d{color:var(--paper); opacity:.72;}
   .next-step{font:600 0.88rem 'Inter',system-ui,sans-serif; color:var(--wood); background:none; border:none; padding:0; cursor:pointer; white-space:nowrap;}
   .next-step:hover{text-decoration:underline;}
   .seg.chords button{font-family:'Fraunces',serif; font-weight:600; min-width:46px;}
   .strum-grid{display:grid; grid-template-columns:repeat(8,minmax(0,1fr)); gap:6px;}
   .slot{display:grid; gap:6px; justify-items:center;}
-  .slot .count{font-size:0.8rem; color:#8a7a66; font-variant-numeric:tabular-nums;}
+  .slot .count{font-size:0.8rem; color:var(--faint); font-variant-numeric:tabular-nums;}
   .slot.on-beat .count{font-family:'Fraunces',serif; font-weight:700; font-size:0.95rem; color:var(--ink);}
   .slot .cell{
     width:100%; max-width:52px; aspect-ratio:1/1.15; border-radius:8px; border:1.6px solid var(--ink);
@@ -222,21 +252,21 @@
   }
   .slot .cell svg{width:58%; height:auto;}
   .slot .cell .arrow{fill:none; stroke:currentColor; stroke-width:2.6; stroke-linecap:round; stroke-linejoin:round;}
-  .slot .cell.miss{border-style:dashed; border-color:#C9BEA9; color:#C9BEA9;}
+  .slot .cell.miss{border-style:dashed; border-color:var(--miss); color:var(--miss);}
   .slot .cell.miss::after{content:""; width:6px; height:6px; border-radius:50%; background:currentColor;}
-  .slot.now .cell{background:var(--wood); border-color:var(--wood); color:#FFFFFF;}
-  .slot.now .cell.miss{background:#F2EBDC; border-color:var(--wood); color:var(--wood);}
-  .pattern-note{margin:0; font-size:0.9rem; line-height:1.5; color:#4a3d30;}
+  .slot.now .cell{background:var(--wood); border-color:var(--wood); color:var(--on-accent);}
+  .slot.now .cell.miss{background:var(--hover); border-color:var(--wood); color:var(--wood);}
+  .pattern-note{margin:0; font-size:0.9rem; line-height:1.5; color:var(--ink-2);}
   .transport{display:flex; align-items:center; gap:18px; flex-wrap:wrap;}
   .strum-btn{
     display:inline-flex; align-items:center; gap:9px; font:600 0.92rem 'Inter',system-ui,sans-serif;
     background:var(--ink); color:var(--paper); border:none; border-radius:999px; padding:11px 22px; cursor:pointer;
   }
-  .strum-btn:hover{background:#2a2018;}
+  .strum-btn:hover{background:var(--muted);}
   .strum-btn .ico{width:0; height:0; border-style:solid; border-width:6px 0 6px 10px; border-color:transparent transparent transparent var(--paper);}
   .strum-btn.on .ico{width:10px; height:10px; border:none; background:var(--paper); border-radius:1px;}
   .tempo{display:flex; align-items:center; gap:10px; flex:1; min-width:220px;}
-  .tempo label{font-size:0.85rem; color:#6b5c4c; white-space:nowrap;}
+  .tempo label{font-size:0.85rem; color:var(--muted); white-space:nowrap;}
   .tempo input{flex:1; accent-color:var(--wood);}
   .tempo output{font-family:'Fraunces',serif; font-weight:600; font-variant-numeric:tabular-nums; min-width:62px; text-align:right;}
   @media (max-width:560px){.strum-box{padding:16px;} .strum-grid{gap:4px;}}
@@ -246,30 +276,30 @@
   .song{display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap; padding:14px 0; border-bottom:1px solid var(--rule); counter-increment:song;}
   .song:last-child{border-bottom:none;}
   .song-main{min-width:0; display:grid; grid-template-columns:28px auto 1fr; column-gap:6px; align-items:baseline;}
-  .song-main::before{content:counter(song); grid-row:1 / span 2; font-family:'Fraunces',serif; font-weight:600; color:#B9AE9C; font-variant-numeric:tabular-nums; padding-top:2px;}
+  .song-main::before{content:counter(song); grid-row:1 / span 2; font-family:'Fraunces',serif; font-weight:600; color:var(--line); font-variant-numeric:tabular-nums; padding-top:2px;}
   .song-main .meta{grid-column:2 / span 2;}
   .song-toggle{background:none; border:none; padding:0; text-align:left; cursor:pointer; color:var(--ink); display:inline-flex; align-items:center; gap:8px;}
   .song-toggle:hover{color:var(--wood);}
   .chev{width:7px; height:7px; border-right:1.8px solid currentColor; border-bottom:1.8px solid currentColor; transform:rotate(45deg) translateY(-3px); transition:transform .2s; flex-shrink:0;}
   .song-toggle[aria-expanded="true"] .chev{transform:rotate(225deg) translate(-2px,-1px);}
   .song-panel{flex-basis:100%; margin:4px 0 4px 34px; background:var(--card); border:1.4px solid var(--rule); border-radius:10px; padding:14px 16px; display:grid; gap:12px; min-width:0;}
-  .sec-label{font-size:0.75rem; font-weight:600; letter-spacing:.06em; text-transform:uppercase; color:#8a7a66; margin-bottom:6px;}
+  .sec-label{font-size:0.75rem; font-weight:600; letter-spacing:.06em; text-transform:uppercase; color:var(--faint); margin-bottom:6px;}
   .sec-label .rep{text-transform:none; letter-spacing:0; font-weight:500; color:var(--wood); margin-left:4px;}
   .bars{display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); row-gap:6px; max-width:440px; padding-right:2px;}
   .bar{display:flex; min-width:0; border-left:2px solid var(--ink); border-right:2px solid var(--ink); margin-right:-2px; padding:4px 6px; gap:4px;}
   .bchord{flex:1; font-family:'Fraunces',serif; font-weight:600; font-size:1rem; color:var(--ink); background:none; border:1.2px solid transparent; border-radius:6px; padding:4px 6px; cursor:pointer;}
   .bchord:hover{border-color:var(--wood);}
-  .bchord.sounding{background:var(--wood); color:#FFFFFF;}
-  .song-note{margin:0; font-size:0.85rem; color:#6b5c4c; line-height:1.5;}
+  .bchord.sounding{background:var(--wood); color:var(--on-accent);}
+  .song-note{margin:0; font-size:0.85rem; color:var(--muted); line-height:1.5;}
   .song-foot{display:flex; flex-wrap:wrap; align-items:center; gap:10px 16px; border-top:1px solid var(--rule); padding-top:10px; font-size:0.85rem;}
-  .strum-hint{color:#4a3d30;}
+  .strum-hint{color:var(--ink-2);}
   .practise{font:600 0.82rem 'Inter',system-ui,sans-serif; color:var(--ink); background:var(--paper); border:1.4px solid var(--rule); border-radius:999px; padding:5px 12px; cursor:pointer;}
   .practise:hover{border-color:var(--wood);}
   .lyrics-link{color:var(--wood); font-weight:600; text-decoration:none; margin-left:auto;}
   .lyrics-link:hover{text-decoration:underline;}
   @media (max-width:560px){.song-panel{margin-left:0;} .lyrics-link{margin-left:0;}}
   .song .title{font-family:'Fraunces',serif; font-weight:600; font-size:1.12rem;}
-  .song .meta{font-size:0.88rem; color:#8a7a66; margin-top:2px;}
+  .song .meta{font-size:0.88rem; color:var(--faint); margin-top:2px;}
   .song .tag{font-family:'Inter',sans-serif; font-weight:500; font-size:0.7rem; letter-spacing:.04em; text-transform:uppercase; color:var(--sage); border:1px solid var(--sage); border-radius:999px; padding:1px 7px; vertical-align:middle; margin-left:4px;}
   .chips{display:flex; gap:6px; flex-wrap:wrap;}
   .chip{
@@ -278,17 +308,14 @@
     transition:background .15s, border-color .15s, color .15s;
   }
   .chip:hover{border-color:var(--wood);}
-  .chip.sounding{background:var(--wood); border-color:var(--wood); color:#FFFFFF;}
+  .chip.sounding{background:var(--wood); border-color:var(--wood); color:var(--on-accent);}
   @media (max-width:560px){.song{gap:10px;} .chips{padding-left:34px;}}
 
-  footer{padding:60px 0 80px; text-align:center;}
-  footer p{color:#6b5c4c; max-width:44ch; margin:0 auto 20px; line-height:1.55;}
-  .cta{
-    display:inline-block; font-family:'Fraunces',serif; font-weight:600;
-    background:var(--wood); color:#fff; padding:14px 28px; border-radius:8px;
-    text-decoration:none; font-size:1.02rem;
-  }
-  .cta:hover{background:#b5762f;}
+  .site-foot{padding-block:24px 64px; display:grid; gap:40px;}
+  .next-up{background:var(--card); border:1.4px solid var(--rule); border-radius:12px; padding:24px;}
+  .next-up h2{font-size:1.5rem; margin-bottom:8px;}
+  .next-up p:last-child{margin:0; color:var(--muted); line-height:1.55; max-width:58ch;}
+  .made{margin:0; text-align:center; font-size:0.85rem; color:var(--faint);}
   :focus-visible{outline:2px solid var(--sage); outline-offset:2px;}
   @media (prefers-reduced-motion:reduce){*{transition:none !important; animation:none !important;}}
 </style>
@@ -296,10 +323,10 @@
 <body>
 
 <div class="hero wrap">
-  <h1>Your first six chords,<br>learned in one sitting.</h1>
-  <p>A gentle starting point for acoustic guitar — no theory, no rush. Just the shapes and sounds that get you playing real songs today.</p>
+  <h1>From your first chord<br>to your first song.</h1>
+  <p>A gentle start on acoustic guitar. Learn the parts, tune up, play six chords, build a steady strum, then play ten real songs, all at your own pace.</p>
 </div>
-<svg class="torn" viewBox="0 0 720 14" preserveAspectRatio="none"><path d="M0,7 Q30,2 60,8 T120,6 T180,9 T240,5 T300,8 T360,6 T420,9 T480,5 T540,8 T600,6 T660,9 T720,6" stroke="#D9CFBB" stroke-width="1.4" fill="none"/></svg>
+<svg class="torn" viewBox="0 0 720 14" preserveAspectRatio="none"><path d="M0,7 Q30,2 60,8 T120,6 T180,9 T240,5 T300,8 T360,6 T420,9 T480,5 T540,8 T600,6 T660,9 T720,6" stroke-width="1.4" fill="none"/></svg>
 
 <section class="wrap">
   <h2>The parts you'll hear about</h2>
@@ -785,9 +812,13 @@
   </ol>
 </section>
 
-<footer class="wrap">
-  <p>That's enough to start playing today. The full guide adds barre chords, fingerpicking, a week-by-week practice plan, and a bigger song list.</p>
-  <a class="cta" href="#" id="ctaLink">Get the full guide (PDF)</a>
+<footer class="wrap site-foot">
+  <div class="next-up">
+    <p class="ctl-label">Coming next</p>
+    <h2>The full First Chords guide</h2>
+    <p>A downloadable guide that picks up where this page ends: using a capo, your first barre chord, fingerpicking, a week-by-week practice plan and a bigger song list.</p>
+  </div>
+  <p class="made">First Chords · made by a guitarist, for beginners</p>
 </footer>
 
 <script>
@@ -816,24 +847,24 @@
     const w=100,h=120, left=14, top=14, sw=(w-2*left)/(strings-1), fh=(h-top-10)/fretsShown;
     let s=`<svg viewBox="0 0 ${w} ${h}">`;
     // nut
-    s+=`<rect x="${left-1}" y="${top-3}" width="${w-2*left+2}" height="3" fill="#3B2E24"/>`;
+    s+=`<rect x="${left-1}" y="${top-3}" width="${w-2*left+2}" height="3" class="cd-nut"/>`;
     for(let f=0;f<=fretsShown;f++){
       const y=top+f*fh;
-      s+=`<line x1="${left}" y1="${y}" x2="${w-left}" y2="${y}" stroke="#B9AE9C" stroke-width="${f===0?0:1}"/>`;
+      if(f>0) s+=`<line x1="${left}" y1="${y}" x2="${w-left}" y2="${y}" class="cd-fret"/>`;
     }
     for(let i=0;i<strings;i++){
       const x=left+i*sw;
-      s+=`<line x1="${x}" y1="${top}" x2="${x}" y2="${top+fretsShown*fh}" stroke="#8a7a66" stroke-width="0.9"/>`;
+      s+=`<line x1="${x}" y1="${top}" x2="${x}" y2="${top+fretsShown*fh}" class="cd-string"/>`;
     }
     frets.forEach((f,i)=>{
       const x=left+i*sw;
       if(f===null){
-        s+=`<text x="${x}" y="${top-6}" font-size="8" text-anchor="middle" fill="#B08968">✕</text>`;
+        s+=`<text x="${x}" y="${top-6}" class="cd-x">✕</text>`;
       } else if(f===0){
-        s+=`<circle cx="${x}" cy="${top-7}" r="3.4" fill="none" stroke="#7A8B6F" stroke-width="1.4"/>`;
+        s+=`<circle cx="${x}" cy="${top-7}" r="3.4" class="cd-open"/>`;
       } else {
         const y=top+(f-0.5)*fh;
-        s+=`<circle cx="${x}" cy="${y}" r="6.6" fill="#C9873F"/>`;
+        s+=`<circle cx="${x}" cy="${y}" r="6.6" class="cd-dot"/>`;
         if(fingers[i]) s+=`<text x="${x}" y="${y+3.1}" class="finger-num">${fingers[i]}</text>`;
       }
     });
@@ -845,7 +876,7 @@
   chords.forEach(c=>{
     const card=document.createElement('div');
     card.className='chord-card';
-    card.innerHTML=fretSVG(c.frets,c.fingers)+`<span class="name">${c.name}</span>`
+    card.innerHTML=`<button type="button" class="chord-face" id="face-${c.name}" aria-expanded="false" aria-label="${c.name} chord: show finger placement">`+fretSVG(c.frets,c.fingers)+`<span class="name">${c.name}</span></button>`
       +`<button type="button" class="chord-play" id="play-${c.name}" aria-label="Play the ${c.name} chord"><span class="tri" aria-hidden="true"></span>Play</button>`;
     const btn=card.querySelector('.chord-play'); let t=null;
     btn.addEventListener('click',e=>{
@@ -855,13 +886,14 @@
         t=setTimeout(()=>card.classList.remove('playing'),dur*1000);
       });
     });
-    card.addEventListener('click',()=>{
-      document.querySelectorAll('.chord-card').forEach(el=>{if(el!==card)el.classList.remove('open');});
+    card.addEventListener('click',e=>{
+      if(e.target.closest('.chord-play')) return;
+      document.querySelectorAll('.chord-card').forEach(el=>{if(el!==card){el.classList.remove('open'); el.querySelector('.chord-face').setAttribute('aria-expanded','false');}});
       document.querySelectorAll('.chord-note').forEach(n=>n.remove());
       const wasOpen=card.classList.contains('open');
-      card.classList.remove('open');
+      card.classList.remove('open'); card.querySelector('.chord-face').setAttribute('aria-expanded','false');
       if(!wasOpen){
-        card.classList.add('open');
+        card.classList.add('open'); card.querySelector('.chord-face').setAttribute('aria-expanded','true');
         const note=document.createElement('div');
         note.className='chord-note show';
         note.textContent=tips[c.name];
