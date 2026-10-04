@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>First Chords Plus</title>
+<meta name="description" content="First Chords Plus: the next steps after your first chords. Learn to read guitar tab and find the notes on the neck, with sound.">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#FAF6EC" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#1C1714" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M16 3C22 3 28 5.5 28 11C28 17.5 20 26 16 29C12 26 4 17.5 4 11C4 5.5 10 3 16 3Z' fill='%23C9873F'/%3E%3C/svg%3E">
+<link rel="preload" href="fonts/fraunces-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+  /* fonts are served from this site (Fraunces and Inter, SIL Open Font License) */
+  @font-face{font-family:'Fraunces'; font-style:normal; font-weight:400 700; font-display:swap; src:url(fonts/fraunces-latin.woff2) format('woff2');}
+  @font-face{font-family:'Inter'; font-style:normal; font-weight:400 600; font-display:swap; src:url(fonts/inter-latin.woff2) format('woff2');}
+  /* same tokens as the free guide: warm workshop paper in light, lamp-lit walnut in dark */
+  :root{
+    --paper:#FAF6EC; --card:#FFFFFF; --ink:#3B2E24; --ink-2:#4a3d30; --muted:#6b5c4c; --faint:#8a7a66;
+    --line:#B9AE9C; --rule:#D9CFBB; --hover:#F2EBDC; --miss:#C9BEA9;
+    --wood:#C9873F; --wood-deep:#b5762f; --sage:#7A8B6F; --on-accent:#FFFFFF;
+    --board:#3A2C24; --fret:#D4CEC2; --inlay:#EDE6D6; --bronze:#B98E52; --steel:#C9C4BA;
+    box-sizing:border-box;
+    padding-top:env(safe-area-inset-top,0px);
+    padding-bottom:env(safe-area-inset-bottom,0px);
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --paper:#1C1714; --card:#26201B; --ink:#EFE6D6; --ink-2:#DCCFBC; --muted:#BBAC96; --faint:#A0907A;
+      --line:#6E6152; --rule:#3E352D; --hover:#302822; --miss:#5C5146;
+      --wood:#D99A52; --wood-deep:#E6AC68; --sage:#9DB08F; --on-accent:#1C1714; color-scheme:dark;
+    }
+  }
+  :root[data-theme="dark"]{
+    --paper:#1C1714; --card:#26201B; --ink:#EFE6D6; --ink-2:#DCCFBC; --muted:#BBAC96; --faint:#A0907A;
+    --line:#6E6152; --rule:#3E352D; --hover:#302822; --miss:#5C5146;
+    --wood:#D99A52; --wood-deep:#E6AC68; --sage:#9DB08F; --on-accent:#1C1714; color-scheme:dark;
+  }
+  html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 20px); scroll-behavior:smooth;}
+  *{box-sizing:border-box;}
+  [hidden]{display:none !important;}
+  body{margin:0; background:var(--paper); color:var(--ink); font-family:'Inter',system-ui,sans-serif; -webkit-font-smoothing:antialiased;}
+  h1,h2,h3{font-family:'Fraunces',Georgia,serif; margin:0; font-weight:600;}
+  .wrap{max-width:720px; margin:0 auto; padding:0 24px;}
+  section.wrap{padding-block:64px;}
+  .divider{border:none; border-top:1px solid var(--rule); margin:0;}
+  h2{font-size:1.7rem; margin-bottom:6px;}
+  h3{font-size:1.15rem; margin:0 0 6px;}
+  .lede{color:var(--muted); margin:0 0 24px; font-size:0.98rem; line-height:1.55; max-width:62ch;}
+  p{line-height:1.55;}
+  .body-text{color:var(--ink-2); font-size:0.95rem; max-width:62ch; margin:0 0 14px;}
+  .ctl-label{font-size:0.75rem; font-weight:600; letter-spacing:.06em; text-transform:uppercase; color:var(--faint); margin:0 0 8px;}
+  :focus-visible{outline:2px solid var(--sage); outline-offset:2px;}
+
+  /* top bar */
+  .topbar{max-width:720px; margin:0 auto; padding:16px 24px 0; display:flex; align-items:center; justify-content:space-between; gap:12px;}
+  .back{font-size:0.88rem; font-weight:500; color:var(--muted); text-decoration:none;}
+  .back:hover{color:var(--ink);}
+  .plus-badge{font-size:0.72rem; font-weight:600; letter-spacing:.08em; text-transform:uppercase; color:var(--wood); border:1.4px solid var(--wood); border-radius:999px; padding:3px 10px;}
+
+  /* hero */
+  .hero.wrap{padding-block:56px 48px;}
+  .kicker{font-size:0.8rem; font-weight:600; letter-spacing:.12em; text-transform:uppercase; color:var(--wood); margin:0 0 14px;}
+  .hero h1{font-size:clamp(2.2rem,6vw,3.2rem); line-height:1.08; letter-spacing:-0.01em; margin-bottom:20px;}
+  .hero p{font-size:1.02rem; color:var(--muted); margin:0 0 14px; max-width:58ch; text-wrap:pretty;}
+  .hero p.first{color:var(--ink);}
+
+  /* contents */
+  .toc{list-style:none; margin:28px 0 0; padding:0; counter-reset:toc; border-top:1px solid var(--rule);}
+  .toc li{counter-increment:toc; display:grid; grid-template-columns:34px 1fr auto; gap:6px 10px; align-items:baseline; padding:12px 0; border-bottom:1px solid var(--rule);}
+  .toc li::before{content:counter(toc); font-family:'Fraunces',serif; font-weight:600; color:var(--line); font-variant-numeric:tabular-nums;}
+  .toc .t{font-family:'Fraunces',serif; font-weight:600; font-size:1.02rem;}
+  .toc a.t{color:var(--ink); text-decoration:none;}
+  .toc a.t:hover{color:var(--wood);}
+  .toc .d{grid-column:2; font-size:0.85rem; color:var(--faint);}
+  .toc .state{grid-row:1; grid-column:3; font-size:0.72rem; font-weight:600; letter-spacing:.05em; text-transform:uppercase; border-radius:999px; padding:2px 9px; white-space:nowrap;}
+  .state.ready{color:var(--on-accent); background:var(--sage);}
+  .state.soon{color:var(--faint); border:1px solid var(--rule);}
+
+  /* jump bar */
+  .jump{position:sticky; top:env(safe-area-inset-top,0px); z-index:10; background:var(--paper); border-bottom:1px solid var(--rule);}
+  .jump-inner{max-width:720px; margin:0 auto; padding:10px 24px; display:flex; gap:6px; overflow-x:auto; scrollbar-width:none;}
+  .jump-inner::-webkit-scrollbar{display:none;}
+  .jump a{flex:0 0 auto; font-size:0.85rem; font-weight:500; color:var(--muted); text-decoration:none; padding:6px 12px; border-radius:999px; border:1.4px solid transparent;}
+  .jump a:hover{color:var(--ink); border-color:var(--rule);}
+  .jump a[aria-current="true"]{background:var(--ink); color:var(--paper);}
+
+  /* cards and rules */
+  .card{background:var(--card); border:1.4px solid var(--rule); border-radius:12px; padding:20px; display:grid; gap:14px; margin:0 0 20px;}
+  .card > p{margin:0;}
+  .rules{list-style:none; margin:0 0 24px; padding:0; display:grid; grid-template-columns:1fr 1fr; gap:12px;}
+  @media (max-width:560px){.rules{grid-template-columns:1fr;}}
+  .rules li{background:var(--card); border:1.4px solid var(--rule); border-radius:10px; padding:14px 16px; font-size:0.9rem; color:var(--ink-2); line-height:1.5;}
+  .rules strong{display:block; font-family:'Fraunces',serif; font-weight:600; font-size:1rem; color:var(--ink); margin-bottom:2px;}
+  .note-box{border-left:3px solid var(--sage); background:var(--card); border-radius:6px; padding:12px 16px; font-size:0.9rem; color:var(--ink-2); line-height:1.5; margin:0 0 24px; max-width:62ch;}
+  .note-box strong{color:var(--ink);}
+
+  /* tab */
+  .tab-scroll{overflow-x:auto; padding-bottom:4px;}
+  .tab{display:inline-flex; align-items:stretch; border-left:2px solid var(--ink); border-right:2px solid var(--ink); padding:6px 0; min-width:100%;}
+  .tab-labels,.tab-col{display:grid; grid-template-rows:repeat(6,26px);}
+  .tab-labels{padding:0 6px 0 8px;}
+  .tab-labels span{display:flex; align-items:center; font-family:'Fraunces',serif; font-weight:600; font-size:0.9rem; color:var(--faint);}
+  .tab-cells{display:flex; flex:1;}
+  .tab-col{flex:1 0 34px; min-width:34px; background:none; border:none; padding:0; cursor:pointer; color:var(--ink); border-radius:6px; font:inherit;}
+  .tab-col:hover{background:var(--hover);}
+  .tab-col.now{background:var(--hover);}
+  .tab-col.now .num{color:var(--wood);}
+  .tab-cell{position:relative; display:flex; align-items:center; justify-content:center;}
+  .tab-cell::before{content:""; position:absolute; left:0; right:0; top:50%; border-top:1.4px solid var(--line);}
+  .tab-cells .tab-col:first-child .tab-cell::before{left:-6px;}
+  .tab-labels span{position:relative;}
+  .num{position:relative; font-family:'Inter',sans-serif; font-weight:600; font-size:0.95rem; font-variant-numeric:tabular-nums; background:var(--card); padding:0 3px; line-height:1;}
+  .tab-col:hover .num,.tab-col.now .num{background:var(--hover);}
+  .tab-head{display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap;}
+  .tab-caption{margin:0; font-size:0.85rem; color:var(--faint);}
+
+  /* fretboard */
+  .fb-scroll{overflow-x:auto;}
+  .fb{display:block; width:100%; min-width:560px; height:auto;}
+  .fb .board{fill:var(--board);}
+  .fb .fretline{stroke:var(--fret); stroke-width:2.4;}
+  .fb .nut{fill:#F6EEDB; stroke:var(--ink); stroke-width:1;}
+  .fb .inlay{fill:var(--inlay);}
+  .fb .str-wound{stroke:var(--bronze);}
+  .fb .str-plain{stroke:var(--steel);}
+  .fb .fnum{font-family:'Inter',sans-serif; font-size:11px; fill:var(--faint); text-anchor:middle; font-variant-numeric:tabular-nums;}
+  .fb .slabel{font-family:'Fraunces',serif; font-weight:600; font-size:14px; fill:var(--faint); text-anchor:middle;}
+  .fb .hit{fill:transparent; cursor:pointer;}
+  .fb .spot{pointer-events:none;}
+  .fb .spot circle{fill:var(--card); stroke:var(--line); stroke-width:1.2;}
+  .fb .spot text{font-family:'Inter',sans-serif; font-weight:600; font-size:11px; fill:var(--ink); text-anchor:middle;}
+  .fb .spot.sharp circle{fill:var(--paper); stroke-dasharray:2 2;}
+  .fb .spot.sharp text{font-size:9.5px; fill:var(--muted);}
+  .fb .spot.on circle{fill:var(--wood); stroke:var(--wood);}
+  .fb .spot.on text{fill:var(--on-accent);}
+  .fb .spot.good circle{fill:var(--sage); stroke:var(--sage);}
+  .fb .spot.good text{fill:var(--on-accent);}
+  .fb .spot.focus-row circle{stroke:var(--wood); stroke-width:1.6;}
+  .fb-readout{margin:0; font-size:0.9rem; color:var(--ink-2); min-height:1.5em;}
+  .fb-readout strong{font-family:'Fraunces',serif; font-size:1.1rem; color:var(--ink);}
+
+  /* controls */
+  .seg{display:flex; flex-wrap:wrap; gap:8px;}
+  .seg button{font:500 0.86rem 'Inter',system-ui,sans-serif; color:var(--ink); background:var(--paper); border:1.4px solid var(--rule); border-radius:999px; padding:7px 14px; cursor:pointer;}
+  .seg button:hover{border-color:var(--wood);}
+  .seg button[aria-pressed="true"]{background:var(--ink); border-color:var(--ink); color:var(--paper);}
+  .btn{display:inline-flex; align-items:center; gap:9px; font:600 0.9rem 'Inter',system-ui,sans-serif; background:var(--ink); color:var(--paper); border:none; border-radius:999px; padding:10px 20px; cursor:pointer;}
+  .btn:hover{background:var(--muted);}
+  .btn .ico{width:0; height:0; border-style:solid; border-width:6px 0 6px 10px; border-color:transparent transparent transparent var(--paper);}
+  .btn.on .ico{width:10px; height:10px; border:none; background:var(--paper); border-radius:1px;}
+  .btn-quiet{font:600 0.86rem 'Inter',system-ui,sans-serif; color:var(--ink); background:var(--paper); border:1.4px solid var(--rule); border-radius:999px; padding:8px 16px; cursor:pointer;}
+  .btn-quiet:hover{border-color:var(--wood);}
+
+  /* alphabet strip */
+  .alpha{display:grid; grid-template-columns:repeat(12,minmax(0,1fr)); gap:4px; margin:0 0 8px;}
+  .alpha span{display:flex; align-items:center; justify-content:center; height:44px; border-radius:8px; font-family:'Fraunces',serif; font-weight:600; font-size:1rem; background:var(--card); border:1.4px solid var(--rule);}
+  .alpha span.sh{background:var(--paper); border-style:dashed; color:var(--muted); font-family:'Inter',sans-serif; font-size:0.72rem; font-weight:600;}
+  .alpha-cap{font-size:0.82rem; color:var(--faint); margin:0 0 24px;}
+  @media (max-width:560px){.alpha span{height:38px; font-size:0.9rem;} .alpha span.sh{font-size:0.6rem;}}
+
+  /* quiz */
+  .quiz{display:flex; align-items:center; gap:14px; flex-wrap:wrap;}
+  .quiz-q{font-family:'Fraunces',serif; font-weight:600; font-size:1.15rem; margin:0;}
+  .quiz-q em{font-style:normal; color:var(--wood);}
+  .quiz-score{font-size:0.85rem; color:var(--faint); margin:0; font-variant-numeric:tabular-nums;}
+  .quiz-msg{font-size:0.9rem; margin:0; min-height:1.4em; color:var(--ink-2);}
+  .quiz-msg.ok{color:var(--sage);}
+
+  /* coming soon */
+  .soon-list{list-style:none; margin:0; padding:0; display:grid; grid-template-columns:1fr 1fr; gap:10px;}
+  @media (max-width:560px){.soon-list{grid-template-columns:1fr;}}
+  .soon-list li{border:1.4px dashed var(--rule); border-radius:10px; padding:12px 14px; font-size:0.88rem; color:var(--muted);}
+  .soon-list strong{display:block; font-family:'Fraunces',serif; color:var(--ink); font-size:0.98rem;}
+
+  footer.wrap{padding-block:32px 64px; text-align:center;}
+  .made{margin:0; font-size:0.85rem; color:var(--faint);}
+  .made strong{color:var(--ink); font-weight:600;}
+  @media (max-width:560px){.wrap,.topbar{padding-left:16px; padding-right:16px;} .jump-inner{padding:8px 16px;} .card{padding:16px;}}
+  @media (prefers-reduced-motion:reduce){*{transition:none !important; animation:none !important;} html{scroll-behavior:auto;}}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <a class="back" href="index.html">← First Chords (free guide)</a>
+  <span class="plus-badge">Plus</span>
+</div>
+
+<header class="hero wrap">
+  <p class="kicker">First Chords Plus</p>
+  <h1>Your next steps on guitar.</h1>
+  <p class="first">You can already play six chords, keep a steady strum and get through a few real songs. That's the hardest part done, and Plus picks up exactly where the free guide ends.</p>
+  <p>The free guide gets your hands playing. These pages help you understand what you're playing: how to read tab, where the notes live on the neck, and why some chords sound bright and others sad. That understanding is what lets you learn new songs on your own, instead of copying one shape at a time.</p>
+  <p>Each section is short, hands-on and builds on the one before. Take them in order, at your own pace.</p>
+
+  <ol class="toc" aria-label="What's inside Plus">
+    <li><span class="t">Left-hand practice</span><span class="state soon">Coming soon</span><span class="d">Finger strength, clean fretting and faster chord changes</span></li>
+    <li><a class="t" href="#tabs">Reading tabs</a><span class="state ready">Ready</span><span class="d">Read a tab, tap any number to hear it and see it on the neck</span></li>
+    <li><a class="t" href="#neck">The neck and its notes</a><span class="state ready">Ready</span><span class="d">The musical alphabet and the notes on the two lowest strings</span></li>
+    <li><span class="t">Major and minor chords</span><span class="state soon">Coming soon</span><span class="d">Why one note makes a chord bright or sad</span></li>
+    <li><span class="t">Capo</span><span class="state soon">Coming soon</span><span class="d">Same shapes, higher pitch, more songs</span></li>
+    <li><span class="t">Barre chords</span><span class="state soon">Coming soon</span><span class="d">An easy F first, then the full F and Bm</span></li>
+    <li><span class="t">Fingerpicking</span><span class="state soon">Coming soon</span><span class="d">One or two simple patterns over chords you know</span></li>
+    <li><span class="t">Practice plan</span><span class="state soon">Coming soon</span><span class="d">Four weeks of 15 minutes a day</span></li>
+    <li><span class="t">Song library</span><span class="state soon">Coming soon</span><span class="d">About 20 more songs, including capo songs</span></li>
+  </ol>
+</header>
+
+<nav class="jump" aria-label="Jump to a section">
+  <div class="jump-inner">
+    <a href="#tabs">Reading tabs</a>
+    <a href="#neck">The neck</a>
+    <a href="#next">Coming next</a>
+  </div>
+</nav>
+
+<!-- ============ READING TABS ============ -->
+<section class="wrap" id="tabs">
+  <h2>Reading tabs</h2>
+  <p class="lede">Tab (short for tablature) is the simplest way guitar music is written down. It doesn't show notes or rhythm. It shows where to put your fingers: which string, which fret. Most songs, riffs and solos you'll find online are written in tab.</p>
+
+  <ul class="rules">
+    <li><strong>Six lines, six strings</strong>The top line is the thinnest string (high e), the bottom line the thickest (low E).</li>
+    <li><strong>Numbers are frets</strong>A 3 on a line means: press that string at the 3rd fret and pick it.</li>
+    <li><strong>0 means open</strong>Pick the string without pressing anything.</li>
+    <li><strong>Read left to right</strong>Play the numbers in order. Numbers stacked on top of each other are played together, as a chord.</li>
+  </ul>
+
+  <p class="note-box"><strong>Heads-up:</strong> tab is drawn upside down compared with what you see when you look down at your guitar. Looking down, the thick low E is closest to you, at the top. In tab, it's the bottom line. It feels odd for a day or two, then it clicks.</p>
+
+  <div class="card">
+    <div class="tab-head">
+      <h3>1. The open strings</h3>
+      <p class="tab-caption">Tap a number to hear it</p>
+    </div>
+    <p class="body-text">All zeros: every string played open, from the thickest to the thinnest. Notice how the 0 climbs from the bottom line to the top.</p>
+    <div class="tab-scroll"><div class="tab" id="tab1"></div></div>
+  </div>
+
+  <div class="card">
+    <div class="tab-head">
+      <h3>2. A first melody</h3>
+      <button type="button" class="btn" id="playMelody"><span class="ico" aria-hidden="true"></span><span class="txt">Play along</span></button>
+    </div>
+    <p class="body-text">“Ode to Joy” by Beethoven, on just the top two strings. You only need two fingers: index on fret 1, ring finger on fret 3. Tap any number, or press Play and follow the highlight.</p>
+    <div class="tab-scroll"><div class="tab" id="tab2"></div></div>
+  </div>
+
+  <div class="card">
+    <div class="tab-head">
+      <h3>3. Chords in tab</h3>
+      <p class="tab-caption">Tap a column to strum it</p>
+    </div>
+    <p class="body-text">Stacked numbers are a chord. Here are G, C and D from the free guide. Compare each column with the chord diagram you already know: same frets, just written sideways. A string with no number isn't played.</p>
+    <div class="tab-scroll"><div class="tab" id="tab3"></div></div>
+  </div>
+
+  <div class="card">
+    <h3>Where that is on the neck</h3>
+    <p class="fb-readout" id="tabReadout">Tap anything in the tabs above and it lights up here.</p>
+    <div class="fb-scroll"><svg class="fb" id="tabBoard" viewBox="0 0 780 220" role="img" aria-label="Fretboard showing the notes from the tab you tapped"></svg></div>
+  </div>
+
+  <p class="note-box"><strong>Tab or chord chart?</strong> Chord charts tell you which chord to hold and leave the strumming to you. Tab tells you exactly which strings to play, one at a time or together. Songs often use both: chord charts for strumming parts, tab for riffs and intros.</p>
+</section>
+
+<hr class="divider">
+
+<!-- ============ THE NECK ============ -->
+<section class="wrap" id="neck">
+  <h2>The neck and its notes</h2>
+  <p class="lede">Every fret is a note with a name. You don't need to memorize the whole neck. Knowing how the names work, and the notes on the two lowest strings, gets you a long way: it's how you'll find barre chords later.</p>
+
+  <h3>The musical alphabet</h3>
+  <p class="body-text">Music uses only seven letters: A B C D E F G, then it starts again at A. Between most letters sits one extra note, called a sharp (♯) or a flat (♭). A♯ and B♭ are the same note with two names.</p>
+  <div class="alpha" aria-label="The twelve notes from A to G sharp">
+    <span>A</span><span class="sh">A♯ B♭</span><span>B</span><span>C</span><span class="sh">C♯ D♭</span><span>D</span><span class="sh">D♯ E♭</span><span>E</span><span>F</span><span class="sh">F♯ G♭</span><span>G</span><span class="sh">G♯ A♭</span>
+  </div>
+  <p class="alpha-cap">Twelve notes in all. Note that B–C and E–F have nothing in between.</p>
+
+  <ul class="rules">
+    <li><strong>One fret = one step</strong>Moving up one fret moves one box along the alphabet above. Open A string, 1st fret A♯, 2nd fret B, 3rd fret C.</li>
+    <li><strong>The 12th fret starts over</strong>Twelve frets up, you're back at the same note as the open string, just higher. That's why the 12th fret has a double dot.</li>
+  </ul>
+
+  <div class="card">
+    <div class="tab-head">
+      <h3>Explore the neck</h3>
+      <div class="seg" role="group" aria-label="Which notes to show" id="showPick">
+        <button type="button" id="show-natural" data-show="natural" aria-pressed="true">Letters only</button>
+        <button type="button" id="show-all" data-show="all" aria-pressed="false">All notes</button>
+        <button type="button" id="show-none" data-show="none" aria-pressed="false">Hide names</button>
+      </div>
+    </div>
+    <p class="fb-readout" id="neckReadout">Tap any spot to hear it and see its name. Start with the bottom two strings, low E and A, outlined in orange.</p>
+    <div class="fb-scroll"><svg class="fb" id="neckBoard" viewBox="0 0 780 220" role="img" aria-label="Interactive fretboard with note names, frets 0 to 12"></svg></div>
+  </div>
+
+  <div class="card">
+    <h3>Find the note</h3>
+    <p class="body-text">A quick game on the low E and A strings. Hide the names first if you want a real challenge.</p>
+    <div class="quiz">
+      <p class="quiz-q" id="quizQ">Ready when you are.</p>
+      <button type="button" class="btn-quiet" id="quizStart">Start</button>
+    </div>
+    <p class="quiz-msg" id="quizMsg" aria-live="polite"></p>
+    <p class="quiz-score" id="quizScore"></p>
+  </div>
+</section>
+
+<hr class="divider">
+
+<section class="wrap" id="next">
+  <h2>Coming next in Plus</h2>
+  <p class="lede">These sections are on their way and will appear here as they're ready.</p>
+  <ul class="soon-list">
+    <li><strong>Left-hand practice</strong>Finger exercises and a chord-change drill</li>
+    <li><strong>Major and minor chords</strong>Hear the one note that changes</li>
+    <li><strong>Capo</strong>Move your chords higher with one clamp</li>
+    <li><strong>Barre chords</strong>An easy F, then the full F and Bm</li>
+    <li><strong>Fingerpicking</strong>A simple pattern to start</li>
+    <li><strong>Practice plan and songs</strong>Four weeks, about 20 more songs</li>
+  </ul>
+</section>
+
+<footer class="wrap">
+  <p class="made"><strong>First Chords</strong> · made by a guitarist, for beginners</p>
+</footer>
+
+<script src="assets/guitar-sound.js"></script>
+<script>
+(function(){
+  const S=window.FCSound;
+  const LABELS=['E','A','D','G','B','e'];            // string index 0 = low E .. 5 = high e
+  const OPEN_MIDI=[40,45,50,55,59,64];
+  const NAMES=['C','C♯','D','D♯','E','F','F♯','G','G♯','A','A♯','B'];
+  const FULL={'C♯':'C♯ / D♭','D♯':'D♯ / E♭','F♯':'F♯ / G♭','G♯':'G♯ / A♭','A♯':'A♯ / B♭'};
+  const STRING_NAME=['low E','A','D','G','B','high e'];
+  const noteName=(s,f)=>NAMES[(OPEN_MIDI[s]+f)%12];
+  const ordinal=n=>n+(n%10===1&&n!==11?'st':n%10===2&&n!==12?'nd':n%10===3&&n!==13?'rd':'th');
+  const where=(s,f)=>f===0?`${STRING_NAME[s]} string, open`:`${STRING_NAME[s]} string, ${ordinal(f)} fret`;
+
+  // ---------- fretboard (tab orientation: high e on top) ----------
+  const NUT=64, END=760, TOP=34, GAP=28, FRETS=12;
+  const L=(END-NUT)/(1-Math.pow(2,-FRETS/12));
+  const fx=n=>NUT+L*(1-Math.pow(2,-n/12));
+  const sy=s=>TOP+(5-s)*GAP;                          // s = 0 low E (bottom) .. 5 high e (top)
+  const spotX=f=>f===0?NUT-26:(fx(f-1)+fx(f))/2;
+  function buildBoard(svg,{onTap,focus}){
+    const ns='http://www.w3.org/2000/svg'; let h='';
+    h+=`<rect class="board" x="${NUT}" y="${TOP-14}" width="${END-NUT}" height="${GAP*5+28}" rx="3"/>`;
+    for(let n=1;n<=FRETS;n++) h+=`<line class="fretline" x1="${fx(n)}" y1="${TOP-14}" x2="${fx(n)}" y2="${TOP+GAP*5+14}"/>`;
+    [3,5,7,9].forEach(n=>h+=`<circle class="inlay" cx="${spotX(n)}" cy="${TOP+GAP*2.5}" r="5"/>`);
+    h+=`<circle class="inlay" cx="${spotX(12)}" cy="${TOP+GAP*1.5}" r="5"/><circle class="inlay" cx="${spotX(12)}" cy="${TOP+GAP*3.5}" r="5"/>`;
+    h+=`<rect class="nut" x="${NUT-5}" y="${TOP-16}" width="7" height="${GAP*5+32}" rx="2"/>`;
+    const widths=[3,2.6,2.2,1.8,1.3,1.1];
+    for(let s=0;s<6;s++){
+      h+=`<line class="${s<4?'str-wound':'str-plain'}" x1="${NUT-40}" y1="${sy(s)}" x2="${END}" y2="${sy(s)}" stroke-width="${widths[s]}"/>`;
+      h+=`<text class="slabel" x="14" y="${sy(s)+5}">${LABELS[s]}</text>`;
+    }
+    for(let n=0;n<=FRETS;n++) h+=`<text class="fnum" x="${spotX(n)}" y="${TOP+GAP*5+32}">${n}</text>`;
+    for(let s=0;s<6;s++) for(let f=0;f<=FRETS;f++){
+      const nm=noteName(s,f), sharp=nm.length>1;
+      h+=`<g class="spot${sharp?' sharp':''}${focus&&focus.includes(s)?' focus-row':''}" data-s="${s}" data-f="${f}"><circle cx="${spotX(f)}" cy="${sy(s)}" r="11"/><text x="${spotX(f)}" y="${sy(s)+4}">${nm}</text></g>`;
+    }
+    for(let s=0;s<6;s++) for(let f=0;f<=FRETS;f++){
+      const x0=f===0?NUT-46:fx(f-1), x1=f===0?NUT-4:fx(f);
+      h+=`<rect class="hit" x="${x0}" y="${sy(s)-GAP/2}" width="${x1-x0}" height="${GAP}" data-s="${s}" data-f="${f}"><title>${where(s,f)}</title></rect>`;
+    }
+    svg.innerHTML=h;
+    if(onTap) svg.addEventListener('click',e=>{ const r=e.target.closest('.hit'); if(r) onTap(+r.dataset.s,+r.dataset.f); });
+    const spots=[...svg.querySelectorAll('.spot')];
+    const spot=(s,f)=>spots.find(g=>+g.dataset.s===s&&+g.dataset.f===f);
+    return {
+      spots, spot,
+      show(mode,onlyMarked){ spots.forEach(g=>{ const sharp=g.classList.contains('sharp'); const vis=onlyMarked?g.classList.contains('on')||g.classList.contains('good'):(mode==='all'||(mode==='natural'&&!sharp)); g.style.display=vis?'':'none'; }); },
+      mark(list,cls='on'){ spots.forEach(g=>g.classList.remove(cls)); list.forEach(([s,f])=>{ const g=spot(s,f); if(g){ g.classList.add(cls); g.style.display=''; } }); },
+    };
+  }
+
+  // ---------- tab renderer ----------
+  // column = array of [string, fret] pairs
+  function buildTab(el,cols,onCol){
+    let lab='<div class="tab-labels" aria-hidden="true">'+[5,4,3,2,1,0].map(s=>`<span>${LABELS[s]}</span>`).join('')+'</div>';
+    let cells='<div class="tab-cells">';
+    cols.forEach((c,i)=>{
+      const desc=c.map(([s,f])=>where(s,f)).join(', ');
+      cells+=`<button type="button" class="tab-col" data-i="${i}" aria-label="${desc}">`;
+      for(const s of [5,4,3,2,1,0]){ const hit=c.find(p=>p[0]===s); cells+=`<span class="tab-cell">${hit?`<span class="num">${hit[1]}</span>`:''}</span>`; }
+      cells+='</button>';
+    });
+    el.innerHTML=lab+cells+'</div>';
+    const btns=[...el.querySelectorAll('.tab-col')];
+    btns.forEach((b,i)=>b.addEventListener('click',()=>onCol(i,b)));
+    return btns;
+  }
+
+  // ---------- Reading tabs ----------
+  const tabBoard=buildBoard(document.getElementById('tabBoard'),{});
+  tabBoard.show('natural',true);
+  const tabReadout=document.getElementById('tabReadout');
+  function showOnBoard(col,label){
+    tabBoard.mark(col); tabBoard.show('natural',true);
+    tabReadout.innerHTML=label?`<strong>${label}</strong> · `+col.map(([s,f])=>where(s,f)).join(', '):
+      col.map(([s,f])=>`<strong>${noteName(s,f)}</strong> · ${where(s,f)}`).join('<br>');
+  }
+  function flash(btn){ btn.classList.add('now'); setTimeout(()=>btn.classList.remove('now'),350); }
+
+  const T1=[[[0,0]],[[1,0]],[[2,0]],[[3,0]],[[4,0]],[[5,0]]];
+  buildTab(document.getElementById('tab1'),T1,(i,b)=>{ S.note(T1[i][0][0],0); flash(b); showOnBoard(T1[i]); });
+
+  // Ode to Joy (Beethoven, public domain) on the top two strings: E E F G G F E D C C D E E D D
+  const ODE=[[5,0],[5,0],[5,1],[5,3],[5,3],[5,1],[5,0],[4,3],[4,1],[4,1],[4,3],[5,0],[5,0],[4,3],[4,3]].map(p=>[p]);
+  const odeBtns=buildTab(document.getElementById('tab2'),ODE,(i,b)=>{ S.note(ODE[i][0][0],ODE[i][0][1]); flash(b); showOnBoard(ODE[i]); });
+  const melodyBtn=document.getElementById('playMelody'); let melodyTimers=[];
+  function stopMelody(){ melodyTimers.forEach(clearTimeout); melodyTimers=[]; odeBtns.forEach(b=>b.classList.remove('now')); melodyBtn.classList.remove('on'); melodyBtn.querySelector('.txt').textContent='Play along'; }
+  melodyBtn.addEventListener('click',()=>{
+    if(melodyTimers.length){ stopMelody(); return; }
+    S.ctx(); const beat=0.5;
+    ODE.forEach((c,i)=>{
+      const [s,f]=c[0];
+      const t=i*beat+(i===13?0.25:0);   // dotted "E. D" near the end
+      S.note(s,f,t+0.05);
+      melodyTimers.push(setTimeout(()=>{ odeBtns.forEach((b,j)=>b.classList.toggle('now',j===i)); showOnBoard(c); },(t+0.05)*1000));
+    });
+    melodyTimers.push(setTimeout(stopMelody,(ODE.length*beat+0.6)*1000));
+    melodyBtn.classList.add('on'); melodyBtn.querySelector('.txt').textContent='Stop';
+  });
+
+  const CHORDS3=[{name:'G',frets:[3,2,0,0,0,3]},{name:'C',frets:[null,3,2,0,1,0]},{name:'D',frets:[null,null,0,2,3,2]}];
+  const T3=CHORDS3.map(c=>c.frets.map((f,s)=>f===null?null:[s,f]).filter(Boolean));
+  buildTab(document.getElementById('tab3'),T3,(i,b)=>{ S.strum(CHORDS3[i].frets); flash(b); showOnBoard(T3[i],CHORDS3[i].name+' chord'); });
+
+  // ---------- The neck ----------
+  const FOCUS=[0,1];
+  const neck=buildBoard(document.getElementById('neckBoard'),{focus:FOCUS,onTap:(s,f)=>neckTap(s,f)});
+  let showMode='natural'; neck.show(showMode);
+  const neckReadout=document.getElementById('neckReadout');
+  document.querySelectorAll('#showPick button').forEach(b=>b.addEventListener('click',()=>{
+    showMode=b.dataset.show; document.querySelectorAll('#showPick button').forEach(x=>x.setAttribute('aria-pressed',x===b));
+    neck.show(showMode); neck.spots.forEach(g=>{ if(g.classList.contains('on')||g.classList.contains('good')) g.style.display=''; });
+  }));
+  function neckTap(s,f){
+    S.note(s,f);
+    if(quiz.active){ quizAnswer(s,f); return; }
+    neck.mark([[s,f]]); neck.show(showMode); neck.mark([[s,f]]);
+    const nm=noteName(s,f);
+    neckReadout.innerHTML=`<strong>${FULL[nm]||nm}</strong> · ${where(s,f)}`+(f===12?' · same note as the open string, one octave higher':'');
+  }
+
+  // find-the-note quiz on the low E and A strings, letters only
+  const quiz={active:false,target:null,streak:0,best:0};
+  try{ quiz.best=+localStorage.getItem('firstchords.plus.noteBest')||0; }catch(e){}
+  const qQ=document.getElementById('quizQ'), qMsg=document.getElementById('quizMsg'), qScore=document.getElementById('quizScore'), qBtn=document.getElementById('quizStart');
+  function scoreText(){ qScore.textContent=`In a row: ${quiz.streak}`+(quiz.best?` · Best: ${quiz.best}`:''); }
+  function nextQuestion(){
+    const letters=['A','B','C','D','E','F','G'];
+    let s,nm; do{ s=FOCUS[Math.floor(Math.random()*FOCUS.length)]; nm=letters[Math.floor(Math.random()*7)]; }while(quiz.target&&quiz.target.s===s&&quiz.target.nm===nm);
+    quiz.target={s,nm};
+    qQ.innerHTML=`Find <em>${nm}</em> on the ${STRING_NAME[s]} string`;
+    neck.mark([],'good'); neck.mark([]); neck.show(showMode);
+  }
+  function quizAnswer(s,f){
+    const t=quiz.target, nm=noteName(s,f);
+    if(s===t.s&&nm===t.nm){
+      quiz.streak++; if(quiz.streak>quiz.best){ quiz.best=quiz.streak; try{ localStorage.setItem('firstchords.plus.noteBest',quiz.best); }catch(e){} }
+      qMsg.className='quiz-msg ok'; qMsg.textContent=`Yes! ${t.nm} is at the ${f===0?'open string':ordinal(f)+' fret'}.`;
+      neck.mark([[s,f]],'good'); scoreText(); setTimeout(()=>{ if(quiz.active) nextQuestion(); },1100);
+    }else{
+      quiz.streak=0;
+      const answers=[]; for(let ff=0;ff<=12;ff++) if(noteName(t.s,ff)===t.nm) answers.push([t.s,ff]);
+      qMsg.className='quiz-msg'; qMsg.textContent=`That's ${FULL[nm]||nm} on the ${STRING_NAME[s]} string. ${t.nm} is shown in green. Try the next one.`;
+      neck.mark(answers,'good'); scoreText(); setTimeout(()=>{ if(quiz.active) nextQuestion(); },2200);
+    }
+  }
+  qBtn.addEventListener('click',()=>{
+    if(quiz.active){ quiz.active=false; qBtn.textContent='Start'; qQ.textContent='Ready when you are.'; qMsg.textContent=''; neck.mark([],'good'); neck.show(showMode); return; }
+    quiz.active=true; quiz.streak=0; qBtn.textContent='Stop'; qMsg.textContent=''; scoreText(); nextQuestion();
+  });
+  if(quiz.best) scoreText();
+
+  // ---------- jump bar highlight ----------
+  const links=[...document.querySelectorAll('.jump a')], secs=links.map(a=>document.querySelector(a.getAttribute('href')));
+  function mark(){ const y=scrollY+120; let cur=-1; secs.forEach((s,i)=>{ if(s.offsetTop<=y) cur=i; }); links.forEach((a,i)=>i===cur?a.setAttribute('aria-current','true'):a.removeAttribute('aria-current')); }
+  addEventListener('scroll',mark,{passive:true}); mark();
+})();
+</script>
+</body>
+</html>
