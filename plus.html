@@ -59,25 +59,6 @@
   .back:hover{color:var(--ink);}
   .plus-badge{font-size:0.72rem; font-weight:600; letter-spacing:.08em; text-transform:uppercase; color:var(--wood); border:1.4px solid var(--wood); border-radius:999px; padding:3px 10px;}
 
-  /* hero */
-  .hero.wrap{padding-block:56px 48px;}
-  .kicker{font-size:0.8rem; font-weight:600; letter-spacing:.12em; text-transform:uppercase; color:var(--wood); margin:0 0 14px;}
-  .hero h1{font-size:clamp(2.2rem,6vw,3.2rem); line-height:1.08; letter-spacing:-0.01em; margin-bottom:20px;}
-  .hero p{font-size:1.02rem; color:var(--muted); margin:0 0 14px; max-width:58ch; text-wrap:pretty;}
-  .hero p.first{color:var(--ink);}
-
-  /* contents */
-  .toc{list-style:none; margin:28px 0 0; padding:0; counter-reset:toc; border-top:1px solid var(--rule);}
-  .toc li{counter-increment:toc; display:grid; grid-template-columns:34px 1fr auto; gap:6px 10px; align-items:baseline; padding:12px 0; border-bottom:1px solid var(--rule);}
-  .toc li::before{content:counter(toc); font-family:'Fraunces',serif; font-weight:600; color:var(--line); font-variant-numeric:tabular-nums;}
-  .toc .t{font-family:'Fraunces',serif; font-weight:600; font-size:1.02rem;}
-  .toc a.t{color:var(--ink); text-decoration:none;}
-  .toc a.t:hover{color:var(--wood);}
-  .toc .d{grid-column:2; font-size:0.85rem; color:var(--faint);}
-  .toc .state{grid-row:1; grid-column:3; font-size:0.72rem; font-weight:600; letter-spacing:.05em; text-transform:uppercase; border-radius:999px; padding:2px 9px; white-space:nowrap;}
-  .state.ready{color:var(--on-accent); background:var(--sage);}
-  .state.soon{color:var(--faint); border:1px solid var(--rule);}
-
   /* jump bar */
   .jump{position:sticky; top:env(safe-area-inset-top,0px); z-index:10; background:var(--paper); border-bottom:1px solid var(--rule);}
   .jump-inner{max-width:720px; margin:0 auto; padding:10px 24px; display:flex; gap:6px; overflow-x:auto; scrollbar-width:none;}
@@ -174,6 +155,14 @@
   .soon-list li{border:1.4px dashed var(--rule); border-radius:10px; padding:12px 14px; font-size:0.88rem; color:var(--muted);}
   .soon-list strong{display:block; font-family:'Fraunces',serif; color:var(--ink); font-size:0.98rem;}
 
+  /* lessons */
+  .kicker{font-size:0.8rem; font-weight:600; letter-spacing:.12em; text-transform:uppercase; color:var(--wood); margin:0 0 8px;}
+  .lesson-h{font-size:clamp(1.9rem,5vw,2.4rem); line-height:1.1; margin-bottom:10px;}
+  .sub{margin-top:44px; padding-top:28px; border-top:1px solid var(--rule);}
+  .sub-n{margin:0 0 4px; font-family:'Fraunces',serif; font-weight:600; font-size:0.95rem; color:var(--line); font-variant-numeric:tabular-nums;}
+  .sub-h{font-size:1.45rem; margin:0 0 6px;}
+  .topbar{padding-bottom:8px;}
+
   /* practice task */
   .practice{border-color:var(--wood);}
   .finger-map{list-style:none; margin:0; padding:0; display:flex; flex-wrap:wrap; gap:8px;}
@@ -203,37 +192,24 @@
   <span class="plus-badge">Plus</span>
 </div>
 
-<header class="hero wrap">
-  <p class="kicker">First Chords Plus</p>
-  <h1>Your next steps on guitar.</h1>
-  <p class="first">You can already play six chords, keep a steady strum and get through a few real songs. That's the hardest part done, and Plus picks up exactly where the free guide ends.</p>
-  <p>The free guide gets your hands playing. These pages help you understand what you're playing: how to read tab, where the notes live on the neck, and why some chords sound bright and others sad. That understanding is what lets you learn new songs on your own, instead of copying one shape at a time.</p>
-  <p>Each section is short, hands-on and builds on the one before. Take them in order, at your own pace.</p>
-
-  <ol class="toc" aria-label="What's inside Plus">
-    <li><span class="t">Left-hand practice</span><span class="state soon">Coming soon</span><span class="d">Finger strength, clean fretting and faster chord changes</span></li>
-    <li><a class="t" href="#tabs">Reading tabs</a><span class="state ready">Ready</span><span class="d">Read a tab, tap any number to hear it and see it on the neck</span></li>
-    <li><a class="t" href="#neck">The neck and its notes</a><span class="state ready">Ready</span><span class="d">The musical alphabet and the notes on the two lowest strings</span></li>
-    <li><span class="t">Major and minor chords</span><span class="state soon">Coming soon</span><span class="d">Why one note makes a chord bright or sad</span></li>
-    <li><span class="t">Capo</span><span class="state soon">Coming soon</span><span class="d">Same shapes, higher pitch, more songs</span></li>
-    <li><span class="t">Barre chords</span><span class="state soon">Coming soon</span><span class="d">An easy F first, then the full F and Bm</span></li>
-    <li><span class="t">Fingerpicking</span><span class="state soon">Coming soon</span><span class="d">One or two simple patterns over chords you know</span></li>
-    <li><span class="t">Practice plan</span><span class="state soon">Coming soon</span><span class="d">Four weeks of 15 minutes a day</span></li>
-    <li><span class="t">Song library</span><span class="state soon">Coming soon</span><span class="d">About 20 more songs, including capo songs</span></li>
-  </ol>
-</header>
 
 <nav class="jump" aria-label="Jump to a section">
   <div class="jump-inner">
-    <a href="#tabs">Reading tabs</a>
-    <a href="#neck">The neck</a>
+    <a href="#lesson-1">1 · Left-hand practice</a>
+    <a href="#neck">2 · The neck</a>
     <a href="#next">Coming next</a>
   </div>
 </nav>
 
-<!-- ============ READING TABS ============ -->
-<section class="wrap" id="tabs">
-  <h2>Reading tabs</h2>
+<!-- ============ LESSON 1 ============ -->
+<section class="wrap lesson" id="lesson-1">
+  <p class="kicker">Lesson 1</p>
+  <h2 class="lesson-h">Left-hand practice</h2>
+  <p class="lede">Your fretting hand does most of the learning in the first months. This lesson starts with reading tab, the simplest way guitar music is written, then puts it to work with short melodies that train each finger to land cleanly on its fret.</p>
+
+  <div class="sub" id="tabs">
+  <p class="sub-n">1.1</p>
+  <h3 class="sub-h">Reading tabs</h3>
   <p class="lede">Tab (short for tablature) is the simplest way guitar music is written down. It doesn't show notes or rhythm. It shows where to put your fingers: which string, which fret. Most songs, riffs and solos you'll find online are written in tab.</p>
 
   <ul class="rules">
@@ -272,10 +248,16 @@
     <div class="tab-scroll"><div class="tab" id="tab3"></div></div>
   </div>
 
+  </div>
+
+  <div class="sub" id="practice">
+  <p class="sub-n">1.2</p>
+  <h3 class="sub-h">Practice task</h3>
+  <p class="lede">Three short, well-known melodies, played from tab. They start on the top two strings and then bring in the G string.</p>
+
   <div class="card practice">
-    <p class="ctl-label">Practice task</p>
     <h3>One finger per fret</h3>
-    <p class="body-text">These two melodies train your fretting hand to move cleanly between frets. Give each fret its own finger, the same numbers as on the chord cards:</p>
+    <p class="body-text">These melodies train your fretting hand to move cleanly between frets. Give each fret its own finger, the same numbers as on the chord cards:</p>
     <ul class="finger-map" aria-label="Which finger plays which fret">
       <li><b>0</b><span>open, no finger</span></li>
       <li><b>1</b><span>fret 1 · index</span></li>
@@ -314,13 +296,24 @@
     <p class="body-text">The chorus, from 1857. Lots of repeated notes: keep your fingers relaxed and let the open e string ring between fretted notes.</p>
     <div class="tab-scroll"><div class="tab" id="tabJingle"></div></div>
   </div>
+
+  <div class="card">
+    <div class="tab-head">
+      <h3>Mary Had a Little Lamb</h3>
+      <button type="button" class="btn" id="playMary"><span class="ico" aria-hidden="true"></span><span class="txt">Play along</span></button>
+    </div>
+    <p class="body-text">A traditional tune that adds the 3rd string, G. Your hand moves across strings now: middle finger on the G string at fret 2, ring finger on the B string at fret 3.</p>
+    <div class="tab-scroll"><div class="tab" id="tabMary"></div></div>
+  </div>
+  </div>
 </section>
 
 <hr class="divider">
 
 <!-- ============ THE NECK ============ -->
-<section class="wrap" id="neck">
-  <h2>The neck and its notes</h2>
+<section class="wrap lesson" id="neck">
+  <p class="kicker">Lesson 2</p>
+  <h2 class="lesson-h">The neck and its notes</h2>
   <p class="lede">Every fret is a note with a name. You don't need to memorize the whole neck. Knowing how the names work, and the notes on the two lowest strings, gets you a long way: it's how you'll find barre chords later.</p>
 
   <h3>The musical alphabet</h3>
@@ -366,12 +359,12 @@
   <h2>Coming next in Plus</h2>
   <p class="lede">These sections are on their way and will appear here as they're ready.</p>
   <ul class="soon-list">
-    <li><strong>Left-hand practice</strong>Finger exercises and a chord-change drill</li>
     <li><strong>Major and minor chords</strong>Hear the one note that changes</li>
     <li><strong>Capo</strong>Move your chords higher with one clamp</li>
     <li><strong>Barre chords</strong>An easy F, then the full F and Bm</li>
     <li><strong>Fingerpicking</strong>A simple pattern to start</li>
-    <li><strong>Practice plan and songs</strong>Four weeks, about 20 more songs</li>
+    <li><strong>Practice plan</strong>Four weeks of 15 minutes a day</li>
+    <li><strong>Song library</strong>About 20 more songs, including capo songs</li>
   </ul>
 </section>
 
@@ -512,6 +505,10 @@
   melody('tabTwinkle','playTwinkle',seq('C C G G A A G:2 F F E E D D C:2'),pBpm);
   // Jingle Bells chorus (James Lord Pierpont, 1857)
   melody('tabJingle','playJingle',seq('E E E:2 E E E:2 E G C:1.5 D:0.5 E:4 F F F:1.5 F:0.5 F E E E:0.5 E:0.5 E D D E D:2 G:2'),pBpm);
+  // Mary Had a Little Lamb (traditional), on the G and B strings: G=G0 A=G2 B=B0 D=B3
+  const N3={G:[3,0],A:[3,2],B:[4,0],D:[4,3]};
+  const seq3=str=>str.trim().split(/\s+/).map(t=>{ const [n,d]=t.split(':'); return [...N3[n],d?+d:1]; });
+  melody('tabMary','playMary',seq3('B A G A B B B:2 A A A:2 B D D:2 B A G A B B B B A A B A G:4'),pBpm);
 
   // ---------- The neck ----------
   const FOCUS=[0,1];
