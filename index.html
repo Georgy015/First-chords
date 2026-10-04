@@ -241,10 +241,24 @@
   @media (max-width:560px){.strum-box{padding:16px;} .strum-grid{gap:4px;}}
 
   /* songs */
-  .song{padding:16px 0; border-bottom:1px solid var(--rule);}
+  .song-filter{margin-bottom:8px;}
+  .songs{list-style:none; margin:0; padding:0; counter-reset:song;}
+  .song{display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap; padding:14px 0; border-bottom:1px solid var(--rule); counter-increment:song;}
   .song:last-child{border-bottom:none;}
-  .song .title{font-family:'Fraunces',serif; font-weight:600; font-size:1.15rem;}
-  .song .prog{font-size:0.95rem; color:#8a7a66; margin-top:4px; letter-spacing:0.02em;}
+  .song-main{min-width:0; display:grid; grid-template-columns:28px 1fr; column-gap:6px;}
+  .song-main::before{content:counter(song); grid-row:1 / span 2; font-family:'Fraunces',serif; font-weight:600; color:#B9AE9C; font-variant-numeric:tabular-nums; padding-top:2px;}
+  .song .title{font-family:'Fraunces',serif; font-weight:600; font-size:1.12rem;}
+  .song .meta{font-size:0.88rem; color:#8a7a66; margin-top:2px;}
+  .song .tag{font-family:'Inter',sans-serif; font-weight:500; font-size:0.7rem; letter-spacing:.04em; text-transform:uppercase; color:var(--sage); border:1px solid var(--sage); border-radius:999px; padding:1px 7px; vertical-align:middle; margin-left:4px;}
+  .chips{display:flex; gap:6px; flex-wrap:wrap;}
+  .chip{
+    font-family:'Fraunces',serif; font-weight:600; font-size:0.9rem; color:var(--ink);
+    background:var(--card); border:1.4px solid var(--rule); border-radius:7px; min-width:40px; padding:5px 9px; cursor:pointer;
+    transition:background .15s, border-color .15s, color .15s;
+  }
+  .chip:hover{border-color:var(--wood);}
+  .chip.sounding{background:var(--wood); border-color:var(--wood); color:#FFFFFF;}
+  @media (max-width:560px){.song{gap:10px;} .chips{padding-left:34px;}}
 
   footer{padding:60px 0 80px; text-align:center;}
   footer p{color:#6b5c4c; max-width:44ch; margin:0 auto 20px; line-height:1.55;}
@@ -615,10 +629,55 @@
 
 <section class="wrap">
   <h2>Songs you can play right now</h2>
-  <p class="lede">Once the chords above feel steady, try these — same shapes, real songs.</p>
-  <div class="song"><div class="title">Knockin' on Heaven's Door</div><div class="prog">G · D · Am · C — Bob Dylan</div></div>
-  <div class="song"><div class="title">Horse With No Name</div><div class="prog">Em · D6/9 (or just Em, C) — America</div></div>
-  <div class="song"><div class="title">Three Little Birds</div><div class="prog">A · D · E — Bob Marley</div></div>
+  <p class="lede">Once the chords above feel steady, try these. Every song uses only the six chords from this guide, so start with the ones that need the fewest. Tap a chord to hear it.</p>
+  <div class="seg song-filter" role="group" aria-label="Filter songs by number of chords" id="songFilter">
+    <button type="button" id="sf-all" data-f="all" aria-pressed="true">All 10</button>
+    <button type="button" id="sf-easy" data-f="easy" aria-pressed="false">2–3 chords</button>
+    <button type="button" id="sf-four" data-f="four" aria-pressed="false">4 chords</button>
+    <button type="button" id="sf-more" data-f="more" aria-pressed="false">5+ chords</button>
+  </div>
+  <ol class="songs" id="songList">
+    <li class="song" data-group="easy">
+      <div class="song-main"><div class="title">Horse With No Name <span class="tag">simplified</span></div><div class="meta">America · 1971</div></div>
+      <div class="chips" aria-label="2 chords"><button type="button" class="chip" data-chord="Em" aria-label="Play Em">Em</button><button type="button" class="chip" data-chord="D" aria-label="Play D">D</button></div>
+    </li>
+    <li class="song" data-group="easy">
+      <div class="song-main"><div class="title">Sweet Home Alabama</div><div class="meta">Lynyrd Skynyrd · 1974</div></div>
+      <div class="chips" aria-label="3 chords"><button type="button" class="chip" data-chord="D" aria-label="Play D">D</button><button type="button" class="chip" data-chord="C" aria-label="Play C">C</button><button type="button" class="chip" data-chord="G" aria-label="Play G">G</button></div>
+    </li>
+    <li class="song" data-group="easy">
+      <div class="song-main"><div class="title">Leaving on a Jet Plane</div><div class="meta">John Denver · 1969</div></div>
+      <div class="chips" aria-label="3 chords"><button type="button" class="chip" data-chord="G" aria-label="Play G">G</button><button type="button" class="chip" data-chord="C" aria-label="Play C">C</button><button type="button" class="chip" data-chord="D" aria-label="Play D">D</button></div>
+    </li>
+    <li class="song" data-group="easy">
+      <div class="song-main"><div class="title">Bad Moon Rising</div><div class="meta">Creedence Clearwater Revival · 1969</div></div>
+      <div class="chips" aria-label="3 chords"><button type="button" class="chip" data-chord="D" aria-label="Play D">D</button><button type="button" class="chip" data-chord="A" aria-label="Play A">A</button><button type="button" class="chip" data-chord="G" aria-label="Play G">G</button></div>
+    </li>
+    <li class="song" data-group="easy">
+      <div class="song-main"><div class="title">Ain&#x27;t No Sunshine</div><div class="meta">Bill Withers · 1971</div></div>
+      <div class="chips" aria-label="3 chords"><button type="button" class="chip" data-chord="Am" aria-label="Play Am">Am</button><button type="button" class="chip" data-chord="Em" aria-label="Play Em">Em</button><button type="button" class="chip" data-chord="G" aria-label="Play G">G</button></div>
+    </li>
+    <li class="song" data-group="four">
+      <div class="song-main"><div class="title">Knockin&#x27; on Heaven&#x27;s Door</div><div class="meta">Bob Dylan · 1973</div></div>
+      <div class="chips" aria-label="4 chords"><button type="button" class="chip" data-chord="G" aria-label="Play G">G</button><button type="button" class="chip" data-chord="D" aria-label="Play D">D</button><button type="button" class="chip" data-chord="Am" aria-label="Play Am">Am</button><button type="button" class="chip" data-chord="C" aria-label="Play C">C</button></div>
+    </li>
+    <li class="song" data-group="four">
+      <div class="song-main"><div class="title">Zombie</div><div class="meta">The Cranberries · 1994</div></div>
+      <div class="chips" aria-label="4 chords"><button type="button" class="chip" data-chord="Em" aria-label="Play Em">Em</button><button type="button" class="chip" data-chord="C" aria-label="Play C">C</button><button type="button" class="chip" data-chord="G" aria-label="Play G">G</button><button type="button" class="chip" data-chord="D" aria-label="Play D">D</button></div>
+    </li>
+    <li class="song" data-group="four">
+      <div class="song-main"><div class="title">Good Riddance (Time of Your Life)</div><div class="meta">Green Day · 1997</div></div>
+      <div class="chips" aria-label="4 chords"><button type="button" class="chip" data-chord="G" aria-label="Play G">G</button><button type="button" class="chip" data-chord="C" aria-label="Play C">C</button><button type="button" class="chip" data-chord="D" aria-label="Play D">D</button><button type="button" class="chip" data-chord="Em" aria-label="Play Em">Em</button></div>
+    </li>
+    <li class="song" data-group="more">
+      <div class="song-main"><div class="title">Shallow</div><div class="meta">Lady Gaga &amp; Bradley Cooper · 2018</div></div>
+      <div class="chips" aria-label="5 chords"><button type="button" class="chip" data-chord="Em" aria-label="Play Em">Em</button><button type="button" class="chip" data-chord="D" aria-label="Play D">D</button><button type="button" class="chip" data-chord="G" aria-label="Play G">G</button><button type="button" class="chip" data-chord="C" aria-label="Play C">C</button><button type="button" class="chip" data-chord="Am" aria-label="Play Am">Am</button></div>
+    </li>
+    <li class="song" data-group="more">
+      <div class="song-main"><div class="title">Wish You Were Here <span class="tag">simplified</span></div><div class="meta">Pink Floyd · 1975</div></div>
+      <div class="chips" aria-label="6 chords"><button type="button" class="chip" data-chord="Em" aria-label="Play Em">Em</button><button type="button" class="chip" data-chord="G" aria-label="Play G">G</button><button type="button" class="chip" data-chord="A" aria-label="Play A">A</button><button type="button" class="chip" data-chord="C" aria-label="Play C">C</button><button type="button" class="chip" data-chord="D" aria-label="Play D">D</button><button type="button" class="chip" data-chord="Am" aria-label="Play Am">Am</button></div>
+    </li>
+  </ol>
 </section>
 
 <footer class="wrap">
@@ -908,6 +967,19 @@
     ctx(); step=0; nextTime=actx.currentTime+0.08;
     schedule(); timer=setInterval(schedule,25);
     playBtn.classList.add('on'); playBtn.querySelector('.txt').textContent='Stop';
+  });
+
+  // songs: filter by chord count, tap a chord chip to hear it
+  document.querySelectorAll('#songFilter button').forEach(b=>b.addEventListener('click',()=>{
+    document.querySelectorAll('#songFilter button').forEach(x=>x.setAttribute('aria-pressed',x===b));
+    document.querySelectorAll('#songList .song').forEach(s=>{s.hidden=!(b.dataset.f==='all'||s.dataset.group===b.dataset.f);});
+  }));
+  document.querySelectorAll('#songList .chip').forEach(ch=>{
+    let t=null;
+    ch.addEventListener('click',()=>{
+      const c=chords.find(x=>x.name===ch.dataset.chord); if(!c) return;
+      playChord(c).then(d=>{ch.classList.add('sounding'); clearTimeout(t); t=setTimeout(()=>ch.classList.remove('sounding'),Math.min(d,1.5)*1000);});
+    });
   });
 })();
 </script>
