@@ -17,6 +17,7 @@
   }
   html{scroll-padding-top:env(safe-area-inset-top,0px);}
   *{box-sizing:border-box;}
+  [hidden]{display:none !important;}
   body{
     margin:0; background:var(--paper); color:var(--ink);
     font-family:'Inter',system-ui,sans-serif;
@@ -244,8 +245,29 @@
   .songs{list-style:none; margin:0; padding:0; counter-reset:song;}
   .song{display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap; padding:14px 0; border-bottom:1px solid var(--rule); counter-increment:song;}
   .song:last-child{border-bottom:none;}
-  .song-main{min-width:0; display:grid; grid-template-columns:28px 1fr; column-gap:6px;}
+  .song-main{min-width:0; display:grid; grid-template-columns:28px auto 1fr; column-gap:6px; align-items:baseline;}
   .song-main::before{content:counter(song); grid-row:1 / span 2; font-family:'Fraunces',serif; font-weight:600; color:#B9AE9C; font-variant-numeric:tabular-nums; padding-top:2px;}
+  .song-main .meta{grid-column:2 / span 2;}
+  .song-toggle{background:none; border:none; padding:0; text-align:left; cursor:pointer; color:var(--ink); display:inline-flex; align-items:center; gap:8px;}
+  .song-toggle:hover{color:var(--wood);}
+  .chev{width:7px; height:7px; border-right:1.8px solid currentColor; border-bottom:1.8px solid currentColor; transform:rotate(45deg) translateY(-3px); transition:transform .2s; flex-shrink:0;}
+  .song-toggle[aria-expanded="true"] .chev{transform:rotate(225deg) translate(-2px,-1px);}
+  .song-panel{flex-basis:100%; margin:4px 0 4px 34px; background:var(--card); border:1.4px solid var(--rule); border-radius:10px; padding:14px 16px; display:grid; gap:12px; min-width:0;}
+  .sec-label{font-size:0.75rem; font-weight:600; letter-spacing:.06em; text-transform:uppercase; color:#8a7a66; margin-bottom:6px;}
+  .sec-label .rep{text-transform:none; letter-spacing:0; font-weight:500; color:var(--wood); margin-left:4px;}
+  .bars{display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); row-gap:6px; max-width:440px; padding-right:2px;}
+  .bar{display:flex; min-width:0; border-left:2px solid var(--ink); border-right:2px solid var(--ink); margin-right:-2px; padding:4px 6px; gap:4px;}
+  .bchord{flex:1; font-family:'Fraunces',serif; font-weight:600; font-size:1rem; color:var(--ink); background:none; border:1.2px solid transparent; border-radius:6px; padding:4px 6px; cursor:pointer;}
+  .bchord:hover{border-color:var(--wood);}
+  .bchord.sounding{background:var(--wood); color:#FFFFFF;}
+  .song-note{margin:0; font-size:0.85rem; color:#6b5c4c; line-height:1.5;}
+  .song-foot{display:flex; flex-wrap:wrap; align-items:center; gap:10px 16px; border-top:1px solid var(--rule); padding-top:10px; font-size:0.85rem;}
+  .strum-hint{color:#4a3d30;}
+  .practise{font:600 0.82rem 'Inter',system-ui,sans-serif; color:var(--ink); background:var(--paper); border:1.4px solid var(--rule); border-radius:999px; padding:5px 12px; cursor:pointer;}
+  .practise:hover{border-color:var(--wood);}
+  .lyrics-link{color:var(--wood); font-weight:600; text-decoration:none; margin-left:auto;}
+  .lyrics-link:hover{text-decoration:underline;}
+  @media (max-width:560px){.song-panel{margin-left:0;} .lyrics-link{margin-left:0;}}
   .song .title{font-family:'Fraunces',serif; font-weight:600; font-size:1.12rem;}
   .song .meta{font-size:0.88rem; color:#8a7a66; margin-top:2px;}
   .song .tag{font-family:'Inter',sans-serif; font-weight:500; font-size:0.7rem; letter-spacing:.04em; text-transform:uppercase; color:var(--sage); border:1px solid var(--sage); border-radius:999px; padding:1px 7px; vertical-align:middle; margin-left:4px;}
@@ -594,7 +616,7 @@
 
 <hr class="divider">
 
-<section class="wrap">
+<section class="wrap" id="strumming">
   <h2>A basic strum pattern</h2>
   <p class="lede">Strumming is built in stages. Get steady with downstrokes first, then learn upstrokes on their own, then join them together. The full pattern is the goal at the end. Throughout, your strumming hand swings down and up like a pendulum, in time with the count, even on the slots where it skips the strings.</p>
   <div class="strum-box">
@@ -628,47 +650,137 @@
 
 <section class="wrap">
   <h2>Songs you can play right now</h2>
-  <p class="lede">Once the chords above feel steady, try these. Every song uses only the six chords from this guide, so start with the ones that need the fewest. Tap a chord to hear it.</p>
+  <p class="lede">Once the chords above feel steady, try these. Every song uses only the six chords from this guide, so start with the ones that need the fewest. Tap a song title to see its chords bar by bar, and tap any chord to hear it.</p>
   <ol class="songs" id="songList">
     <li class="song">
-      <div class="song-main"><div class="title">Horse With No Name <span class="tag">simplified</span></div><div class="meta">America · 1971</div></div>
+      <div class="song-main"><button type="button" class="title song-toggle" aria-expanded="false" aria-controls="song-1" id="song-1-btn">Horse With No Name<span class="chev" aria-hidden="true"></span></button> <span class="tag">simplified</span><div class="meta">America · 1971</div></div>
       <div class="chips" aria-label="2 chords"><button type="button" class="chip" data-chord="Em" aria-label="Play Em">Em</button><button type="button" class="chip" data-chord="D" aria-label="Play D">D</button></div>
+      <div class="song-panel" id="song-1" hidden>
+          <div class="sec"><div class="sec-label">Whole song <span class="rep">repeat throughout</span></div><div class="bars"><span class="bar"><button type="button" class="bchord" data-chord="Em" aria-label="Play Em">Em</button></span><span class="bar"><button type="button" class="bchord" data-chord="D" aria-label="Play D">D</button></span><span class="bar"><button type="button" class="bchord" data-chord="Em" aria-label="Play Em">Em</button></span><span class="bar"><button type="button" class="bchord" data-chord="D" aria-label="Play D">D</button></span></div></div>
+          <p class="song-note">The record uses fancier Em and D shapes, but plain Em and D sound close.</p>
+          <div class="song-foot">
+            <span class="strum-hint">Strum: Step 3: Down and up, about 90 BPM</span>
+            <button type="button" class="practise" data-pat="eighths" data-bpm="90" data-chord="Em">Practise this strum</button>
+            <a class="lyrics-link" href="https://www.ultimate-guitar.com/search.php?search_type=title&amp;value=Horse+With+No+Name+America" target="_blank" rel="noopener">Lyrics and full chords ↗</a>
+          </div>
+      </div>
     </li>
     <li class="song">
-      <div class="song-main"><div class="title">Sweet Home Alabama</div><div class="meta">Lynyrd Skynyrd · 1974</div></div>
+      <div class="song-main"><button type="button" class="title song-toggle" aria-expanded="false" aria-controls="song-2" id="song-2-btn">Sweet Home Alabama<span class="chev" aria-hidden="true"></span></button><div class="meta">Lynyrd Skynyrd · 1974</div></div>
       <div class="chips" aria-label="3 chords"><button type="button" class="chip" data-chord="D" aria-label="Play D">D</button><button type="button" class="chip" data-chord="C" aria-label="Play C">C</button><button type="button" class="chip" data-chord="G" aria-label="Play G">G</button></div>
+      <div class="song-panel" id="song-2" hidden>
+          <div class="sec"><div class="sec-label">Whole song <span class="rep">repeat throughout</span></div><div class="bars"><span class="bar"><button type="button" class="bchord" data-chord="D" aria-label="Play D">D</button></span><span class="bar"><button type="button" class="bchord" data-chord="C" aria-label="Play C">C</button></span><span class="bar"><button type="button" class="bchord" data-chord="G" aria-label="Play G">G</button></span><span class="bar"><button type="button" class="bchord" data-chord="G" aria-label="Play G">G</button></span></div></div>
+          <div class="song-foot">
+            <span class="strum-hint">Strum: the full pattern, about 95 BPM</span>
+            <button type="button" class="practise" data-pat="classic" data-bpm="95" data-chord="D">Practise this strum</button>
+            <a class="lyrics-link" href="https://www.ultimate-guitar.com/search.php?search_type=title&amp;value=Sweet+Home+Alabama+Lynyrd+Skynyrd" target="_blank" rel="noopener">Lyrics and full chords ↗</a>
+          </div>
+      </div>
     </li>
     <li class="song">
-      <div class="song-main"><div class="title">Leaving on a Jet Plane</div><div class="meta">John Denver · 1969</div></div>
+      <div class="song-main"><button type="button" class="title song-toggle" aria-expanded="false" aria-controls="song-3" id="song-3-btn">Leaving on a Jet Plane<span class="chev" aria-hidden="true"></span></button><div class="meta">John Denver · 1969</div></div>
       <div class="chips" aria-label="3 chords"><button type="button" class="chip" data-chord="G" aria-label="Play G">G</button><button type="button" class="chip" data-chord="C" aria-label="Play C">C</button><button type="button" class="chip" data-chord="D" aria-label="Play D">D</button></div>
+      <div class="song-panel" id="song-3" hidden>
+          <div class="sec"><div class="sec-label">Verse</div><div class="bars"><span class="bar"><button type="button" class="bchord" data-chord="G" aria-label="Play G">G</button></span><span class="bar"><button type="button" class="bchord" data-chord="C" aria-label="Play C">C</button></span><span class="bar"><button type="button" class="bchord" data-chord="G" aria-label="Play G">G</button></span><span class="bar"><button type="button" class="bchord" data-chord="C" aria-label="Play C">C</button></span><span class="bar"><button type="button" class="bchord" data-chord="G" aria-label="Play G">G</button></span><span class="bar"><button type="button" class="bchord" data-chord="C" aria-label="Play C">C</button></span><span class="bar"><button type="button" class="bchord" data-chord="D" aria-label="Play D">D</button></span><span class="bar"><button type="button" class="bchord" data-chord="D" aria-label="Play D">D</button></span></div></div>
+          <div class="sec"><div class="sec-label">Chorus</div><div class="bars"><span class="bar"><button type="button" class="bchord" data-chord="G" aria-label="Play G">G</button></span><span class="bar"><button type="button" class="bchord" data-chord="C" aria-label="Play C">C</button></span><span class="bar"><button type="button" class="bchord" data-chord="G" aria-label="Play G">G</button></span><span class="bar"><button type="button" class="bchord" data-chord="C" aria-label="Play C">C</button></span><span class="bar"><button type="button" class="bchord" data-chord="G" aria-label="Play G">G</button></span><span class="bar"><button type="button" class="bchord" data-chord="C" aria-label="Play C">C</button></span><span class="bar"><button type="button" class="bchord" data-chord="D" aria-label="Play D">D</button></span><span class="bar"><button type="button" class="bchord" data-chord="D" aria-label="Play D">D</button></span></div></div>
+          <div class="song-foot">
+            <span class="strum-hint">Strum: the full pattern, about 80 BPM</span>
+            <button type="button" class="practise" data-pat="classic" data-bpm="80" data-chord="G">Practise this strum</button>
+            <a class="lyrics-link" href="https://www.ultimate-guitar.com/search.php?search_type=title&amp;value=Leaving+on+a+Jet+Plane+John+Denver" target="_blank" rel="noopener">Lyrics and full chords ↗</a>
+          </div>
+      </div>
     </li>
     <li class="song">
-      <div class="song-main"><div class="title">Bad Moon Rising</div><div class="meta">Creedence Clearwater Revival · 1969</div></div>
+      <div class="song-main"><button type="button" class="title song-toggle" aria-expanded="false" aria-controls="song-4" id="song-4-btn">Bad Moon Rising<span class="chev" aria-hidden="true"></span></button><div class="meta">Creedence Clearwater Revival · 1969</div></div>
       <div class="chips" aria-label="3 chords"><button type="button" class="chip" data-chord="D" aria-label="Play D">D</button><button type="button" class="chip" data-chord="A" aria-label="Play A">A</button><button type="button" class="chip" data-chord="G" aria-label="Play G">G</button></div>
+      <div class="song-panel" id="song-4" hidden>
+          <div class="sec"><div class="sec-label">Verse <span class="rep">× 2</span></div><div class="bars"><span class="bar"><button type="button" class="bchord" data-chord="D" aria-label="Play D">D</button></span><span class="bar split"><button type="button" class="bchord" data-chord="A" aria-label="Play A">A</button><button type="button" class="bchord" data-chord="G" aria-label="Play G">G</button></span><span class="bar"><button type="button" class="bchord" data-chord="D" aria-label="Play D">D</button></span><span class="bar"><button type="button" class="bchord" data-chord="D" aria-label="Play D">D</button></span></div></div>
+          <div class="sec"><div class="sec-label">Chorus</div><div class="bars"><span class="bar"><button type="button" class="bchord" data-chord="G" aria-label="Play G">G</button></span><span class="bar"><button type="button" class="bchord" data-chord="G" aria-label="Play G">G</button></span><span class="bar"><button type="button" class="bchord" data-chord="D" aria-label="Play D">D</button></span><span class="bar"><button type="button" class="bchord" data-chord="D" aria-label="Play D">D</button></span><span class="bar"><button type="button" class="bchord" data-chord="A" aria-label="Play A">A</button></span><span class="bar"><button type="button" class="bchord" data-chord="G" aria-label="Play G">G</button></span><span class="bar"><button type="button" class="bchord" data-chord="D" aria-label="Play D">D</button></span><span class="bar"><button type="button" class="bchord" data-chord="D" aria-label="Play D">D</button></span></div></div>
+          <div class="song-foot">
+            <span class="strum-hint">Strum: Step 3: Down and up, about 110 BPM</span>
+            <button type="button" class="practise" data-pat="eighths" data-bpm="110" data-chord="D">Practise this strum</button>
+            <a class="lyrics-link" href="https://www.ultimate-guitar.com/search.php?search_type=title&amp;value=Bad+Moon+Rising+Creedence+Clearwater+Revival" target="_blank" rel="noopener">Lyrics and full chords ↗</a>
+          </div>
+      </div>
     </li>
     <li class="song">
-      <div class="song-main"><div class="title">Ain&#x27;t No Sunshine</div><div class="meta">Bill Withers · 1971</div></div>
+      <div class="song-main"><button type="button" class="title song-toggle" aria-expanded="false" aria-controls="song-5" id="song-5-btn">Ain&#x27;t No Sunshine<span class="chev" aria-hidden="true"></span></button><div class="meta">Bill Withers · 1971</div></div>
       <div class="chips" aria-label="3 chords"><button type="button" class="chip" data-chord="Am" aria-label="Play Am">Am</button><button type="button" class="chip" data-chord="Em" aria-label="Play Em">Em</button><button type="button" class="chip" data-chord="G" aria-label="Play G">G</button></div>
+      <div class="song-panel" id="song-5" hidden>
+          <div class="sec"><div class="sec-label">Verse <span class="rep">× 2</span></div><div class="bars"><span class="bar"><button type="button" class="bchord" data-chord="Am" aria-label="Play Am">Am</button></span><span class="bar split"><button type="button" class="bchord" data-chord="Em" aria-label="Play Em">Em</button><button type="button" class="bchord" data-chord="G" aria-label="Play G">G</button></span><span class="bar"><button type="button" class="bchord" data-chord="Am" aria-label="Play Am">Am</button></span><span class="bar"><button type="button" class="bchord" data-chord="Am" aria-label="Play Am">Am</button></span></div></div>
+          <p class="song-note">The famous “I know, I know” part stays on Am the whole time.</p>
+          <div class="song-foot">
+            <span class="strum-hint">Strum: Step 1: Downstrokes, about 75 BPM</span>
+            <button type="button" class="practise" data-pat="down" data-bpm="75" data-chord="Am">Practise this strum</button>
+            <a class="lyrics-link" href="https://www.ultimate-guitar.com/search.php?search_type=title&amp;value=Ain%27t+No+Sunshine+Bill+Withers" target="_blank" rel="noopener">Lyrics and full chords ↗</a>
+          </div>
+      </div>
     </li>
     <li class="song">
-      <div class="song-main"><div class="title">Knockin&#x27; on Heaven&#x27;s Door</div><div class="meta">Bob Dylan · 1973</div></div>
+      <div class="song-main"><button type="button" class="title song-toggle" aria-expanded="false" aria-controls="song-6" id="song-6-btn">Knockin&#x27; on Heaven&#x27;s Door<span class="chev" aria-hidden="true"></span></button><div class="meta">Bob Dylan · 1973</div></div>
       <div class="chips" aria-label="4 chords"><button type="button" class="chip" data-chord="G" aria-label="Play G">G</button><button type="button" class="chip" data-chord="D" aria-label="Play D">D</button><button type="button" class="chip" data-chord="Am" aria-label="Play Am">Am</button><button type="button" class="chip" data-chord="C" aria-label="Play C">C</button></div>
+      <div class="song-panel" id="song-6" hidden>
+          <div class="sec"><div class="sec-label">Verse and chorus <span class="rep">repeat throughout</span></div><div class="bars"><span class="bar"><button type="button" class="bchord" data-chord="G" aria-label="Play G">G</button></span><span class="bar"><button type="button" class="bchord" data-chord="D" aria-label="Play D">D</button></span><span class="bar"><button type="button" class="bchord" data-chord="Am" aria-label="Play Am">Am</button></span><span class="bar"><button type="button" class="bchord" data-chord="Am" aria-label="Play Am">Am</button></span><span class="bar"><button type="button" class="bchord" data-chord="G" aria-label="Play G">G</button></span><span class="bar"><button type="button" class="bchord" data-chord="D" aria-label="Play D">D</button></span><span class="bar"><button type="button" class="bchord" data-chord="C" aria-label="Play C">C</button></span><span class="bar"><button type="button" class="bchord" data-chord="C" aria-label="Play C">C</button></span></div></div>
+          <div class="song-foot">
+            <span class="strum-hint">Strum: the full pattern, about 70 BPM</span>
+            <button type="button" class="practise" data-pat="classic" data-bpm="70" data-chord="G">Practise this strum</button>
+            <a class="lyrics-link" href="https://www.ultimate-guitar.com/search.php?search_type=title&amp;value=Knockin%27+on+Heaven%27s+Door+Bob+Dylan" target="_blank" rel="noopener">Lyrics and full chords ↗</a>
+          </div>
+      </div>
     </li>
     <li class="song">
-      <div class="song-main"><div class="title">Zombie</div><div class="meta">The Cranberries · 1994</div></div>
+      <div class="song-main"><button type="button" class="title song-toggle" aria-expanded="false" aria-controls="song-7" id="song-7-btn">Zombie<span class="chev" aria-hidden="true"></span></button><div class="meta">The Cranberries · 1994</div></div>
       <div class="chips" aria-label="4 chords"><button type="button" class="chip" data-chord="Em" aria-label="Play Em">Em</button><button type="button" class="chip" data-chord="C" aria-label="Play C">C</button><button type="button" class="chip" data-chord="G" aria-label="Play G">G</button><button type="button" class="chip" data-chord="D" aria-label="Play D">D</button></div>
+      <div class="song-panel" id="song-7" hidden>
+          <div class="sec"><div class="sec-label">Whole song <span class="rep">repeat throughout</span></div><div class="bars"><span class="bar"><button type="button" class="bchord" data-chord="Em" aria-label="Play Em">Em</button></span><span class="bar"><button type="button" class="bchord" data-chord="C" aria-label="Play C">C</button></span><span class="bar"><button type="button" class="bchord" data-chord="G" aria-label="Play G">G</button></span><span class="bar"><button type="button" class="bchord" data-chord="D" aria-label="Play D">D</button></span></div></div>
+          <p class="song-note">Strum hard on the chorus, softer on the verses.</p>
+          <div class="song-foot">
+            <span class="strum-hint">Strum: Step 1: Downstrokes, about 85 BPM</span>
+            <button type="button" class="practise" data-pat="down" data-bpm="85" data-chord="Em">Practise this strum</button>
+            <a class="lyrics-link" href="https://www.ultimate-guitar.com/search.php?search_type=title&amp;value=Zombie+The+Cranberries" target="_blank" rel="noopener">Lyrics and full chords ↗</a>
+          </div>
+      </div>
     </li>
     <li class="song">
-      <div class="song-main"><div class="title">Good Riddance (Time of Your Life)</div><div class="meta">Green Day · 1997</div></div>
+      <div class="song-main"><button type="button" class="title song-toggle" aria-expanded="false" aria-controls="song-8" id="song-8-btn">Good Riddance (Time of Your Life)<span class="chev" aria-hidden="true"></span></button><div class="meta">Green Day · 1997</div></div>
       <div class="chips" aria-label="4 chords"><button type="button" class="chip" data-chord="G" aria-label="Play G">G</button><button type="button" class="chip" data-chord="C" aria-label="Play C">C</button><button type="button" class="chip" data-chord="D" aria-label="Play D">D</button><button type="button" class="chip" data-chord="Em" aria-label="Play Em">Em</button></div>
+      <div class="song-panel" id="song-8" hidden>
+          <div class="sec"><div class="sec-label">Verse <span class="rep">× 2</span></div><div class="bars"><span class="bar"><button type="button" class="bchord" data-chord="G" aria-label="Play G">G</button></span><span class="bar"><button type="button" class="bchord" data-chord="G" aria-label="Play G">G</button></span><span class="bar"><button type="button" class="bchord" data-chord="C" aria-label="Play C">C</button></span><span class="bar"><button type="button" class="bchord" data-chord="D" aria-label="Play D">D</button></span></div></div>
+          <div class="sec"><div class="sec-label">Chorus <span class="rep">× 2</span></div><div class="bars"><span class="bar"><button type="button" class="bchord" data-chord="Em" aria-label="Play Em">Em</button></span><span class="bar"><button type="button" class="bchord" data-chord="D" aria-label="Play D">D</button></span><span class="bar"><button type="button" class="bchord" data-chord="C" aria-label="Play C">C</button></span><span class="bar"><button type="button" class="bchord" data-chord="G" aria-label="Play G">G</button></span></div></div>
+          <div class="song-foot">
+            <span class="strum-hint">Strum: Step 3: Down and up, about 95 BPM</span>
+            <button type="button" class="practise" data-pat="eighths" data-bpm="95" data-chord="G">Practise this strum</button>
+            <a class="lyrics-link" href="https://www.ultimate-guitar.com/search.php?search_type=title&amp;value=Good+Riddance+%28Time+of+Your+Life%29+Green+Day" target="_blank" rel="noopener">Lyrics and full chords ↗</a>
+          </div>
+      </div>
     </li>
     <li class="song">
-      <div class="song-main"><div class="title">Shallow</div><div class="meta">Lady Gaga &amp; Bradley Cooper · 2018</div></div>
+      <div class="song-main"><button type="button" class="title song-toggle" aria-expanded="false" aria-controls="song-9" id="song-9-btn">Shallow<span class="chev" aria-hidden="true"></span></button><div class="meta">Lady Gaga &amp; Bradley Cooper · 2018</div></div>
       <div class="chips" aria-label="5 chords"><button type="button" class="chip" data-chord="Em" aria-label="Play Em">Em</button><button type="button" class="chip" data-chord="D" aria-label="Play D">D</button><button type="button" class="chip" data-chord="G" aria-label="Play G">G</button><button type="button" class="chip" data-chord="C" aria-label="Play C">C</button><button type="button" class="chip" data-chord="Am" aria-label="Play Am">Am</button></div>
+      <div class="song-panel" id="song-9" hidden>
+          <div class="sec"><div class="sec-label">Verse <span class="rep">× 2</span></div><div class="bars"><span class="bar"><button type="button" class="bchord" data-chord="Em" aria-label="Play Em">Em</button></span><span class="bar"><button type="button" class="bchord" data-chord="D" aria-label="Play D">D</button></span><span class="bar"><button type="button" class="bchord" data-chord="G" aria-label="Play G">G</button></span><span class="bar"><button type="button" class="bchord" data-chord="C" aria-label="Play C">C</button></span></div></div>
+          <div class="sec"><div class="sec-label">Build-up <span class="rep">× 2</span></div><div class="bars"><span class="bar"><button type="button" class="bchord" data-chord="Am" aria-label="Play Am">Am</button></span><span class="bar"><button type="button" class="bchord" data-chord="D" aria-label="Play D">D</button></span><span class="bar"><button type="button" class="bchord" data-chord="G" aria-label="Play G">G</button></span><span class="bar"><button type="button" class="bchord" data-chord="Em" aria-label="Play Em">Em</button></span></div></div>
+          <div class="sec"><div class="sec-label">Chorus <span class="rep">× 2</span></div><div class="bars"><span class="bar"><button type="button" class="bchord" data-chord="Em" aria-label="Play Em">Em</button></span><span class="bar"><button type="button" class="bchord" data-chord="D" aria-label="Play D">D</button></span><span class="bar"><button type="button" class="bchord" data-chord="G" aria-label="Play G">G</button></span><span class="bar"><button type="button" class="bchord" data-chord="C" aria-label="Play C">C</button></span></div></div>
+          <div class="song-foot">
+            <span class="strum-hint">Strum: Step 1: Downstrokes, about 95 BPM</span>
+            <button type="button" class="practise" data-pat="down" data-bpm="95" data-chord="Em">Practise this strum</button>
+            <a class="lyrics-link" href="https://www.ultimate-guitar.com/search.php?search_type=title&amp;value=Shallow+Lady+Gaga+%26+Bradley+Cooper" target="_blank" rel="noopener">Lyrics and full chords ↗</a>
+          </div>
+      </div>
     </li>
     <li class="song">
-      <div class="song-main"><div class="title">Wish You Were Here <span class="tag">simplified</span></div><div class="meta">Pink Floyd · 1975</div></div>
+      <div class="song-main"><button type="button" class="title song-toggle" aria-expanded="false" aria-controls="song-10" id="song-10-btn">Wish You Were Here<span class="chev" aria-hidden="true"></span></button> <span class="tag">simplified</span><div class="meta">Pink Floyd · 1975</div></div>
       <div class="chips" aria-label="6 chords"><button type="button" class="chip" data-chord="Em" aria-label="Play Em">Em</button><button type="button" class="chip" data-chord="G" aria-label="Play G">G</button><button type="button" class="chip" data-chord="A" aria-label="Play A">A</button><button type="button" class="chip" data-chord="C" aria-label="Play C">C</button><button type="button" class="chip" data-chord="D" aria-label="Play D">D</button><button type="button" class="chip" data-chord="Am" aria-label="Play Am">Am</button></div>
+      <div class="song-panel" id="song-10" hidden>
+          <div class="sec"><div class="sec-label">Intro</div><div class="bars"><span class="bar"><button type="button" class="bchord" data-chord="Em" aria-label="Play Em">Em</button></span><span class="bar"><button type="button" class="bchord" data-chord="G" aria-label="Play G">G</button></span><span class="bar"><button type="button" class="bchord" data-chord="Em" aria-label="Play Em">Em</button></span><span class="bar"><button type="button" class="bchord" data-chord="G" aria-label="Play G">G</button></span><span class="bar"><button type="button" class="bchord" data-chord="Em" aria-label="Play Em">Em</button></span><span class="bar"><button type="button" class="bchord" data-chord="A" aria-label="Play A">A</button></span><span class="bar"><button type="button" class="bchord" data-chord="Em" aria-label="Play Em">Em</button></span><span class="bar"><button type="button" class="bchord" data-chord="A" aria-label="Play A">A</button></span><span class="bar"><button type="button" class="bchord" data-chord="G" aria-label="Play G">G</button></span></div></div>
+          <div class="sec"><div class="sec-label">Verse</div><div class="bars"><span class="bar"><button type="button" class="bchord" data-chord="C" aria-label="Play C">C</button></span><span class="bar"><button type="button" class="bchord" data-chord="D" aria-label="Play D">D</button></span><span class="bar"><button type="button" class="bchord" data-chord="Am" aria-label="Play Am">Am</button></span><span class="bar"><button type="button" class="bchord" data-chord="G" aria-label="Play G">G</button></span><span class="bar"><button type="button" class="bchord" data-chord="D" aria-label="Play D">D</button></span><span class="bar"><button type="button" class="bchord" data-chord="C" aria-label="Play C">C</button></span><span class="bar"><button type="button" class="bchord" data-chord="Am" aria-label="Play Am">Am</button></span><span class="bar"><button type="button" class="bchord" data-chord="G" aria-label="Play G">G</button></span></div></div>
+          <p class="song-note">The record uses Em7 and A7sus4 shapes in the intro; plain Em and A work fine.</p>
+          <div class="song-foot">
+            <span class="strum-hint">Strum: Step 3: Down and up, about 60 BPM</span>
+            <button type="button" class="practise" data-pat="eighths" data-bpm="60" data-chord="Em">Practise this strum</button>
+            <a class="lyrics-link" href="https://www.ultimate-guitar.com/search.php?search_type=title&amp;value=Wish+You+Were+Here+Pink+Floyd" target="_blank" rel="noopener">Lyrics and full chords ↗</a>
+          </div>
+      </div>
     </li>
   </ol>
 </section>
@@ -962,7 +1074,24 @@
     playBtn.classList.add('on'); playBtn.querySelector('.txt').textContent='Stop';
   });
 
-  // songs: tap a chord chip to hear it
+  // songs: tap a chord chip to hear it; tap a title to open its chord chart
+  document.querySelectorAll('.song-toggle').forEach(b=>b.addEventListener('click',()=>{
+    const open=b.getAttribute('aria-expanded')==='true';
+    b.setAttribute('aria-expanded',!open); document.getElementById(b.getAttribute('aria-controls')).hidden=open;
+  }));
+  document.querySelectorAll('#songList .bchord').forEach(ch=>{
+    let t=null;
+    ch.addEventListener('click',()=>{
+      const c=chords.find(x=>x.name===ch.dataset.chord); if(!c) return;
+      playChord(c).then(d=>{ch.classList.add('sounding'); clearTimeout(t); t=setTimeout(()=>ch.classList.remove('sounding'),Math.min(d,1.5)*1000);});
+    });
+  });
+  document.querySelectorAll('#songList .practise').forEach(b=>b.addEventListener('click',()=>{
+    state.pat=b.dataset.pat; renderPattern();
+    const bpm=Math.min(120,Math.max(60,+b.dataset.bpm)); state.bpm=bpm; tempo.value=bpm; tempoOut.textContent=bpm+' BPM';
+    const cb=document.getElementById('strum-'+b.dataset.chord); if(cb) cb.click();
+    document.getElementById('strumming').scrollIntoView({behavior:'smooth',block:'start'});
+  }));
   document.querySelectorAll('#songList .chip').forEach(ch=>{
     let t=null;
     ch.addEventListener('click',()=>{
