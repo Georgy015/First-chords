@@ -180,20 +180,46 @@
   .tip p{margin:0; font-size:0.9rem; line-height:1.5; color:#4a3d30;}
 
   /* strumming */
-  .strum-pattern{display:flex; gap:10px; margin-top:14px; flex-wrap:wrap;}
-  .beat{
-    font-family:'Fraunces',serif; font-weight:700; font-size:1.3rem;
-    width:46px; height:46px; border-radius:8px; border:1.6px solid var(--ink);
-    display:flex; align-items:center; justify-content:center; background:var(--card);
-    transition:background .12s, color .12s;
+  .strum-box{background:var(--card); border:1.4px solid var(--rule); border-radius:12px; padding:20px; display:grid; gap:18px;}
+  .ctl-label{font-size:0.75rem; font-weight:600; letter-spacing:.06em; text-transform:uppercase; color:#8a7a66; margin:0 0 8px;}
+  .seg{display:flex; flex-wrap:wrap; gap:8px;}
+  .seg button{
+    font:500 0.86rem 'Inter',system-ui,sans-serif; color:var(--ink); background:var(--paper);
+    border:1.4px solid var(--rule); border-radius:999px; padding:7px 14px; cursor:pointer;
+    transition:background .15s, border-color .15s, color .15s;
   }
-  .beat.active{background:var(--wood); color:#fff; border-color:var(--wood);}
+  .seg button:hover{border-color:var(--wood);}
+  .seg button[aria-pressed="true"]{background:var(--ink); border-color:var(--ink); color:var(--paper);}
+  .seg.chords button{font-family:'Fraunces',serif; font-weight:600; min-width:46px;}
+  .strum-grid{display:grid; grid-template-columns:repeat(8,minmax(0,1fr)); gap:6px;}
+  .slot{display:grid; gap:6px; justify-items:center;}
+  .slot .count{font-size:0.8rem; color:#8a7a66; font-variant-numeric:tabular-nums;}
+  .slot.on-beat .count{font-family:'Fraunces',serif; font-weight:700; font-size:0.95rem; color:var(--ink);}
+  .slot .cell{
+    width:100%; max-width:52px; aspect-ratio:1/1.15; border-radius:8px; border:1.6px solid var(--ink);
+    display:flex; align-items:center; justify-content:center; background:var(--card);
+    transition:background .08s, color .08s, border-color .08s;
+  }
+  .slot .cell svg{width:58%; height:auto;}
+  .slot .cell .arrow{fill:none; stroke:currentColor; stroke-width:2.6; stroke-linecap:round; stroke-linejoin:round;}
+  .slot .cell.miss{border-style:dashed; border-color:#C9BEA9; color:#C9BEA9;}
+  .slot .cell.miss::after{content:""; width:6px; height:6px; border-radius:50%; background:currentColor;}
+  .slot.now .cell{background:var(--wood); border-color:var(--wood); color:#FFFFFF;}
+  .slot.now .cell.miss{background:#F2EBDC; border-color:var(--wood); color:var(--wood);}
+  .pattern-note{margin:0; font-size:0.9rem; line-height:1.5; color:#4a3d30;}
+  .transport{display:flex; align-items:center; gap:18px; flex-wrap:wrap;}
   .strum-btn{
-    margin-top:20px; font-family:'Inter'; font-weight:600; font-size:0.92rem;
-    background:var(--ink); color:var(--paper); border:none; border-radius:7px;
-    padding:11px 22px; cursor:pointer;
+    display:inline-flex; align-items:center; gap:9px; font:600 0.92rem 'Inter',system-ui,sans-serif;
+    background:var(--ink); color:var(--paper); border:none; border-radius:999px; padding:11px 22px; cursor:pointer;
   }
   .strum-btn:hover{background:#2a2018;}
+  .strum-btn .ico{width:0; height:0; border-style:solid; border-width:6px 0 6px 10px; border-color:transparent transparent transparent var(--paper);}
+  .strum-btn.on .ico{width:10px; height:10px; border:none; background:var(--paper); border-radius:1px;}
+  .tempo{display:flex; align-items:center; gap:10px; flex:1; min-width:220px;}
+  .tempo label{font-size:0.85rem; color:#6b5c4c; white-space:nowrap;}
+  .tempo input{flex:1; accent-color:var(--wood);}
+  .tempo output{font-family:'Fraunces',serif; font-weight:600; font-variant-numeric:tabular-nums; min-width:62px; text-align:right;}
+  @media (max-width:560px){.strum-box{padding:16px;} .strum-grid{gap:4px;}}
 
   /* songs */
   .song{padding:16px 0; border-bottom:1px solid var(--rule);}
@@ -538,9 +564,31 @@
 
 <section class="wrap">
   <h2>A basic strum pattern</h2>
-  <p class="lede">Down, down, up, down, up — the workhorse pattern behind countless songs. Press play and strum along.</p>
-  <div class="strum-pattern" id="strumRow"></div>
-  <button class="strum-btn" id="strumPlay">Play pattern</button>
+  <p class="lede">Your strumming hand swings down and up the whole time, like a pendulum, in time with the count. On the empty slots it keeps moving but skips the strings. Pick a pattern, press play and strum along.</p>
+  <div class="strum-box">
+    <div>
+      <p class="ctl-label" id="patLabel">Pattern</p>
+      <div class="seg" role="group" aria-labelledby="patLabel" id="patternPick">
+        <button type="button" id="pat-down" data-pat="down" aria-pressed="false">All downstrokes</button>
+        <button type="button" id="pat-eighths" data-pat="eighths" aria-pressed="false">Down-up</button>
+        <button type="button" id="pat-classic" data-pat="classic" aria-pressed="true">Down, down-up, up-down-up</button>
+      </div>
+    </div>
+    <div class="strum-grid" id="strumGrid" aria-label="Strum pattern, one bar of eight slots"></div>
+    <p class="pattern-note" id="patternNote"></p>
+    <div>
+      <p class="ctl-label" id="chordLabel">Chord</p>
+      <div class="seg chords" role="group" aria-labelledby="chordLabel" id="chordPick"></div>
+    </div>
+    <div class="transport">
+      <button type="button" class="strum-btn" id="strumPlay"><span class="ico" aria-hidden="true"></span><span class="txt">Play</span></button>
+      <div class="tempo">
+        <label for="tempo">Speed</label>
+        <input type="range" id="tempo" min="60" max="120" step="5" value="80">
+        <output for="tempo" id="tempoOut">80 BPM</output>
+      </div>
+    </div>
+  </div>
 </section>
 
 <hr class="divider">
@@ -713,6 +761,7 @@
     src.connect(tone).connect(air).connect(top).connect(warm).connect(sparkle).connect(lvl).connect(dry).connect(actx.destination);
     lvl.connect(room);
     src.start(actx.currentTime+delay);
+    return {src,out:lvl};
   }
 
   // chord sounds: plays a recording from sounds/chords/<name>.(mp3|m4a|wav|ogg) when one is
@@ -753,27 +802,85 @@
     });
   });
 
-  // strum pattern
-  const pattern=["D","D","U","D","U"];
-  const row=document.getElementById('strumRow');
-  pattern.forEach(p=>{
-    const b=document.createElement('div');
-    b.className='beat';
-    b.textContent=p;
-    row.appendChild(b);
+  // strum pattern: one bar of eighth notes counted 1 & 2 & 3 & 4 &
+  const PATTERNS={
+    down:{slots:['D',null,'D',null,'D',null,'D',null], note:'Start here. One downstroke on each beat, and lift your hand back up in between without touching the strings.'},
+    eighths:{slots:['D','U','D','U','D','U','D','U'], note:'Down on the numbers, up on the "&"s. Keep it light and even, like a pendulum.'},
+    classic:{slots:['D',null,'D','U',null,'U','D','U'], note:'The workhorse pattern behind countless songs. Count it out loud: "1, 2-and, and-4-and". Your hand still swings on the empty slots.'},
+  };
+  const COUNTS=['1','&','2','&','3','&','4','&'];
+  const ARROW={D:'<svg viewBox="0 0 24 24" aria-hidden="true"><path class="arrow" d="M12 3v17M5 13l7 7 7-7"/></svg>',
+               U:'<svg viewBox="0 0 24 24" aria-hidden="true"><path class="arrow" d="M12 21V4M5 11l7-7 7 7"/></svg>'};
+  const state={pat:'classic', chord:'G', bpm:80};
+  const grid2=document.getElementById('strumGrid');
+  const slotEls=COUNTS.map((c,i)=>{
+    const s=document.createElement('div'); s.className='slot'+(i%2===0?' on-beat':'');
+    s.innerHTML=`<span class="count">${c}</span><span class="cell"></span>`; grid2.appendChild(s); return s;
   });
-  let playing=false;
-  document.getElementById('strumPlay').addEventListener('click',function(){
-    if(playing)return;
-    playing=true;
-    const beats=row.querySelectorAll('.beat');
-    beats.forEach(b=>b.classList.remove('active'));
-    let i=0;
-    const iv=setInterval(()=>{
-      beats.forEach(b=>b.classList.remove('active'));
-      if(i<beats.length){beats[i].classList.add('active');i++;}
-      else{clearInterval(iv);playing=false;beats.forEach(b=>b.classList.remove('active'));}
-    },420);
+  function renderPattern(){
+    const p=PATTERNS[state.pat];
+    p.slots.forEach((d,i)=>{
+      const cell=slotEls[i].querySelector('.cell');
+      cell.className='cell'+(d?'':' miss'); cell.innerHTML=d?ARROW[d]:'';
+      cell.setAttribute('aria-label',`${COUNTS[i]}: ${d==='D'?'down':d==='U'?'up':'miss'}`);
+    });
+    document.getElementById('patternNote').textContent=p.note;
+    document.querySelectorAll('#patternPick button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.pat===state.pat));
+  }
+  document.querySelectorAll('#patternPick button').forEach(b=>b.addEventListener('click',()=>{state.pat=b.dataset.pat; renderPattern();}));
+  const chordPick=document.getElementById('chordPick');
+  chords.forEach(c=>{
+    const b=document.createElement('button'); b.type='button'; b.id='strum-'+c.name; b.textContent=c.name;
+    b.setAttribute('aria-pressed',c.name===state.chord);
+    b.addEventListener('click',()=>{state.chord=c.name; chordPick.querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed',x===b));});
+    chordPick.appendChild(b);
+  });
+  const tempo=document.getElementById('tempo'), tempoOut=document.getElementById('tempoOut');
+  tempo.addEventListener('input',()=>{state.bpm=+tempo.value; tempoOut.textContent=state.bpm+' BPM';});
+  renderPattern();
+
+  // a strum: down hits low to high, up catches the top strings high to low and a bit softer;
+  // a new strum cuts off the strings still ringing from the last one, as your hand does
+  let ringing=[];
+  function strum(dir,t){
+    const c=chords.find(x=>x.name===state.chord);
+    const notes=[]; c.frets.forEach((f,i)=>{ if(f!==null) notes.push(OPEN[i]*Math.pow(2,f/12)); });
+    const seq=dir==='D'?notes:notes.slice(-4).reverse();
+    ringing.forEach(v=>{ try{v.out.gain.setTargetAtTime(0,t,0.02); v.src.stop(t+0.25);}catch(e){} });
+    ringing=seq.map((fq,k)=>play(fq,Math.max(0,t-actx.currentTime)+k*0.012,dir==='D'?0.4:0.28));
+  }
+  function click(t,accent){
+    const o=actx.createOscillator(), g=actx.createGain();
+    o.frequency.value=accent?1600:1100;
+    g.gain.setValueAtTime(0.0001,t); g.gain.exponentialRampToValueAtTime(accent?0.18:0.1,t+0.002);
+    g.gain.exponentialRampToValueAtTime(0.0001,t+0.05);
+    o.connect(g).connect(actx.destination); o.start(t); o.stop(t+0.06);
+  }
+  const playBtn=document.getElementById('strumPlay');
+  let timer=null, nextTime=0, step=0, uiTimers=[];
+  function schedule(){
+    const eighth=60/state.bpm/2;
+    while(nextTime<actx.currentTime+0.12){
+      const i=step%8, d=PATTERNS[state.pat].slots[i];
+      if(i%2===0) click(nextTime,i===0);
+      if(d) strum(d,nextTime);
+      const ms=Math.max(0,(nextTime-actx.currentTime)*1000);
+      uiTimers.push(setTimeout(()=>{slotEls.forEach((s,j)=>s.classList.toggle('now',j===i));},ms));
+      nextTime+=eighth; step++;
+    }
+    if(uiTimers.length>64) uiTimers=uiTimers.slice(-16);
+  }
+  function stopStrum(){
+    clearInterval(timer); timer=null; uiTimers.forEach(clearTimeout); uiTimers=[];
+    if(actx) ringing.forEach(v=>{ try{v.out.gain.setTargetAtTime(0,actx.currentTime,0.05); v.src.stop(actx.currentTime+0.4);}catch(e){} });
+    ringing=[]; slotEls.forEach(s=>s.classList.remove('now'));
+    playBtn.classList.remove('on'); playBtn.querySelector('.txt').textContent='Play';
+  }
+  playBtn.addEventListener('click',()=>{
+    if(timer){stopStrum(); return;}
+    ctx(); step=0; nextTime=actx.currentTime+0.08;
+    schedule(); timer=setInterval(schedule,25);
+    playBtn.classList.add('on'); playBtn.querySelector('.txt').textContent='Stop';
   });
 })();
 </script>
