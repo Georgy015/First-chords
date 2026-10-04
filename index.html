@@ -190,6 +190,25 @@
   }
   .seg button:hover{border-color:var(--wood);}
   .seg button[aria-pressed="true"]{background:var(--ink); border-color:var(--ink); color:var(--paper);}
+  .steps{list-style:none; margin:0; padding:0; display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px; counter-reset:none;}
+  @media (max-width:640px){.steps{grid-template-columns:repeat(2,minmax(0,1fr));}}
+  .steps li{display:flex; position:relative;}
+  .steps li + li::before{content:""; position:absolute; left:-8px; top:50%; width:8px; height:1.4px; background:var(--rule);}
+  @media (max-width:640px){.steps li:nth-child(3)::before{display:none;}}
+  .steps button{
+    width:100%; display:grid; gap:2px; align-content:start; text-align:left; cursor:pointer;
+    background:var(--paper); border:1.4px solid var(--rule); border-radius:10px; padding:10px 12px;
+    font:inherit; color:var(--ink); transition:background .15s, border-color .15s, color .15s;
+  }
+  .steps button:hover{border-color:var(--wood);}
+  .steps .step-n{font-size:0.7rem; font-weight:600; letter-spacing:.06em; text-transform:uppercase; color:#8a7a66;}
+  .steps .goal .step-n{color:var(--wood);}
+  .steps .step-t{font-family:'Fraunces',serif; font-weight:600; font-size:1rem;}
+  .steps .step-d{font-size:0.78rem; color:#6b5c4c; line-height:1.35;}
+  .steps button[aria-pressed="true"]{background:var(--ink); border-color:var(--ink); color:var(--paper);}
+  .steps button[aria-pressed="true"] .step-n,.steps button[aria-pressed="true"] .step-d{color:#D9CFBB;}
+  .next-step{font:600 0.88rem 'Inter',system-ui,sans-serif; color:var(--wood); background:none; border:none; padding:0; cursor:pointer; white-space:nowrap;}
+  .next-step:hover{text-decoration:underline;}
   .seg.chords button{font-family:'Fraunces',serif; font-weight:600; min-width:46px;}
   .strum-grid{display:grid; grid-template-columns:repeat(8,minmax(0,1fr)); gap:6px;}
   .slot{display:grid; gap:6px; justify-items:center;}
@@ -564,15 +583,16 @@
 
 <section class="wrap">
   <h2>A basic strum pattern</h2>
-  <p class="lede">Your strumming hand swings down and up the whole time, like a pendulum, in time with the count. On the empty slots it keeps moving but skips the strings. Pick a pattern, press play and strum along.</p>
+  <p class="lede">Strumming is built in stages. Get steady with downstrokes first, then learn upstrokes on their own, then join them together. The full pattern is the goal at the end. Throughout, your strumming hand swings down and up like a pendulum, in time with the count, even on the slots where it skips the strings.</p>
   <div class="strum-box">
     <div>
-      <p class="ctl-label" id="patLabel">Pattern</p>
-      <div class="seg" role="group" aria-labelledby="patLabel" id="patternPick">
-        <button type="button" id="pat-down" data-pat="down" aria-pressed="false">All downstrokes</button>
-        <button type="button" id="pat-eighths" data-pat="eighths" aria-pressed="false">Down-up</button>
-        <button type="button" id="pat-classic" data-pat="classic" aria-pressed="true">Down, down-up, up-down-up</button>
-      </div>
+      <p class="ctl-label" id="patLabel">Your path</p>
+      <ol class="steps" aria-labelledby="patLabel" id="patternPick">
+        <li><button type="button" id="pat-down" data-pat="down" aria-pressed="true"><span class="step-n">Step 1</span><span class="step-t">Downstrokes</span><span class="step-d">One strum on each beat</span></button></li>
+        <li><button type="button" id="pat-up" data-pat="up" aria-pressed="false"><span class="step-n">Step 2</span><span class="step-t">Upstrokes</span><span class="step-d">Strum only on the way up</span></button></li>
+        <li><button type="button" id="pat-eighths" data-pat="eighths" aria-pressed="false"><span class="step-n">Step 3</span><span class="step-t">Down and up</span><span class="step-d">Join them, non-stop</span></button></li>
+        <li><button type="button" id="pat-classic" data-pat="classic" aria-pressed="false" class="goal"><span class="step-n">Goal</span><span class="step-t">The full pattern</span><span class="step-d">Down, down-up, up-down-up</span></button></li>
+      </ol>
     </div>
     <div class="strum-grid" id="strumGrid" aria-label="Strum pattern, one bar of eight slots"></div>
     <p class="pattern-note" id="patternNote"></p>
@@ -804,14 +824,15 @@
 
   // strum pattern: one bar of eighth notes counted 1 & 2 & 3 & 4 &
   const PATTERNS={
-    down:{slots:['D',null,'D',null,'D',null,'D',null], note:'Start here. One downstroke on each beat, and lift your hand back up in between without touching the strings.'},
-    eighths:{slots:['D','U','D','U','D','U','D','U'], note:'Down on the numbers, up on the "&"s. Keep it light and even, like a pendulum.'},
-    classic:{slots:['D',null,'D','U',null,'U','D','U'], note:'The workhorse pattern behind countless songs. Count it out loud: "1, 2-and, and-4-and". Your hand still swings on the empty slots.'},
+    down:{slots:['D',null,'D',null,'D',null,'D',null], note:'Strum down on each number and bring your hand back up in between without touching the strings. Count "1, 2, 3, 4" out loud. Move on when you can keep it even at 80 BPM for a minute without stopping.', next:'up'},
+    up:{slots:[null,'U',null,'U',null,'U',null,'U'], note:'Your hand still moves down on each number, but misses the strings. On the "&" it catches the top few strings on the way up. Upstrokes are lighter, so let the pick brush the strings. Move on when they sound clean at 80 BPM.', next:'eighths'},
+    eighths:{slots:['D','U','D','U','D','U','D','U'], note:'Now hit the strings both ways: down on the numbers, up on the "&"s, without a pause. Keep the downstrokes a little stronger. Move on when you can change chords without stopping your hand.', next:'classic'},
+    classic:{slots:['D',null,'D','U',null,'U','D','U'], note:'The pattern behind countless songs. Count "1, 2-and, and-4-and". Your hand keeps swinging on the empty slots and simply misses the strings. Start at 60 BPM and speed up only when it feels easy.'},
   };
   const COUNTS=['1','&','2','&','3','&','4','&'];
   const ARROW={D:'<svg viewBox="0 0 24 24" aria-hidden="true"><path class="arrow" d="M12 3v17M5 13l7 7 7-7"/></svg>',
                U:'<svg viewBox="0 0 24 24" aria-hidden="true"><path class="arrow" d="M12 21V4M5 11l7-7 7 7"/></svg>'};
-  const state={pat:'classic', chord:'G', bpm:80};
+  const state={pat:'down', chord:'G', bpm:80};
   const grid2=document.getElementById('strumGrid');
   const slotEls=COUNTS.map((c,i)=>{
     const s=document.createElement('div'); s.className='slot'+(i%2===0?' on-beat':'');
@@ -824,7 +845,13 @@
       cell.className='cell'+(d?'':' miss'); cell.innerHTML=d?ARROW[d]:'';
       cell.setAttribute('aria-label',`${COUNTS[i]}: ${d==='D'?'down':d==='U'?'up':'miss'}`);
     });
-    document.getElementById('patternNote').textContent=p.note;
+    const noteEl=document.getElementById('patternNote'); noteEl.textContent=p.note+' ';
+    if(p.next){
+      const nb=document.createElement('button'); nb.type='button'; nb.className='next-step'; nb.id='nextStep';
+      nb.textContent=p.next==='classic'?'Try the full pattern →':'Next step →';
+      nb.addEventListener('click',()=>{state.pat=p.next; renderPattern();});
+      noteEl.appendChild(nb);
+    }
     document.querySelectorAll('#patternPick button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.pat===state.pat));
   }
   document.querySelectorAll('#patternPick button').forEach(b=>b.addEventListener('click',()=>{state.pat=b.dataset.pat; renderPattern();}));
