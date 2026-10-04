@@ -1,0 +1,200 @@
+/* First Chords Plus: shared styles for the lesson pages */
+  /* fonts are served from this site (Fraunces and Inter, SIL Open Font License) */
+  @font-face{font-family:'Fraunces'; font-style:normal; font-weight:400 700; font-display:swap; src:url(../fonts/fraunces-latin.woff2) format('woff2');}
+  @font-face{font-family:'Inter'; font-style:normal; font-weight:400 600; font-display:swap; src:url(../fonts/inter-latin.woff2) format('woff2');}
+  /* same tokens as the free guide: warm workshop paper in light, lamp-lit walnut in dark */
+  :root{
+    --paper:#FAF6EC; --card:#FFFFFF; --ink:#3B2E24; --ink-2:#4a3d30; --muted:#6b5c4c; --faint:#8a7a66;
+    --line:#B9AE9C; --rule:#D9CFBB; --hover:#F2EBDC; --miss:#C9BEA9;
+    --wood:#C9873F; --wood-deep:#b5762f; --sage:#7A8B6F; --on-accent:#FFFFFF;
+    --board:#3A2C24; --fret:#D4CEC2; --inlay:#EDE6D6; --bronze:#B98E52; --steel:#C9C4BA;
+    box-sizing:border-box;
+    padding-top:env(safe-area-inset-top,0px);
+    padding-bottom:env(safe-area-inset-bottom,0px);
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --paper:#1C1714; --card:#26201B; --ink:#EFE6D6; --ink-2:#DCCFBC; --muted:#BBAC96; --faint:#A0907A;
+      --line:#6E6152; --rule:#3E352D; --hover:#302822; --miss:#5C5146;
+      --wood:#D99A52; --wood-deep:#E6AC68; --sage:#9DB08F; --on-accent:#1C1714; color-scheme:dark;
+    }
+  }
+  :root[data-theme="dark"]{
+    --paper:#1C1714; --card:#26201B; --ink:#EFE6D6; --ink-2:#DCCFBC; --muted:#BBAC96; --faint:#A0907A;
+    --line:#6E6152; --rule:#3E352D; --hover:#302822; --miss:#5C5146;
+    --wood:#D99A52; --wood-deep:#E6AC68; --sage:#9DB08F; --on-accent:#1C1714; color-scheme:dark;
+  }
+  html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 20px); scroll-behavior:smooth;}
+  *{box-sizing:border-box;}
+  [hidden]{display:none !important;}
+  body{margin:0; background:var(--paper); color:var(--ink); font-family:'Inter',system-ui,sans-serif; -webkit-font-smoothing:antialiased;}
+  h1,h2,h3{font-family:'Fraunces',Georgia,serif; margin:0; font-weight:600;}
+  .wrap{max-width:720px; margin:0 auto; padding:0 24px;}
+  section.wrap{padding-block:64px;}
+  .divider{border:none; border-top:1px solid var(--rule); margin:0;}
+  h2{font-size:1.7rem; margin-bottom:6px;}
+  h3{font-size:1.15rem; margin:0 0 6px;}
+  .lede{color:var(--muted); margin:0 0 24px; font-size:0.98rem; line-height:1.55; max-width:62ch;}
+  p{line-height:1.55;}
+  .body-text{color:var(--ink-2); font-size:0.95rem; max-width:62ch; margin:0 0 14px;}
+  .ctl-label{font-size:0.75rem; font-weight:600; letter-spacing:.06em; text-transform:uppercase; color:var(--faint); margin:0 0 8px;}
+  :focus-visible{outline:2px solid var(--sage); outline-offset:2px;}
+
+  /* top bar */
+  .topbar{max-width:720px; margin:0 auto; padding:16px 24px 0; display:flex; align-items:center; justify-content:space-between; gap:12px;}
+  .back{font-size:0.88rem; font-weight:500; color:var(--muted); text-decoration:none;}
+  .back:hover{color:var(--ink);}
+  .plus-badge{font-size:0.72rem; font-weight:600; letter-spacing:.08em; text-transform:uppercase; color:var(--wood); border:1.4px solid var(--wood); border-radius:999px; padding:3px 10px;}
+
+  /* jump bar */
+  .jump{position:sticky; top:env(safe-area-inset-top,0px); z-index:10; background:var(--paper); border-bottom:1px solid var(--rule);}
+  .jump-inner{max-width:720px; margin:0 auto; padding:10px 24px; display:flex; gap:6px; overflow-x:auto; scrollbar-width:none;}
+  .jump-inner::-webkit-scrollbar{display:none;}
+  .jump a{flex:0 0 auto; font-size:0.85rem; font-weight:500; color:var(--muted); text-decoration:none; padding:6px 12px; border-radius:999px; border:1.4px solid transparent;}
+  .jump a:hover{color:var(--ink); border-color:var(--rule);}
+  .jump a[aria-current="true"]{background:var(--ink); color:var(--paper);}
+
+  /* cards and rules */
+  .card{background:var(--card); border:1.4px solid var(--rule); border-radius:12px; padding:20px; display:grid; gap:14px; margin:0 0 20px;}
+  .card > p{margin:0;}
+  .rules{list-style:none; margin:0 0 24px; padding:0; display:grid; grid-template-columns:1fr 1fr; gap:12px;}
+  @media (max-width:560px){.rules{grid-template-columns:1fr;}}
+  .rules li{background:var(--card); border:1.4px solid var(--rule); border-radius:10px; padding:14px 16px; font-size:0.9rem; color:var(--ink-2); line-height:1.5;}
+  .rules strong{display:block; font-family:'Fraunces',serif; font-weight:600; font-size:1rem; color:var(--ink); margin-bottom:2px;}
+  .note-box{border-left:3px solid var(--sage); background:var(--card); border-radius:6px; padding:12px 16px; font-size:0.9rem; color:var(--ink-2); line-height:1.5; margin:0 0 24px; max-width:62ch;}
+  .note-box strong{color:var(--ink);}
+
+  /* tab */
+  .tab-scroll{overflow-x:auto; padding-bottom:4px;}
+  .tab{display:inline-flex; align-items:stretch; border-left:2px solid var(--ink); border-right:2px solid var(--ink); padding:6px 0; min-width:100%;}
+  .tab-labels,.tab-col{display:grid; grid-template-rows:repeat(6,26px);}
+  .tab-labels{padding:0 6px 0 8px;}
+  .tab-labels span{display:flex; align-items:center; font-family:'Fraunces',serif; font-weight:600; font-size:0.9rem; color:var(--faint);}
+  .tab-cells{display:flex; flex:1;}
+  .tab-col{flex:1 0 34px; min-width:34px; background:none; border:none; padding:0; cursor:pointer; color:var(--ink); border-radius:6px; font:inherit;}
+  .tab-col:hover{background:var(--hover);}
+  .tab-col.now{background:var(--hover);}
+  .tab-col.now .num{color:var(--wood);}
+  .tab-cell{position:relative; display:flex; align-items:center; justify-content:center;}
+  .tab-cell::before{content:""; position:absolute; left:0; right:0; top:50%; border-top:1.4px solid var(--line);}
+  .tab-cells .tab-col:first-child .tab-cell::before{left:-6px;}
+  .tab-labels span{position:relative;}
+  .num{position:relative; font-family:'Inter',sans-serif; font-weight:600; font-size:0.95rem; font-variant-numeric:tabular-nums; background:var(--card); padding:0 3px; line-height:1;}
+  .tab-col:hover .num,.tab-col.now .num{background:var(--hover);}
+  .tab-head{display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap;}
+  .tab-caption{margin:0; font-size:0.85rem; color:var(--faint);}
+
+  /* fretboard */
+  .fb-scroll{overflow-x:auto;}
+  .fb{display:block; width:100%; min-width:560px; height:auto;}
+  .fb .board{fill:var(--board);}
+  .fb .fretline{stroke:var(--fret); stroke-width:2.4;}
+  .fb .nut{fill:#F6EEDB; stroke:var(--ink); stroke-width:1;}
+  .fb .inlay{fill:var(--inlay);}
+  .fb .str-wound{stroke:var(--bronze);}
+  .fb .str-plain{stroke:var(--steel);}
+  .fb .fnum{font-family:'Inter',sans-serif; font-size:11px; fill:var(--faint); text-anchor:middle; font-variant-numeric:tabular-nums;}
+  .fb .slabel{font-family:'Fraunces',serif; font-weight:600; font-size:14px; fill:var(--faint); text-anchor:middle;}
+  .fb .hit{fill:transparent; cursor:pointer;}
+  .fb .spot{pointer-events:none;}
+  .fb .spot circle{fill:var(--card); stroke:var(--line); stroke-width:1.2;}
+  .fb .spot text{font-family:'Inter',sans-serif; font-weight:600; font-size:11px; fill:var(--ink); text-anchor:middle;}
+  .fb .spot.sharp circle{fill:var(--paper); stroke-dasharray:2 2;}
+  .fb .spot.sharp text{font-size:9.5px; fill:var(--muted);}
+  .fb .spot.on circle{fill:var(--wood); stroke:var(--wood);}
+  .fb .spot.on text{fill:var(--on-accent);}
+  .fb .spot.good circle{fill:var(--sage); stroke:var(--sage);}
+  .fb .spot.good text{fill:var(--on-accent);}
+  .fb .spot.focus-row circle{stroke:var(--wood); stroke-width:1.6;}
+  .fb-readout{margin:0; font-size:0.9rem; color:var(--ink-2); min-height:1.5em;}
+  .fb-readout strong{font-family:'Fraunces',serif; font-size:1.1rem; color:var(--ink);}
+
+  /* controls */
+  .seg{display:flex; flex-wrap:wrap; gap:8px;}
+  .seg button{font:500 0.86rem 'Inter',system-ui,sans-serif; color:var(--ink); background:var(--paper); border:1.4px solid var(--rule); border-radius:999px; padding:7px 14px; cursor:pointer;}
+  .seg button:hover{border-color:var(--wood);}
+  .seg button[aria-pressed="true"]{background:var(--ink); border-color:var(--ink); color:var(--paper);}
+  .btn{display:inline-flex; align-items:center; gap:9px; font:600 0.9rem 'Inter',system-ui,sans-serif; background:var(--ink); color:var(--paper); border:none; border-radius:999px; padding:10px 20px; cursor:pointer;}
+  .btn:hover{background:var(--muted);}
+  .btn .ico{width:0; height:0; border-style:solid; border-width:6px 0 6px 10px; border-color:transparent transparent transparent var(--paper);}
+  .btn.on .ico{width:10px; height:10px; border:none; background:var(--paper); border-radius:1px;}
+  .btn-quiet{font:600 0.86rem 'Inter',system-ui,sans-serif; color:var(--ink); background:var(--paper); border:1.4px solid var(--rule); border-radius:999px; padding:8px 16px; cursor:pointer;}
+  .btn-quiet:hover{border-color:var(--wood);}
+
+  /* alphabet strip */
+  .alpha{display:grid; grid-template-columns:repeat(12,minmax(0,1fr)); gap:4px; margin:0 0 8px;}
+  .alpha span{display:flex; align-items:center; justify-content:center; height:44px; border-radius:8px; font-family:'Fraunces',serif; font-weight:600; font-size:1rem; background:var(--card); border:1.4px solid var(--rule);}
+  .alpha span.sh{background:var(--paper); border-style:dashed; color:var(--muted); font-family:'Inter',sans-serif; font-size:0.72rem; font-weight:600;}
+  .alpha-cap{font-size:0.82rem; color:var(--faint); margin:0 0 24px;}
+  @media (max-width:560px){.alpha span{height:38px; font-size:0.9rem;} .alpha span.sh{font-size:0.6rem;}}
+
+  /* quiz */
+  .quiz{display:flex; align-items:center; gap:14px; flex-wrap:wrap;}
+  .quiz-q{font-family:'Fraunces',serif; font-weight:600; font-size:1.15rem; margin:0;}
+  .quiz-q em{font-style:normal; color:var(--wood);}
+  .quiz-score{font-size:0.85rem; color:var(--faint); margin:0; font-variant-numeric:tabular-nums;}
+  .quiz-msg{font-size:0.9rem; margin:0; min-height:1.4em; color:var(--ink-2);}
+  .quiz-msg.ok{color:var(--sage);}
+
+  /* coming soon */
+  .soon-list{list-style:none; margin:0; padding:0; display:grid; grid-template-columns:1fr 1fr; gap:10px;}
+  @media (max-width:560px){.soon-list{grid-template-columns:1fr;}}
+  .soon-list li{border:1.4px dashed var(--rule); border-radius:10px; padding:12px 14px; font-size:0.88rem; color:var(--muted);}
+  .soon-list strong{display:block; font-family:'Fraunces',serif; color:var(--ink); font-size:0.98rem;}
+
+  /* lessons */
+  .kicker{font-size:0.8rem; font-weight:600; letter-spacing:.12em; text-transform:uppercase; color:var(--wood); margin:0 0 8px;}
+  .lesson-h{font-size:clamp(1.9rem,5vw,2.4rem); line-height:1.1; margin-bottom:10px;}
+  .sub{margin-top:44px; padding-top:28px; border-top:1px solid var(--rule);}
+  .sub-n{margin:0 0 4px; font-family:'Fraunces',serif; font-weight:600; font-size:0.95rem; color:var(--line); font-variant-numeric:tabular-nums;}
+  .sub-h{font-size:1.45rem; margin:0 0 6px;}
+  .topbar{padding-bottom:8px;}
+
+  /* practice task */
+  .practice{border-color:var(--wood);}
+  .finger-map{list-style:none; margin:0; padding:0; display:flex; flex-wrap:wrap; gap:8px;}
+  .finger-map li{display:flex; align-items:center; gap:8px; font-size:0.85rem; color:var(--ink-2); background:var(--paper); border:1.4px solid var(--rule); border-radius:999px; padding:4px 12px 4px 4px;}
+  .finger-map b{display:inline-flex; align-items:center; justify-content:center; width:24px; height:24px; border-radius:50%; background:var(--wood); color:var(--on-accent); font-family:'Fraunces',serif; font-size:0.85rem;}
+  .finger-map li:first-child b{background:none; color:var(--sage); border:1.6px solid var(--sage);}
+  .steps-list{margin:0; padding-left:1.2em; display:grid; gap:4px; font-size:0.9rem; color:var(--ink-2); line-height:1.5;}
+  .tempo-row{display:flex; align-items:center; gap:10px;}
+  .tempo-row label{font-size:0.85rem; color:var(--muted);}
+  .tempo-row input{flex:1; accent-color:var(--wood);}
+  .tempo-row output{font-family:'Fraunces',serif; font-weight:600; font-variant-numeric:tabular-nums; min-width:62px; text-align:right;}
+  .tab-col .fing{font-family:'Inter',sans-serif; font-size:0.72rem; font-weight:600; color:var(--wood);}
+  .tab.has-fingers .tab-labels,.tab.has-fingers .tab-col{grid-template-rows:repeat(6,26px) 22px;}
+  .tab-labels .fl{font-family:'Inter',sans-serif; font-size:0.66rem; font-weight:600; color:var(--wood); text-transform:uppercase; letter-spacing:.04em;}
+
+  footer.wrap{padding-block:32px 64px; text-align:center;}
+  .made{margin:0; font-size:0.85rem; color:var(--faint);}
+  .made strong{color:var(--ink); font-weight:600;}
+  @media (max-width:560px){.wrap,.topbar{padding-left:16px; padding-right:16px;} .jump-inner{padding:8px 16px;} .card{padding:16px;}}
+  @media (prefers-reduced-motion:reduce){*{transition:none !important; animation:none !important;} html{scroll-behavior:auto;}}
+
+  /* chord cards (same as the free guide) */
+  .chord-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:16px;}
+  .chord-card{background:var(--card); border-radius:10px; padding:16px 10px 14px; text-align:center; border:1.4px solid var(--rule); transition:border-color .15s, transform .15s;}
+  .chord-card:hover{border-color:var(--wood); transform:translateY(-2px);}
+  .chord-card.open{border-color:var(--sage); border-width:2px;}
+  .chord-card:focus-within{border-color:var(--wood);}
+  .chord-card svg{width:100%; height:auto; max-width:110px;}
+  .chord-face{display:block; width:100%; background:none; border:none; padding:0; color:inherit; cursor:pointer; font:inherit;}
+  .chord-card .name{font-family:'Fraunces',serif; font-weight:600; font-size:1.1rem; margin-top:6px; display:block;}
+  .chord-play{margin:10px auto 0; display:inline-flex; align-items:center; gap:7px; font:600 0.82rem 'Inter',system-ui,sans-serif; color:var(--ink); background:var(--paper); border:1.4px solid var(--rule); border-radius:999px; padding:6px 14px 6px 11px; cursor:pointer;}
+  .chord-play .tri{width:0; height:0; border-style:solid; border-width:5px 0 5px 8px; border-color:transparent transparent transparent var(--wood);}
+  .chord-play:hover{border-color:var(--wood);}
+  .chord-card.playing .chord-play{background:var(--wood); border-color:var(--wood); color:var(--on-accent);}
+  .chord-card.playing .chord-play .tri{border-left-color:var(--on-accent);}
+  .chord-note{grid-column:1/-1; background:var(--card); border-left:3px solid var(--sage); border-radius:6px; padding:14px 18px; font-size:0.92rem; color:var(--ink-2); line-height:1.5;}
+  .cd-nut{fill:var(--ink);} .cd-fret{stroke:var(--line); stroke-width:1;} .cd-string{stroke:var(--faint); stroke-width:0.9;}
+  .cd-x{fill:var(--faint); font-size:8px; text-anchor:middle;} .cd-open{fill:none; stroke:var(--sage); stroke-width:1.4;} .cd-dot{fill:var(--wood);}
+  .cd-dot.changed{fill:var(--sage);} .cd-open.changed{stroke:var(--sage); stroke-width:2.4;}
+  .finger-num{font-family:'Fraunces',serif; font-weight:700; font-size:8.6px; fill:var(--on-accent); text-anchor:middle;}
+  .chord-key{font-size:0.85rem; color:var(--faint); margin:-12px 0 20px;}
+
+  /* next-lesson call to action */
+  .next-lesson{margin-top:48px; display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap; background:var(--card); border:1.4px solid var(--wood); border-radius:12px; padding:20px 24px;}
+  .next-lesson p{margin:0; color:var(--ink-2); font-size:0.95rem; max-width:44ch;}
+  .next-lesson strong{display:block; font-family:'Fraunces',serif; font-size:1.15rem; color:var(--ink); margin-bottom:2px;}
+  .btn-next{display:inline-flex; align-items:center; gap:10px; font:600 0.95rem 'Inter',system-ui,sans-serif; background:var(--wood); color:var(--on-accent); text-decoration:none; border-radius:999px; padding:12px 22px;}
+  .btn-next:hover{background:var(--wood-deep);}

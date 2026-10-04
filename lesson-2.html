@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>First Chords Plus · Lesson 2</title>
+<meta name="description" content="First Chords Plus, Lesson 2: learn the E and Dm chords, hear how major and minor chords differ, and practice chord changes with songs.">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#FAF6EC" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#1C1714" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M16 3C22 3 28 5.5 28 11C28 17.5 20 26 16 29C12 26 4 17.5 4 11C4 5.5 10 3 16 3Z' fill='%23C9873F'/%3E%3C/svg%3E">
+<link rel="preload" href="fonts/fraunces-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="assets/plus.css">
+<style>
+  #newGrid{grid-template-columns:repeat(2,minmax(0,220px)); justify-content:start;}
+  @media (max-width:560px){#newGrid{grid-template-columns:repeat(2,minmax(0,1fr));}}
+
+  /* major / minor pairs */
+  .pairs{display:grid; gap:16px;}
+  .pair{background:var(--card); border:1.4px solid var(--rule); border-radius:12px; padding:16px 18px; display:grid; grid-template-columns:auto auto 1fr; gap:10px 20px; align-items:center;}
+  @media (max-width:560px){.pair{grid-template-columns:1fr 1fr;} .pair .pair-text{grid-column:1/-1;}}
+  .pair figure{margin:0; text-align:center;}
+  .pair svg{width:96px; height:auto;}
+  .pair figcaption{font-family:'Fraunces',serif; font-weight:600; font-size:1.05rem; margin-top:2px;}
+  .pair-text p{margin:0 0 10px; font-size:0.9rem; color:var(--ink-2); line-height:1.5;}
+  .pair-text p strong{color:var(--ink);}
+  .pair-btns{display:flex; gap:8px; flex-wrap:wrap;}
+  .legend{display:flex; gap:16px; flex-wrap:wrap; font-size:0.82rem; color:var(--faint); margin:-8px 0 18px;}
+  .legend span{display:inline-flex; align-items:center; gap:6px;}
+  .legend i{width:12px; height:12px; border-radius:50%; display:inline-block;}
+
+  /* chord-change drill */
+  .drill-stage{display:flex; align-items:center; justify-content:center; gap:18px; padding:8px 0;}
+  .drill-chord{font-family:'Fraunces',serif; font-weight:700; font-size:clamp(2.6rem,9vw,3.6rem); line-height:1; min-width:2.4ch; text-align:center; transition:color .1s;}
+  .drill-next{font-size:0.85rem; color:var(--faint); text-align:center;}
+  .drill-next b{font-family:'Fraunces',serif; font-size:1.2rem; color:var(--muted); display:block;}
+  .beats{display:flex; gap:8px; justify-content:center;}
+  .beats span{width:14px; height:14px; border-radius:50%; border:1.6px solid var(--line);}
+  .beats span.on{background:var(--wood); border-color:var(--wood);}
+  .beats span.change{border-color:var(--wood);}
+  .transport{display:flex; align-items:center; gap:18px; flex-wrap:wrap;}
+
+  /* songs */
+  .song-card{background:var(--card); border:1.4px solid var(--rule); border-radius:12px; padding:18px; display:grid; gap:12px; margin-bottom:16px;}
+  .song-top{display:flex; justify-content:space-between; align-items:flex-start; gap:12px; flex-wrap:wrap;}
+  .song-top h4{font-family:'Fraunces',serif; font-weight:600; font-size:1.15rem; margin:0;}
+  .song-top .meta{font-size:0.86rem; color:var(--faint); margin-top:2px;}
+  .chips{display:flex; gap:6px; flex-wrap:wrap;}
+  .chip,.bchord{font-family:'Fraunces',serif; font-weight:600; font-size:0.92rem; color:var(--ink); background:var(--card); border:1.4px solid var(--rule); border-radius:7px; min-width:40px; padding:5px 9px; cursor:pointer;}
+  .chip:hover,.bchord:hover{border-color:var(--wood);}
+  .chip.new{border-color:var(--wood);}
+  .chip.sounding,.bchord.sounding{background:var(--wood); border-color:var(--wood); color:var(--on-accent);}
+  .sec-label{font-size:0.72rem; font-weight:600; letter-spacing:.06em; text-transform:uppercase; color:var(--faint); margin-bottom:6px;}
+  .sec-label .rep{text-transform:none; letter-spacing:0; font-weight:500; color:var(--wood); margin-left:4px;}
+  .bars{display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); row-gap:6px; max-width:440px; padding-right:2px;}
+  .bar{display:flex; gap:4px; border-left:2px solid var(--ink); border-right:2px solid var(--ink); margin-right:-2px; padding:4px 6px; min-width:0;}
+  .bar .bchord{flex:1; border-color:transparent; background:none; padding:4px 4px; min-width:0;}
+  .song-foot{display:flex; flex-wrap:wrap; align-items:center; gap:8px 16px; border-top:1px solid var(--rule); padding-top:10px; font-size:0.85rem; color:var(--ink-2);}
+  .lyrics-link{color:var(--wood); font-weight:600; text-decoration:none; margin-left:auto;}
+  .lyrics-link:hover{text-decoration:underline;}
+  @media (max-width:560px){.lyrics-link{margin-left:0;}}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <a class="back" href="plus.html">← Lesson 1</a>
+  <span class="plus-badge">Plus</span>
+</div>
+
+<nav class="jump" aria-label="Jump to a section">
+  <div class="jump-inner">
+    <a href="#new-chords">2.1 · E and Dm</a>
+    <a href="#pairs">2.2 · Major and minor</a>
+    <a href="#practice">2.3 · Practice task</a>
+    <a href="#songs">2.4 · Songs</a>
+  </div>
+</nav>
+
+<section class="wrap lesson" id="lesson-2">
+  <p class="kicker">Lesson 2</p>
+  <h2 class="lesson-h">Two new chords: E and Dm</h2>
+  <p class="lede">With E and Dm you'll know eight chords, and something more useful than any single shape: how major and minor chords are built from each other. One finger is often all that separates them.</p>
+
+  <!-- 2.1 -->
+  <div class="sub" id="new-chords">
+    <p class="sub-n">2.1</p>
+    <h3 class="sub-h">The new chords</h3>
+    <p class="lede">Tap a card to see how to place your fingers, and press Play to hear it.</p>
+    <p class="chord-key">Numbers on the dots are fingers: 1 index, 2 middle, 3 ring, 4 pinky. ○ play the string open, ✕ don't play it.</p>
+    <div class="chord-grid" id="newGrid"></div>
+  </div>
+
+  <!-- 2.2 -->
+  <div class="sub" id="pairs">
+    <p class="sub-n">2.2</p>
+    <h3 class="sub-h">Major and minor: one note apart</h3>
+    <p class="lede">Major chords sound bright and settled. Minor chords sound darker, a little sad. On guitar, the difference is usually one note, and often one finger. Play each pair and listen for the change.</p>
+    <div class="legend"><span><i style="background:var(--sage)"></i>the note that changes</span></div>
+    <div class="pairs" id="pairList"></div>
+  </div>
+
+  <!-- 2.3 -->
+  <div class="sub" id="practice">
+    <p class="sub-n">2.3</p>
+    <h3 class="sub-h">Practice task: change on the beat</h3>
+    <p class="lede">The hard part of a new chord isn't holding it, it's getting to it in time. Pick a pair, strum once on every beat, and switch when the big letter changes. Your hand should already be moving on the last beat before the change.</p>
+    <div class="card">
+      <div>
+        <p class="ctl-label" id="drillLabel">Pair</p>
+        <div class="seg" role="group" aria-labelledby="drillLabel" id="drillPick"></div>
+      </div>
+      <div>
+        <p class="ctl-label" id="lenLabel">Beats on each chord</p>
+        <div class="seg" role="group" aria-labelledby="lenLabel" id="lenPick">
+          <button type="button" id="len-4" data-len="4" aria-pressed="true">4 beats</button>
+          <button type="button" id="len-2" data-len="2" aria-pressed="false">2 beats</button>
+        </div>
+      </div>
+      <div class="drill-stage" aria-live="polite">
+        <div class="drill-chord" id="drillNow">E</div>
+        <div class="drill-next">next<b id="drillNext">Em</b></div>
+      </div>
+      <div class="beats" id="beats" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
+      <div class="transport">
+        <button type="button" class="btn" id="drillPlay"><span class="ico" aria-hidden="true"></span><span class="txt">Play</span></button>
+        <div class="tempo-row" style="flex:1; min-width:220px;">
+          <label for="drillTempo">Speed</label>
+          <input type="range" id="drillTempo" min="50" max="120" step="5" value="60">
+          <output for="drillTempo" id="drillTempoOut">60 BPM</output>
+        </div>
+      </div>
+      <p class="body-text" style="margin:0;">Start with 4 beats at 60 BPM. When ten changes in a row sound clean, try 2 beats, then speed up.</p>
+    </div>
+  </div>
+
+  <!-- 2.4 -->
+  <div class="sub" id="songs">
+    <p class="sub-n">2.4</p>
+    <h3 class="sub-h">Songs to play</h3>
+    <p class="lede">Three well-known songs built on this lesson's chords. New chords are outlined in orange. Tap any chord to hear it.</p>
+    <div id="songList"></div>
+  </div>
+
+  <div class="next-lesson">
+    <p><strong>Lesson 3 is on its way</strong>Next up: the capo, and how it moves these same shapes higher.</p>
+    <a class="btn-next" href="plus.html" id="backLesson1"><span aria-hidden="true">←</span> Back to Lesson 1</a>
+  </div>
+</section>
+
+<footer class="wrap">
+  <p class="made"><strong>First Chords</strong> · made by a guitarist, for beginners</p>
+</footer>
+
+<script src="assets/guitar-sound.js"></script>
+<script>
+(function(){
+  const S=window.FCSound;
+  // fret per string, low E to high e (null = don't play); fingers 1 index .. 4 pinky
+  const CH={
+    E:{frets:[0,2,2,1,0,0],fingers:[0,2,3,1,0,0]},
+    Em:{frets:[0,2,2,0,0,0],fingers:[0,2,3,0,0,0]},
+    A:{frets:[null,0,2,2,2,0],fingers:[0,0,1,2,3,0]},
+    Am:{frets:[null,0,2,2,1,0],fingers:[0,0,2,3,1,0]},
+    D:{frets:[null,null,0,2,3,2],fingers:[0,0,0,1,3,2]},
+    Dm:{frets:[null,null,0,2,3,1],fingers:[0,0,0,2,3,1]},
+    C:{frets:[null,3,2,0,1,0],fingers:[0,3,2,0,1,0]},
+    G:{frets:[3,2,0,0,0,3],fingers:[2,1,0,0,0,3]},
+  };
+  const TIPS={
+    E:'Middle finger on the A string (2nd fret), ring finger on the D string (2nd fret), index on the G string (1st fret). Strum all six strings. It\'s your Em with one extra finger.',
+    Dm:'Middle finger on the G string (2nd fret), ring finger on the B string (3rd fret), index on high e (1st fret). Strum only the top four strings, starting from the open D. Keep the index finger curved so it doesn\'t touch the B string.'
+  };
+
+  function fretSVG(frets,fingers,changed){
+    const strings=6, fretsShown=4, w=100,h=120, left=14, top=14, sw=(w-2*left)/(strings-1), fh=(h-top-10)/fretsShown;
+    let s=`<svg viewBox="0 0 ${w} ${h}" aria-hidden="true"><rect x="${left-1}" y="${top-3}" width="${w-2*left+2}" height="3" class="cd-nut"/>`;
+    for(let f=1;f<=fretsShown;f++) s+=`<line x1="${left}" y1="${top+f*fh}" x2="${w-left}" y2="${top+f*fh}" class="cd-fret"/>`;
+    for(let i=0;i<strings;i++){ const x=left+i*sw; s+=`<line x1="${x}" y1="${top}" x2="${x}" y2="${top+fretsShown*fh}" class="cd-string"/>`; }
+    frets.forEach((f,i)=>{
+      const x=left+i*sw, ch=i===changed?' changed':'';
+      if(f===null) s+=`<text x="${x}" y="${top-6}" class="cd-x">✕</text>`;
+      else if(f===0) s+=`<circle cx="${x}" cy="${top-7}" r="3.4" class="cd-open${ch}"/>`;
+      else{ const y=top+(f-0.5)*fh; s+=`<circle cx="${x}" cy="${y}" r="6.6" class="cd-dot${ch}"/>`; if(fingers[i]) s+=`<text x="${x}" y="${y+3.1}" class="finger-num">${fingers[i]}</text>`; }
+    });
+    return s+'</svg>';
+  }
+  function playChord(name){ S.strum(CH[name].frets); }
+
+  // 2.1 chord cards
+  const grid=document.getElementById('newGrid');
+  ['E','Dm'].forEach(name=>{
+    const c=CH[name], card=document.createElement('div'); card.className='chord-card';
+    card.innerHTML=`<button type="button" class="chord-face" id="face-${name}" aria-expanded="false" aria-label="${name} chord: show finger placement">${fretSVG(c.frets,c.fingers)}<span class="name">${name}</span></button>`
+      +`<button type="button" class="chord-play" id="play-${name}" aria-label="Play the ${name} chord"><span class="tri" aria-hidden="true"></span>Play</button>`;
+    let t=null;
+    card.querySelector('.chord-play').addEventListener('click',()=>{ playChord(name); card.classList.add('playing'); clearTimeout(t); t=setTimeout(()=>card.classList.remove('playing'),2000); });
+    card.querySelector('.chord-face').addEventListener('click',()=>{
+      const open=card.classList.contains('open');
+      grid.querySelectorAll('.chord-card').forEach(x=>{ x.classList.remove('open'); x.querySelector('.chord-face').setAttribute('aria-expanded','false'); });
+      grid.querySelectorAll('.chord-note').forEach(n=>n.remove());
+      if(!open){ card.classList.add('open'); card.querySelector('.chord-face').setAttribute('aria-expanded','true');
+        const n=document.createElement('div'); n.className='chord-note'; n.textContent=TIPS[name]; grid.appendChild(n); }
+    });
+    grid.appendChild(card);
+  });
+
+  // 2.2 major / minor pairs; changed = string index of the note that moves
+  const PAIRS=[
+    {maj:'E',min:'Em',changed:3,text:'<strong>E to Em:</strong> lift your index finger off the G string. The note drops from G♯ to G, and the chord turns minor.'},
+    {maj:'A',min:'Am',changed:4,text:'<strong>A to Am:</strong> the note on the B string drops from fret 2 to fret 1 (C♯ to C). Your fingers rearrange, but only that note changes.'},
+    {maj:'D',min:'Dm',changed:5,text:'<strong>D to Dm:</strong> the note on high e drops from fret 2 to fret 1 (F♯ to F). Same idea, on the top string.'},
+  ];
+  const pairList=document.getElementById('pairList');
+  PAIRS.forEach(p=>{
+    const el=document.createElement('div'); el.className='pair';
+    el.innerHTML=`<figure>${fretSVG(CH[p.maj].frets,CH[p.maj].fingers,p.changed)}<figcaption>${p.maj}</figcaption></figure>`
+      +`<figure>${fretSVG(CH[p.min].frets,CH[p.min].fingers,p.changed)}<figcaption>${p.min}</figcaption></figure>`
+      +`<div class="pair-text"><p>${p.text}</p><div class="pair-btns">`
+      +`<button type="button" class="btn-quiet" id="pp-${p.maj}">Play ${p.maj}</button>`
+      +`<button type="button" class="btn-quiet" id="pp-${p.min}">Play ${p.min}</button>`
+      +`<button type="button" class="btn-quiet" id="pp-${p.maj}-${p.min}">Compare</button></div></div>`;
+    el.querySelector(`#pp-${p.maj}`).addEventListener('click',()=>playChord(p.maj));
+    el.querySelector(`#pp-${p.min}`).addEventListener('click',()=>playChord(p.min));
+    el.querySelector(`#pp-${p.maj}-${p.min}`).addEventListener('click',()=>{ playChord(p.maj); setTimeout(()=>playChord(p.min),1300); });
+    pairList.appendChild(el);
+  });
+
+  // 2.3 chord-change drill: one downstroke per beat, click on every beat
+  const DRILLS=[['E','Em'],['A','Am'],['D','Dm'],['Am','E'],['Dm','Am']];
+  const drill={pair:DRILLS[0],len:4,bpm:60,timer:null,next:0,step:0,ring:[],ui:[]};
+  const drillPick=document.getElementById('drillPick');
+  DRILLS.forEach((d,i)=>{
+    const b=document.createElement('button'); b.type='button'; b.id='drill-'+d.join('-'); b.textContent=d.join(' ↔ '); b.setAttribute('aria-pressed',i===0);
+    b.addEventListener('click',()=>{ drill.pair=d; drillPick.querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed',x===b)); drill.step=0; showDrill(0); });
+    drillPick.appendChild(b);
+  });
+  document.querySelectorAll('#lenPick button').forEach(b=>b.addEventListener('click',()=>{
+    drill.len=+b.dataset.len; document.querySelectorAll('#lenPick button').forEach(x=>x.setAttribute('aria-pressed',x===b)); drill.step=0; showDrill(0);
+  }));
+  const tempo=document.getElementById('drillTempo'), tempoOut=document.getElementById('drillTempoOut');
+  tempo.addEventListener('input',()=>{ drill.bpm=+tempo.value; tempoOut.textContent=drill.bpm+' BPM'; });
+  const nowEl=document.getElementById('drillNow'), nextEl=document.getElementById('drillNext'), beatEls=[...document.querySelectorAll('#beats span')];
+  function showDrill(step){
+    const idx=Math.floor(step/drill.len)%2, beat=step%drill.len;
+    nowEl.textContent=drill.pair[idx]; nextEl.textContent=drill.pair[1-idx];
+    beatEls.forEach((b,i)=>{ b.hidden=i>=drill.len; b.classList.toggle('on',i===beat&&!!drill.timer); b.classList.toggle('change',i===drill.len-1); });
+  }
+  function click(t,accent){
+    const ctx=S.ctx(), o=ctx.createOscillator(), g=ctx.createGain();
+    o.frequency.value=accent?1600:1100; g.gain.setValueAtTime(0.0001,t); g.gain.exponentialRampToValueAtTime(accent?0.16:0.09,t+0.002); g.gain.exponentialRampToValueAtTime(0.0001,t+0.05);
+    o.connect(g).connect(ctx.destination); o.start(t); o.stop(t+0.06);
+  }
+  function schedule(){
+    const ctx=S.ctx(), beat=60/drill.bpm;
+    while(drill.next<ctx.currentTime+0.12){
+      const step=drill.step, idx=Math.floor(step/drill.len)%2, name=drill.pair[idx];
+      click(drill.next,step%drill.len===0);
+      drill.ring.forEach(v=>{ try{ v.out.gain.setTargetAtTime(0,drill.next,0.03); v.src.stop(drill.next+0.3); }catch(e){} });
+      const notes=[]; CH[name].frets.forEach((f,i)=>{ if(f!==null) notes.push(S.OPEN[i]*Math.pow(2,f/12)); });
+      drill.ring=notes.map((fq,k)=>S.play(fq,drill.next-ctx.currentTime+k*0.012,0.38));
+      const ms=Math.max(0,(drill.next-ctx.currentTime)*1000);
+      drill.ui.push(setTimeout(()=>showDrill(step),ms));
+      drill.next+=beat; drill.step++;
+    }
+    if(drill.ui.length>64) drill.ui=drill.ui.slice(-16);
+  }
+  const playBtn=document.getElementById('drillPlay');
+  function stopDrill(){
+    clearInterval(drill.timer); drill.timer=null; drill.ui.forEach(clearTimeout); drill.ui=[];
+    const t=S.time; drill.ring.forEach(v=>{ try{ v.out.gain.cancelScheduledValues(t); v.out.gain.setTargetAtTime(0,t,0.04); v.src.stop(t+0.3); }catch(e){} }); drill.ring=[];
+    playBtn.classList.remove('on'); playBtn.querySelector('.txt').textContent='Play'; drill.step=0; showDrill(0);
+  }
+  playBtn.addEventListener('click',()=>{
+    if(drill.timer){ stopDrill(); return; }
+    const ctx=S.ctx(); drill.step=0; drill.next=ctx.currentTime+0.1; schedule(); drill.timer=setInterval(schedule,25);
+    playBtn.classList.add('on'); playBtn.querySelector('.txt').textContent='Stop';
+  });
+  showDrill(0);
+
+  // 2.4 songs (chord progressions only; lyrics are linked, not reproduced)
+  const NEW=['E','Dm'];
+  const SONGS=[
+    {title:'Louie Louie',artist:'The Kingsmen',year:1963,chords:['A','D','Em'],
+     secs:[['Whole song',['A D','Em D'],'repeat throughout']],strum:'Down-up on each chord, two beats each, about 115 BPM',
+     note:'The famous riff is just these three chords: A A A, D D, Em Em, D D.'},
+    {title:'Wild Thing',artist:'The Troggs',year:1966,chords:['A','D','E'],
+     secs:[['Main riff',['A D','E D'],'repeat throughout']],strum:'Big downstrokes, two beats per chord, about 105 BPM',
+     note:'A good one for the E chord: strum all six strings and let it ring.'},
+    {title:'Drunken Sailor',artist:'Traditional sea shanty',year:null,chords:['Dm','C'],
+     secs:[['Verse and chorus',['Dm','Dm','C','C','Dm','Dm','C Dm','Dm'],'repeat']],strum:'Downstrokes on every beat, about 100 BPM, with a strong first beat',
+     note:'Only two chords, and a fun, steady way to get Dm into your hand.'},
+  ];
+  const songList=document.getElementById('songList');
+  const chipBtn=(c,cls)=>`<button type="button" class="${cls}${cls==='chip'&&NEW.includes(c)?' new':''}" data-chord="${c}" aria-label="Play ${c}">${c}</button>`;
+  SONGS.forEach(s=>{
+    const q=encodeURIComponent(`${s.title} ${s.year?s.artist:''} lyrics`.replace(/\s+/g,' ')).replace(/%20/g,'+');
+    const el=document.createElement('div'); el.className='song-card';
+    el.innerHTML=`<div class="song-top"><div><h4>${s.title}</h4><div class="meta">${s.artist}${s.year?' · '+s.year:''}</div></div><div class="chips">${s.chords.map(c=>chipBtn(c,'chip')).join('')}</div></div>`
+      +s.secs.map(([label,bars,rep])=>`<div><div class="sec-label">${label}${rep?` <span class="rep">${rep}</span>`:''}</div><div class="bars">${bars.map(b=>`<span class="bar">${b.split(' ').map(c=>chipBtn(c,'bchord')).join('')}</span>`).join('')}</div></div>`).join('')
+      +`<p class="body-text" style="margin:0;">${s.note}</p>`
+      +`<div class="song-foot"><span>Strum: ${s.strum}</span><a class="lyrics-link" href="https://www.google.com/search?q=${q}" target="_blank" rel="noopener">Find the lyrics ↗</a></div>`;
+    songList.appendChild(el);
+  });
+  songList.addEventListener('click',e=>{
+    const b=e.target.closest('[data-chord]'); if(!b) return;
+    playChord(b.dataset.chord); b.classList.add('sounding'); setTimeout(()=>b.classList.remove('sounding'),1200);
+  });
+
+  // jump bar highlight
+  const links=[...document.querySelectorAll('.jump a')], secs=links.map(a=>document.querySelector(a.getAttribute('href')));
+  function mark(){ const y=scrollY+120; let cur=-1; secs.forEach((s,i)=>{ if(s.getBoundingClientRect().top+scrollY<=y) cur=i; }); links.forEach((a,i)=>i===cur?a.setAttribute('aria-current','true'):a.removeAttribute('aria-current')); }
+  addEventListener('scroll',mark,{passive:true}); mark();
+})();
+</script>
+</body>
+</html>
