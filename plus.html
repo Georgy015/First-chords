@@ -453,26 +453,46 @@
   // ---------- Reading tabs ----------
   function flash(btn){ btn.classList.add('now'); setTimeout(()=>btn.classList.remove('now'),350); }
   // play-along for a single-note melody: notes = [[string,fret,beats],...]
+  // Each note is cut when the next one starts (as when you lift a finger), the last one
+  // fades after its own length, and anything still scheduled is silenced on stop.
+  let current=null;                                   // the melody that's playing, if any
+  function silence(handles,when){
+    const t=when??S.time;
+    handles.forEach(v=>{ try{ v.out.gain.cancelScheduledValues(t); v.out.gain.setTargetAtTime(0,t,0.02); v.src.stop(t+0.15); }catch(e){} });
+  }
   function melody(tabId,btnId,notes,getBpm){
     const cols=notes.map(([s,f])=>[[s,f]]);
-    const btns=buildTab(document.getElementById(tabId),cols,(i,b)=>{ S.note(notes[i][0],notes[i][1]); flash(b); },true);
-    const btn=document.getElementById(btnId); let timers=[];
-    const stop=()=>{ timers.forEach(clearTimeout); timers=[]; btns.forEach(b=>b.classList.remove('now')); btn.classList.remove('on'); btn.querySelector('.txt').textContent='Play along'; };
-    btn.addEventListener('click',()=>{
-      if(timers.length){ stop(); return; }
-      S.ctx(); const beat=60/getBpm(); let t=0.05;
+    const player={timers:[],handles:[],btns:null,btn:document.getElementById(btnId)};
+    player.stop=()=>{
+      player.timers.forEach(clearTimeout); player.timers=[];
+      silence(player.handles); player.handles=[];
+      player.btns.forEach(b=>b.classList.remove('now'));
+      player.btn.classList.remove('on'); player.btn.querySelector('.txt').textContent='Play along';
+      if(current===player) current=null;
+    };
+    player.btns=buildTab(document.getElementById(tabId),cols,(i,b)=>{ if(current) current.stop(); S.note(notes[i][0],notes[i][1]); flash(b); },true);
+    player.btn.addEventListener('click',()=>{
+      if(current===player){ player.stop(); return; }
+      if(current) current.stop();
+      current=player; S.ctx();
+      const beat=60/getBpm(), start=S.time+0.08; let t=0;
+      let prev=null;
       notes.forEach(([s,f,d],i)=>{
-        S.note(s,f,t);
-        timers.push(setTimeout(()=>btns.forEach((b,j)=>b.classList.toggle('now',j===i)),t*1000));
+        const h=S.note(s,f,start+t-S.time);
+        if(prev){ prev.out.gain.setTargetAtTime(0,start+t,0.025); }   // previous note stops as this one starts
+        h.out.gain.setTargetAtTime(0,start+t+d*beat+0.15,0.08);        // and every note ends after its length
+        player.handles.push(h); prev=h;
+        player.timers.push(setTimeout(()=>player.btns.forEach((b,j)=>b.classList.toggle('now',j===i)),(start+t-S.time)*1000));
         t+=d*beat;
       });
-      timers.push(setTimeout(stop,(t+0.4)*1000));
-      btn.classList.add('on'); btn.querySelector('.txt').textContent='Stop';
+      player.timers.push(setTimeout(player.stop,(start+t-S.time+0.5)*1000));
+      player.btn.classList.add('on'); player.btn.querySelector('.txt').textContent='Stop';
     });
+    return player;
   }
 
   const T1=[[[0,0]],[[1,0]],[[2,0]],[[3,0]],[[4,0]],[[5,0]]];
-  buildTab(document.getElementById('tab1'),T1,(i,b)=>{ S.note(T1[i][0][0],0); flash(b); });
+  buildTab(document.getElementById('tab1'),T1,(i,b)=>{ if(current) current.stop(); S.note(T1[i][0][0],0); flash(b); });
 
   // note names on the top two strings: C=B1 D=B3 E=e0 F=e1 G=e3 A=e5
   const N={C:[4,1],D:[4,3],E:[5,0],F:[5,1],G:[5,3],A:[5,5]};
@@ -482,7 +502,7 @@
 
   const CHORDS3=[{name:'G',frets:[3,2,0,0,0,3]},{name:'C',frets:[null,3,2,0,1,0]},{name:'D',frets:[null,null,0,2,3,2]}];
   const T3=CHORDS3.map(c=>c.frets.map((f,s)=>f===null?null:[s,f]).filter(Boolean));
-  buildTab(document.getElementById('tab3'),T3,(i,b)=>{ S.strum(CHORDS3[i].frets); flash(b); });
+  buildTab(document.getElementById('tab3'),T3,(i,b)=>{ if(current) current.stop(); S.strum(CHORDS3[i].frets); flash(b); });
 
   // practice task melodies, at the practice speed
   const pTempo=document.getElementById('pTempo'), pOut=document.getElementById('pTempoOut');
