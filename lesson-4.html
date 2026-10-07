@@ -172,9 +172,9 @@
       card.querySelectorAll('[data-pos]').forEach(b=>b.setAttribute('aria-pressed',+b.dataset.pos===st.pos));
     }
     let run=null;
-    // glide one note at a time, keeping the current note about a third of the way in
+    // stay still for the first 9 notes, then glide one column per note so the current note stays where note 9 was
     function follow(b){
-      const sc=tabEl.parentElement, x=b.getBoundingClientRect().left-sc.getBoundingClientRect().left+sc.scrollLeft, target=Math.max(0,x-sc.clientWidth*0.33);
+      const sc=tabEl.parentElement, x=b.getBoundingClientRect().left-sc.getBoundingClientRect().left+sc.scrollLeft, a9=st.btns[Math.min(8,st.btns.length-1)], ax=a9.getBoundingClientRect().left-sc.getBoundingClientRect().left+sc.scrollLeft, target=Math.max(0,x-ax);
       if(Math.abs(target-sc.scrollLeft)>1) sc.scrollTo({left:target,behavior:'smooth'});
     }
     function stop(){

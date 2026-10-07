@@ -218,7 +218,7 @@
       if(current) current.stop();
       current=player; sc.scrollTo({left:0});
       player.run=S.sequence({notes,bpm:getBpm,
-        onNote:i=>{ player.btns.forEach((b,j)=>b.classList.toggle('now',j===i)); const b=player.btns[i], x=b.getBoundingClientRect().left-sc.getBoundingClientRect().left+sc.scrollLeft, target=Math.max(0,x-sc.clientWidth*0.33);
+        onNote:i=>{ player.btns.forEach((b,j)=>b.classList.toggle('now',j===i)); const b=player.btns[i], x=b.getBoundingClientRect().left-sc.getBoundingClientRect().left+sc.scrollLeft, a9=player.btns[Math.min(8,player.btns.length-1)], ax=a9.getBoundingClientRect().left-sc.getBoundingClientRect().left+sc.scrollLeft, target=Math.max(0,x-ax);
           if(Math.abs(target-sc.scrollLeft)>1) sc.scrollTo({left:target,behavior:'smooth'}); },
         onEnd:()=>{ player.run=null; player.stop(); }});
       player.btn.classList.add('on'); player.btn.querySelector('.txt').textContent='Stop';

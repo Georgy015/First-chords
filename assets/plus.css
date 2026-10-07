@@ -68,7 +68,7 @@
   .tab-scroll{overflow-x:auto; padding-bottom:4px;}
   .tab{display:inline-flex; align-items:stretch; border-left:2px solid var(--ink); border-right:2px solid var(--ink); padding:6px 0; min-width:100%;}
   .tab-labels,.tab-col{display:grid; grid-template-rows:repeat(6,26px);}
-  .tab-labels{padding:0 6px 0 8px;}
+  .tab-labels{padding:0 6px 0 8px; position:sticky; left:0; z-index:1; background:var(--card); box-shadow:6px 0 6px -6px rgba(0,0,0,.18);}
   .tab-labels span{display:flex; align-items:center; font-family:'Fraunces',serif; font-weight:600; font-size:0.9rem; color:var(--faint);}
   .tab-cells{display:flex; flex:1;}
   .tab-col{flex:1 0 34px; min-width:34px; background:none; border:none; padding:0; cursor:pointer; color:var(--ink); border-radius:6px; font:inherit;}
