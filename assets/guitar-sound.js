@@ -88,5 +88,39 @@
   }
   // one note: string index 0 = low E .. 5 = high e, fret number
   function note(string,fret,delay=0,level=0.9){ ctx(); return play(OPEN[string]*Math.pow(2,fret/12),delay,level); }
-  window.FCSound={ctx,play,note,strum,OPEN,get time(){ return actx?actx.currentTime:0; }};
+  // Play a single-note line in time. notes = [[string, fret, beats], ...]; bpm() is read for every
+  // note, so speed changes apply straight away. Notes are scheduled just ahead on the audio clock,
+  // and onNote(i) fires from the same clock, so the highlight always matches what you hear.
+  function sequence({notes,bpm,onNote,onEnd,level=0.85}){
+    ctx();
+    let stopped=false, i=0, next=0, prev=null, endAt=null, timer=null, raf=null;
+    const live=[], due=[];
+    function tick(){
+      while(!stopped&&i<notes.length&&next<actx.currentTime+0.12){
+        const [s,f,d=1]=notes[i], len=d*60/bpm();
+        const h=note(s,f,Math.max(0,next-actx.currentTime),level);
+        if(prev) prev.out.gain.setTargetAtTime(0,next,0.025);   // the last note stops as this one starts
+        h.out.gain.setTargetAtTime(0,next+len+0.1,0.08);         // and each note ends after its own length
+        live.push(h); if(live.length>6) live.shift();
+        prev=h; due.push([next,i]); next+=len; i++;
+      }
+      if(i>=notes.length&&endAt===null) endAt=next;
+    }
+    function frame(){
+      if(stopped) return;
+      const t=actx.currentTime;
+      while(due.length&&due[0][0]<=t){ const idx=due.shift()[1]; if(onNote) onNote(idx); }
+      if(endAt!==null&&!due.length&&t>=endAt){ finish(); return; }
+      raf=requestAnimationFrame(frame);
+    }
+    function begin(){ if(stopped) return; next=actx.currentTime+0.08; tick(); timer=setInterval(tick,25); raf=requestAnimationFrame(frame); }
+    function finish(){ stopped=true; clearInterval(timer); if(onEnd) onEnd(); }
+    if(actx.state!=='running') actx.resume().then(begin,begin); else begin();
+    return { stop(){
+      if(stopped) return; stopped=true; clearInterval(timer); cancelAnimationFrame(raf);
+      const t=actx.currentTime;
+      live.forEach(v=>{ try{ v.out.gain.cancelScheduledValues(t); v.out.gain.setTargetAtTime(0,t,0.02); v.src.stop(t+0.15); }catch(e){} });
+    }};
+  }
+  window.FCSound={ctx,play,note,strum,sequence,OPEN,get time(){ return actx?actx.currentTime:0; }};
 })();

@@ -155,7 +155,7 @@
         <label class="climb"><input type="checkbox" id="climb-${ex.id}"> Climb the neck (one fret up each round)</label>
       </div>
       <p class="status" id="status-${ex.id}" aria-live="polite"></p>`;
-    const st={pos:1,timers:[],handles:[],btns:[],playing:false};
+    const st={pos:1,btns:[],playing:false};
     const tabEl=card.querySelector('#tab-'+ex.id), playBtn=card.querySelector('#play-'+ex.id), climb=card.querySelector('#climb-'+ex.id), status=card.querySelector('#status-'+ex.id);
 
     function render(){
@@ -171,38 +171,34 @@
       st.btns.forEach((b,i)=>b.addEventListener('click',()=>{ if(current) current.stop(); const [s,f]=notes[i]; S.note(s,f); b.classList.add('now'); setTimeout(()=>b.classList.remove('now'),350); }));
       card.querySelectorAll('[data-pos]').forEach(b=>b.setAttribute('aria-pressed',+b.dataset.pos===st.pos));
     }
-    function silence(){
-      const t=S.time; st.handles.forEach(v=>{ try{ v.out.gain.cancelScheduledValues(t); v.out.gain.setTargetAtTime(0,t,0.02); v.src.stop(t+0.15); }catch(e){} }); st.handles=[];
+    let run=null;
+    function follow(b){
+      const sc=tabEl.parentElement, x=b.offsetLeft-sc.scrollLeft;
+      if(x>sc.clientWidth*0.75||x<40) sc.scrollTo({left:Math.max(0,b.offsetLeft-sc.clientWidth*0.25),behavior:'smooth'});
     }
     function stop(){
-      st.timers.forEach(clearTimeout); st.timers=[]; silence(); st.playing=false;
+      if(run){ run.stop(); run=null; } st.playing=false;
       st.btns.forEach(b=>b.classList.remove('now'));
       playBtn.classList.remove('on'); playBtn.querySelector('.txt').textContent='Play along';
       if(current===api) current=null;
     }
     function playRound(){
-      const notes=build(ex,st.pos), beat=60/(+tempo.value), start=S.time+0.1;
+      const notes=build(ex,st.pos).map(([s,f])=>[s,f,1]);
       status.innerHTML=`Playing at <b>fret ${st.pos}</b>`+(climb.checked?' · climbing':'');
-      let prev=null;
-      notes.forEach(([s,f],i)=>{
-        const t=start+i*beat, h=S.note(s,f,t-S.time,0.85);
-        if(prev) prev.out.gain.setTargetAtTime(0,t,0.025);
-        h.out.gain.setTargetAtTime(0,t+beat+0.1,0.08);
-        st.handles.push(h); prev=h;
-        st.timers.push(setTimeout(()=>{ st.btns.forEach((b,j)=>b.classList.toggle('now',j===i)); const b=st.btns[i], sc=tabEl.parentElement; if(b) sc.scrollLeft=b.offsetLeft-sc.clientWidth/2; },(t-S.time)*1000));
-      });
-      const end=(start+notes.length*beat-S.time)*1000;
-      st.timers.push(setTimeout(()=>{
-        st.handles=[];
-        if(climb.checked&&st.pos<9){ st.pos++; render(); playRound(); }
-        else { status.textContent=climb.checked?'You reached fret 9. Nice climbing.':''; stop(); }
-      },end+200));
+      tabEl.parentElement.scrollTo({left:0});
+      run=S.sequence({notes,bpm:()=>+tempo.value,
+        onNote:i=>{ st.btns.forEach((b,j)=>b.classList.toggle('now',j===i)); if(st.btns[i]) follow(st.btns[i]); },
+        onEnd:()=>{
+          run=null;
+          if(st.playing&&climb.checked&&st.pos<9){ st.pos++; render(); playRound(); }
+          else { status.textContent=climb.checked?'You reached fret 9. Nice climbing.':''; stop(); }
+        }});
     }
     const api={stop};
     playBtn.addEventListener('click',()=>{
       if(st.playing){ stop(); status.textContent=''; return; }
       if(current) current.stop();
-      current=api; st.playing=true; S.ctx();
+      current=api; st.playing=true;
       playBtn.classList.add('on'); playBtn.querySelector('.txt').textContent='Stop';
       playRound();
     });

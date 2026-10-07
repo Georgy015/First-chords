@@ -202,36 +202,25 @@
   // Each note is cut when the next one starts (as when you lift a finger), the last one
   // fades after its own length, and anything still scheduled is silenced on stop.
   let current=null;                                   // the melody that's playing, if any
-  function silence(handles,when){
-    const t=when??S.time;
-    handles.forEach(v=>{ try{ v.out.gain.cancelScheduledValues(t); v.out.gain.setTargetAtTime(0,t,0.02); v.src.stop(t+0.15); }catch(e){} });
-  }
   function melody(tabId,btnId,notes,getBpm){
     const cols=notes.map(([s,f])=>[[s,f]]);
-    const player={timers:[],handles:[],btns:null,btn:document.getElementById(btnId)};
+    const player={run:null,btns:null,btn:document.getElementById(btnId)};
     player.stop=()=>{
-      player.timers.forEach(clearTimeout); player.timers=[];
-      silence(player.handles); player.handles=[];
+      if(player.run){ player.run.stop(); player.run=null; }
       player.btns.forEach(b=>b.classList.remove('now'));
       player.btn.classList.remove('on'); player.btn.querySelector('.txt').textContent='Play along';
       if(current===player) current=null;
     };
     player.btns=buildTab(document.getElementById(tabId),cols,(i,b)=>{ if(current) current.stop(); S.note(notes[i][0],notes[i][1]); flash(b); },true);
+    const sc=document.getElementById(tabId).parentElement;
     player.btn.addEventListener('click',()=>{
       if(current===player){ player.stop(); return; }
       if(current) current.stop();
-      current=player; S.ctx();
-      const beat=60/getBpm(), start=S.time+0.08; let t=0;
-      let prev=null;
-      notes.forEach(([s,f,d],i)=>{
-        const h=S.note(s,f,start+t-S.time);
-        if(prev){ prev.out.gain.setTargetAtTime(0,start+t,0.025); }   // previous note stops as this one starts
-        h.out.gain.setTargetAtTime(0,start+t+d*beat+0.15,0.08);        // and every note ends after its length
-        player.handles.push(h); prev=h;
-        player.timers.push(setTimeout(()=>player.btns.forEach((b,j)=>b.classList.toggle('now',j===i)),(start+t-S.time)*1000));
-        t+=d*beat;
-      });
-      player.timers.push(setTimeout(player.stop,(start+t-S.time+0.5)*1000));
+      current=player; sc.scrollTo({left:0});
+      player.run=S.sequence({notes,bpm:getBpm,
+        onNote:i=>{ player.btns.forEach((b,j)=>b.classList.toggle('now',j===i)); const b=player.btns[i], x=b.offsetLeft-sc.scrollLeft;
+          if(x>sc.clientWidth*0.75||x<40) sc.scrollTo({left:Math.max(0,b.offsetLeft-sc.clientWidth*0.25),behavior:'smooth'}); },
+        onEnd:()=>{ player.run=null; player.stop(); }});
       player.btn.classList.add('on'); player.btn.querySelector('.txt').textContent='Stop';
     });
     return player;
