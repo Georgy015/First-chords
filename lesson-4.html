@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>First Chords Plus · Lesson 4</title>
+<meta name="description" content="First Chords Plus, Lesson 4: stretch those fingers. Two left-hand warm-ups in tab, playable at any position on the neck, to get ready for barre chords.">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#FAF6EC" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#1C1714" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M16 3C22 3 28 5.5 28 11C28 17.5 20 26 16 29C12 26 4 17.5 4 11C4 5.5 10 3 16 3Z' fill='%23C9873F'/%3E%3C/svg%3E">
+<link rel="preload" href="fonts/fraunces-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="assets/plus.css">
+<style>
+  .why{display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px; margin:0 0 8px; padding:0; list-style:none;}
+  @media (max-width:640px){.why{grid-template-columns:1fr;}}
+  .why li{background:var(--card); border:1.4px solid var(--rule); border-radius:10px; padding:14px 16px; font-size:0.9rem; color:var(--ink-2); line-height:1.5;}
+  .why strong{display:block; font-family:'Fraunces',serif; font-size:1rem; color:var(--ink); margin-bottom:2px;}
+
+  .ex-head{display:flex; align-items:baseline; justify-content:space-between; gap:12px; flex-wrap:wrap;}
+  .ex-head h4{font-family:'Fraunces',serif; font-weight:600; font-size:1.3rem; margin:0;}
+  .ex-head .order{font-family:'Fraunces',serif; font-weight:600; font-size:1.05rem; letter-spacing:.14em; color:var(--wood);}
+  .pos-row{display:flex; align-items:center; gap:12px; flex-wrap:wrap;}
+  .pos-row .ctl-label{margin:0;}
+  .pos-row .seg button{min-width:44px; font-variant-numeric:tabular-nums;}
+  .climb{display:flex; align-items:center; gap:8px; font-size:0.88rem; color:var(--ink-2); cursor:pointer;}
+  .climb input{width:18px; height:18px; accent-color:var(--wood);}
+  .status{margin:0; font-size:0.85rem; color:var(--faint); min-height:1.3em;}
+  .status b{color:var(--wood);}
+  .transport{display:flex; align-items:center; gap:18px; flex-wrap:wrap;}
+  .tab-col.round-end .tab-cell::before{right:0;}
+
+  .barre-teaser{border:1.4px dashed var(--wood); border-radius:12px; padding:18px 20px; display:grid; grid-template-columns:auto 1fr; gap:6px 18px; align-items:center;}
+  @media (max-width:560px){.barre-teaser{grid-template-columns:1fr;}}
+  .barre-teaser svg{width:92px; height:auto;}
+  .barre-teaser h4{font-family:'Fraunces',serif; font-weight:600; font-size:1.15rem; margin:0 0 4px;}
+  .barre-teaser p{margin:0; font-size:0.92rem; color:var(--ink-2); line-height:1.5;}
+  .cd-barre{fill:var(--wood);}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <a class="back" href="lesson-3.html" data-preview="https://claude.ai/artifact/AtLQpp2LGpuCwDMNewSiW7">← Lesson 3</a>
+  <span class="plus-badge">Plus</span>
+</div>
+
+<nav class="jump" aria-label="Jump to a section">
+  <div class="jump-inner">
+    <a href="#before">4.1 · Before you start</a>
+    <a href="#spider">4.2 · The Spider</a>
+    <a href="#crossover">4.3 · The Crossover</a>
+    <a href="#next">What's next</a>
+  </div>
+</nav>
+
+<section class="wrap lesson" id="lesson-4">
+  <p class="kicker">Lesson 4 · Warm-up</p>
+  <h2 class="lesson-h">Stretch those fingers!</h2>
+  <p class="lede">Barre chords are coming next, and they ask more of your fretting hand than anything so far: a strong index finger and four fingers that move on their own. These two warm-ups build exactly that. Play them for a few minutes at the start of every practice session.</p>
+
+  <!-- 4.1 -->
+  <div class="sub" id="before">
+    <p class="sub-n">4.1</p>
+    <h3 class="sub-h">Before you start</h3>
+    <ul class="why">
+      <li><strong>One finger per fret</strong>Each finger owns one fret: index on the first, pinky on the fourth. Your hand stays put; only the fingers move.</li>
+      <li><strong>Slow and even</strong>Every note gets the same length and the same volume. Clean at 60 BPM beats messy at 100.</li>
+      <li><strong>Stay relaxed</strong>Thumb behind the neck, wrist loose. If your hand aches, stop and shake it out. A slight burn in the fingertips is fine; pain is not.</li>
+    </ul>
+    <div class="card practice" style="margin-top:12px;">
+      <h3>Moving across the neck</h3>
+      <p class="body-text" style="margin:0;">Both exercises use the same finger order at any fret. Pick a <strong>starting fret</strong> to move the whole pattern up the neck. Higher up, the frets are closer together, so it's easier on a short stretch; down at fret 1 it's the biggest stretch. Tick <strong>Climb the neck</strong> to move up one fret after every round, all the way to fret 9.</p>
+      <div class="tempo-row">
+        <label for="tempo">Speed</label>
+        <input type="range" id="tempo" min="40" max="120" step="5" value="60">
+        <output for="tempo" id="tempoOut">60 BPM</output>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4.2 -->
+  <div class="sub" id="spider">
+    <p class="sub-n">4.2</p>
+    <h3 class="sub-h">Exercise 1: The Spider</h3>
+    <p class="lede">Four notes on every string, one finger after the other, from the low E up to high e and back down. Leave each finger down until the next one has landed, then lift it just off the string.</p>
+    <div class="card" id="ex-spider"></div>
+  </div>
+
+  <!-- 4.3 -->
+  <div class="sub" id="crossover">
+    <p class="sub-n">4.3</p>
+    <h3 class="sub-h">Exercise 2: The Crossover</h3>
+    <p class="lede">The same four frets in a mixed order: 1, 3, 2, 4. Your middle and ring fingers have to work independently, which is the hardest part of a barre chord shape. Expect it to feel clumsy at first.</p>
+    <div class="card" id="ex-crossover"></div>
+  </div>
+
+  <!-- what's next -->
+  <div class="sub" id="next">
+    <p class="sub-n">Next</p>
+    <h3 class="sub-h">Coming up: barre chords</h3>
+    <div class="barre-teaser">
+      <svg viewBox="0 0 100 120" aria-hidden="true" id="barreSvg"></svg>
+      <div>
+        <h4>Your first barre chord</h4>
+        <p>In a barre chord, your index finger presses all six strings at once, like a movable nut, while the other three fingers make a chord shape. That's why these warm-ups train the index finger and finger independence. Next lesson starts gently, with an easy "mini F", before the full F and Bm.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="next-lesson">
+    <p><strong>Lesson 5 is on its way</strong>Keep these warm-ups in your routine: three to five minutes at the start of every session.</p>
+    <a class="btn-next" href="lesson-3.html" data-preview="https://claude.ai/artifact/AtLQpp2LGpuCwDMNewSiW7"><span aria-hidden="true">←</span> Back to Lesson 3</a>
+  </div>
+</section>
+
+<footer class="wrap">
+  <p class="made"><strong>First Chords</strong> · made by a guitarist, for beginners</p>
+</footer>
+
+<script src="assets/guitar-sound.js"></script>
+<script>
+(function(){
+  const S=window.FCSound;
+  const LABELS=['E','A','D','G','B','e'];
+  const tempo=document.getElementById('tempo'), tempoOut=document.getElementById('tempoOut');
+  tempo.addEventListener('input',()=>{ tempoOut.textContent=tempo.value+' BPM'; });
+
+  // finger order within the four frets: offsets 0..3 = fingers 1..4
+  const EXERCISES=[
+    {id:'spider',name:'The Spider',order:[1,2,3,4],backDown:true},
+    {id:'crossover',name:'The Crossover',order:[1,3,2,4],backDown:false},
+  ];
+  // notes = [string, fret, finger]; strings 0 = low E .. 5 = high e
+  function build(ex,pos){
+    const up=[]; for(let s=0;s<6;s++) ex.order.forEach(f=>up.push([s,pos+f-1,f]));
+    if(!ex.backDown) return up;
+    const down=[]; for(let s=5;s>=0;s--) ex.order.slice().reverse().forEach(f=>down.push([s,pos+f-1,f]));
+    return up.concat(down);
+  }
+
+  let current=null;
+  EXERCISES.forEach(ex=>{
+    const card=document.getElementById('ex-'+ex.id);
+    card.innerHTML=`
+      <div class="ex-head"><h4>${ex.name}</h4><span class="order" aria-label="Finger order">${ex.order.join(' · ')}</span></div>
+      <div class="pos-row">
+        <p class="ctl-label" id="pl-${ex.id}">Starting fret</p>
+        <div class="seg" role="group" aria-labelledby="pl-${ex.id}">${[1,3,5,7,9].map(p=>`<button type="button" id="pos-${ex.id}-${p}" data-pos="${p}" aria-pressed="${p===1}">${p}</button>`).join('')}</div>
+      </div>
+      <div class="tab-scroll"><div class="tab has-fingers" id="tab-${ex.id}"></div></div>
+      <div class="transport">
+        <button type="button" class="btn" id="play-${ex.id}"><span class="ico" aria-hidden="true"></span><span class="txt">Play along</span></button>
+        <label class="climb"><input type="checkbox" id="climb-${ex.id}"> Climb the neck (one fret up each round)</label>
+      </div>
+      <p class="status" id="status-${ex.id}" aria-live="polite"></p>`;
+    const st={pos:1,timers:[],handles:[],btns:[],playing:false};
+    const tabEl=card.querySelector('#tab-'+ex.id), playBtn=card.querySelector('#play-'+ex.id), climb=card.querySelector('#climb-'+ex.id), status=card.querySelector('#status-'+ex.id);
+
+    function render(){
+      const notes=build(ex,st.pos);
+      let h='<div class="tab-labels" aria-hidden="true">'+[5,4,3,2,1,0].map(s=>`<span>${LABELS[s]}</span>`).join('')+'<span class="fl">finger</span></div><div class="tab-cells">';
+      notes.forEach(([s,f,fg],i)=>{
+        h+=`<button type="button" class="tab-col" data-i="${i}" aria-label="${LABELS[s]} string, fret ${f}, finger ${fg}">`;
+        for(const r of [5,4,3,2,1,0]) h+=`<span class="tab-cell">${r===s?`<span class="num">${f}</span>`:''}</span>`;
+        h+=`<span class="fing">${fg}</span></button>`;
+      });
+      tabEl.innerHTML=h+'</div>';
+      st.btns=[...tabEl.querySelectorAll('.tab-col')];
+      st.btns.forEach((b,i)=>b.addEventListener('click',()=>{ if(current) current.stop(); const [s,f]=notes[i]; S.note(s,f); b.classList.add('now'); setTimeout(()=>b.classList.remove('now'),350); }));
+      card.querySelectorAll('[data-pos]').forEach(b=>b.setAttribute('aria-pressed',+b.dataset.pos===st.pos));
+    }
+    function silence(){
+      const t=S.time; st.handles.forEach(v=>{ try{ v.out.gain.cancelScheduledValues(t); v.out.gain.setTargetAtTime(0,t,0.02); v.src.stop(t+0.15); }catch(e){} }); st.handles=[];
+    }
+    function stop(){
+      st.timers.forEach(clearTimeout); st.timers=[]; silence(); st.playing=false;
+      st.btns.forEach(b=>b.classList.remove('now'));
+      playBtn.classList.remove('on'); playBtn.querySelector('.txt').textContent='Play along';
+      if(current===api) current=null;
+    }
+    function playRound(){
+      const notes=build(ex,st.pos), beat=60/(+tempo.value), start=S.time+0.1;
+      status.innerHTML=`Playing at <b>fret ${st.pos}</b>`+(climb.checked?' · climbing':'');
+      let prev=null;
+      notes.forEach(([s,f],i)=>{
+        const t=start+i*beat, h=S.note(s,f,t-S.time,0.85);
+        if(prev) prev.out.gain.setTargetAtTime(0,t,0.025);
+        h.out.gain.setTargetAtTime(0,t+beat+0.1,0.08);
+        st.handles.push(h); prev=h;
+        st.timers.push(setTimeout(()=>{ st.btns.forEach((b,j)=>b.classList.toggle('now',j===i)); const b=st.btns[i], sc=tabEl.parentElement; if(b) sc.scrollLeft=b.offsetLeft-sc.clientWidth/2; },(t-S.time)*1000));
+      });
+      const end=(start+notes.length*beat-S.time)*1000;
+      st.timers.push(setTimeout(()=>{
+        st.handles=[];
+        if(climb.checked&&st.pos<9){ st.pos++; render(); playRound(); }
+        else { status.textContent=climb.checked?'You reached fret 9. Nice climbing.':''; stop(); }
+      },end+200));
+    }
+    const api={stop};
+    playBtn.addEventListener('click',()=>{
+      if(st.playing){ stop(); status.textContent=''; return; }
+      if(current) current.stop();
+      current=api; st.playing=true; S.ctx();
+      playBtn.classList.add('on'); playBtn.querySelector('.txt').textContent='Stop';
+      playRound();
+    });
+    card.querySelectorAll('[data-pos]').forEach(b=>b.addEventListener('click',()=>{ if(st.playing) stop(); st.pos=+b.dataset.pos; render(); status.textContent=''; }));
+    render();
+  });
+
+  // barre teaser: full F barre chord diagram (fret 1 barre)
+  (function(){
+    const strings=6, fretsShown=4, w=100,h=120, left=14, top=14, sw=(w-2*left)/(strings-1), fh=(h-top-10)/fretsShown;
+    let s=`<rect x="${left-1}" y="${top-3}" width="${w-2*left+2}" height="3" class="cd-nut"/>`;
+    for(let f=1;f<=fretsShown;f++) s+=`<line x1="${left}" y1="${top+f*fh}" x2="${w-left}" y2="${top+f*fh}" class="cd-fret"/>`;
+    for(let i=0;i<strings;i++){ const x=left+i*sw; s+=`<line x1="${x}" y1="${top}" x2="${x}" y2="${top+fretsShown*fh}" class="cd-string"/>`; }
+    s+=`<rect x="${left-6}" y="${top+0.5*fh-6.6}" width="${w-2*left+12}" height="13.2" rx="6.6" class="cd-barre"/><text x="${w/2}" y="${top+0.5*fh+3.1}" class="finger-num">1</text>`;
+    [[1,3,3],[2,3,4],[3,2,2]].forEach(([i,f,fg])=>{ const x=left+i*sw, y=top+(f-0.5)*fh; s+=`<circle cx="${x}" cy="${y}" r="6.6" class="cd-dot"/><text x="${x}" y="${y+3.1}" class="finger-num">${fg}</text>`; });
+    document.getElementById('barreSvg').innerHTML=s;
+  })();
+
+  if(window.self!==window.top){ document.querySelectorAll('a[data-preview]').forEach(a=>{ a.href=a.dataset.preview; a.target='_blank'; a.rel='noopener'; }); }
+  const links=[...document.querySelectorAll('.jump a')], secs=links.map(a=>document.querySelector(a.getAttribute('href')));
+  function mark(){ const y=scrollY+120; let cur=-1; secs.forEach((s,i)=>{ if(s.getBoundingClientRect().top+scrollY<=y) cur=i; }); links.forEach((a,i)=>i===cur?a.setAttribute('aria-current','true'):a.removeAttribute('aria-current')); }
+  addEventListener('scroll',mark,{passive:true}); mark();
+})();
+</script>
+</body>
+</html>
