@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>First Chords Plus · Lesson 3</title>
+<meta name="description" content="First Chords Plus, Lesson 3: practice changing between chord pairs (C–Am, A–E, Em–G, Dm–Am), first with downstrokes, then down and up.">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#FAF6EC" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#1C1714" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M16 3C22 3 28 5.5 28 11C28 17.5 20 26 16 29C12 26 4 17.5 4 11C4 5.5 10 3 16 3Z' fill='%23C9873F'/%3E%3C/svg%3E">
+<link rel="preload" href="fonts/fraunces-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="assets/plus.css">
+<style>
+  /* the two stages */
+  .stages{list-style:none; margin:0 0 8px; padding:0; display:grid; grid-template-columns:1fr 1fr; gap:12px;}
+  @media (max-width:560px){.stages{grid-template-columns:1fr;}}
+  .stages li{background:var(--card); border:1.4px solid var(--rule); border-radius:12px; padding:16px 18px; display:grid; gap:6px;}
+  .stages .st-n{font-size:0.72rem; font-weight:600; letter-spacing:.08em; text-transform:uppercase; color:var(--wood);}
+  .stages h4{font-family:'Fraunces',serif; font-weight:600; font-size:1.1rem; margin:0;}
+  .stages p{margin:0; font-size:0.9rem; color:var(--ink-2); line-height:1.5;}
+  .stages .pattern{font-family:'Fraunces',serif; font-weight:600; font-size:1.05rem; letter-spacing:.12em; color:var(--ink);}
+  .rule-box{border-left:3px solid var(--wood); background:var(--card); border-radius:6px; padding:12px 16px; font-size:0.92rem; color:var(--ink-2); line-height:1.5; margin:16px 0 0; max-width:62ch;}
+  .rule-box strong{color:var(--ink);}
+
+  /* pair drill cards */
+  .drill{background:var(--card); border:1.4px solid var(--rule); border-radius:12px; padding:20px; display:grid; gap:16px; margin-bottom:20px;}
+  .drill.playing{border-color:var(--wood);}
+  .drill-head{display:flex; align-items:baseline; justify-content:space-between; gap:12px; flex-wrap:wrap;}
+  .drill-head h4{font-family:'Fraunces',serif; font-weight:600; font-size:1.35rem; margin:0;}
+  .drill-head .done{font-size:0.78rem; font-weight:600; color:var(--sage);}
+  .drill-body{display:grid; grid-template-columns:auto 1fr; gap:16px 22px; align-items:center;}
+  @media (max-width:560px){.drill-body{grid-template-columns:1fr;}}
+  .mini{display:flex; gap:10px;}
+  .mini figure{margin:0; text-align:center;}
+  .mini svg{width:84px; height:auto;}
+  .mini figcaption{font-family:'Fraunces',serif; font-weight:600; font-size:1rem;}
+  .mini button{background:none; border:1.4px solid transparent; border-radius:8px; padding:4px; cursor:pointer; color:inherit;}
+  .mini button:hover{border-color:var(--wood);}
+  .tip{margin:0; font-size:0.9rem; color:var(--ink-2); line-height:1.5;}
+  .tip strong{color:var(--ink);}
+
+  .stage-pick{display:flex; flex-wrap:wrap; gap:8px; align-items:center;}
+  .stage-pick button[disabled]{opacity:.5; cursor:not-allowed;}
+  .lock-note{font-size:0.82rem; color:var(--faint);}
+  .stage-check{display:flex; align-items:center; gap:8px; font-size:0.88rem; color:var(--ink-2); cursor:pointer;}
+  .stage-check input{width:18px; height:18px; accent-color:var(--sage);}
+
+  .stage-view{display:grid; grid-template-columns:1fr auto; align-items:center; gap:12px; background:var(--paper); border-radius:10px; padding:12px 16px;}
+  .now-chord{font-family:'Fraunces',serif; font-weight:700; font-size:clamp(2.2rem,8vw,3rem); line-height:1;}
+  .next-chord{font-size:0.8rem; color:var(--faint); text-align:right;}
+  .next-chord b{display:block; font-family:'Fraunces',serif; font-size:1.15rem; color:var(--muted);}
+  .ticks{grid-column:1/-1; display:flex; gap:6px;}
+  .ticks span{flex:1; max-width:44px; height:28px; border-radius:6px; border:1.4px solid var(--rule); display:flex; align-items:center; justify-content:center; font-size:0.8rem; font-weight:600; color:var(--faint); background:var(--card);}
+  .ticks span.miss{border-style:dashed; color:transparent;}
+  .ticks span.on{background:var(--wood); border-color:var(--wood); color:var(--on-accent);}
+  .ticks span.change{box-shadow:inset 0 -3px 0 var(--wood);}
+  .ticks span.on.change{box-shadow:none;}
+  .transport{display:flex; align-items:center; gap:18px; flex-wrap:wrap;}
+
+  .coming{border:1.4px dashed var(--wood); border-radius:12px; padding:18px 20px; display:grid; gap:8px; margin-top:8px;}
+  .coming h4{font-family:'Fraunces',serif; font-weight:600; font-size:1.15rem; margin:0;}
+  .coming p{margin:0; font-size:0.92rem; color:var(--ink-2); line-height:1.5;}
+  .groups{display:flex; flex-wrap:wrap; gap:8px;}
+  .groups span{font-family:'Fraunces',serif; font-weight:600; font-size:0.95rem; border:1.4px solid var(--rule); border-radius:999px; padding:4px 12px; background:var(--card);}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <a class="back" href="lesson-2.html" data-preview="https://claude.ai/artifact/H55Xusr4nZDNbwJnQWrYfG">← Lesson 2</a>
+  <span class="plus-badge">Plus</span>
+</div>
+
+<nav class="jump" aria-label="Jump to a section">
+  <div class="jump-inner">
+    <a href="#how">3.1 · How to practice</a>
+    <a href="#pairs">3.2 · Chord pairs</a>
+    <a href="#next">What's next</a>
+  </div>
+</nav>
+
+<section class="wrap lesson" id="lesson-3">
+  <p class="kicker">Lesson 3 · Practice</p>
+  <h2 class="lesson-h">Changing between two chords</h2>
+  <p class="lede">Knowing a chord shape is one skill. Getting to it on time, in the middle of a song, is another, and it's the one that makes songs sound like songs. This practice chapter drills four chord pairs you'll meet again and again.</p>
+
+  <!-- 3.1 -->
+  <div class="sub" id="how">
+    <p class="sub-n">3.1</p>
+    <h3 class="sub-h">How to practice</h3>
+    <p class="lede">Every pair is practiced in two stages. Don't skip ahead: the second stage only works once the first feels easy.</p>
+    <ol class="stages">
+      <li>
+        <span class="st-n">Stage 1 · start here</span>
+        <h4>Downstrokes only</h4>
+        <span class="pattern">↓ &nbsp; ↓ &nbsp; ↓ &nbsp; ↓</span>
+        <p>One downstroke on every beat, four on each chord. All your attention goes to the left hand: landing the new shape on beat one.</p>
+      </li>
+      <li>
+        <span class="st-n">Stage 2 · after Stage 1</span>
+        <h4>Down and up</h4>
+        <span class="pattern">↓↑ ↓↑ ↓↑ ↓↑</span>
+        <p>Add an upstroke between the beats. Your strumming hand never stops, so the chord change has to happen while it keeps swinging.</p>
+      </li>
+    </ol>
+    <p class="rule-box"><strong>The rule:</strong> stay on Stage 1 until you can change cleanly at 80 BPM for a full minute, with every string ringing. Tick the box on each pair when you get there, and Stage 2 unlocks. Start every new pair at 60 BPM.</p>
+  </div>
+
+  <!-- 3.2 -->
+  <div class="sub" id="pairs">
+    <p class="sub-n">3.2</p>
+    <h3 class="sub-h">Chord pairs</h3>
+    <p class="lede">Each card plays the pair in a loop: four beats on the first chord, four on the second. The big letter shows the chord you should be holding; the underlined slot is your last chance to move before the change.</p>
+    <div id="drills"></div>
+  </div>
+
+  <!-- what's next -->
+  <div class="sub" id="next">
+    <p class="sub-n">Next</p>
+    <h3 class="sub-h">Coming up: three-chord groups</h3>
+    <div class="coming">
+      <h4>The next practice chapter</h4>
+      <p>Once these pairs feel easy, the next practice chapter moves to groups of three chords. That's how most songs actually move, and it's where your changes start to flow.</p>
+      <div class="groups" aria-label="Examples of three-chord groups"><span>G · C · D</span><span>C · Am · G</span><span>Am · Dm · E</span><span>Em · C · D</span></div>
+    </div>
+  </div>
+
+  <div class="next-lesson">
+    <p><strong>Lesson 4 is on its way</strong>Keep practicing these pairs until they feel automatic.</p>
+    <a class="btn-next" href="lesson-2.html" data-preview="https://claude.ai/artifact/H55Xusr4nZDNbwJnQWrYfG"><span aria-hidden="true">←</span> Back to Lesson 2</a>
+  </div>
+</section>
+
+<footer class="wrap">
+  <p class="made"><strong>First Chords</strong> · made by a guitarist, for beginners</p>
+</footer>
+
+<script src="assets/guitar-sound.js"></script>
+<script>
+(function(){
+  const S=window.FCSound;
+  const CH={
+    C:{frets:[null,3,2,0,1,0],fingers:[0,3,2,0,1,0]},
+    Am:{frets:[null,0,2,2,1,0],fingers:[0,0,2,3,1,0]},
+    A:{frets:[null,0,2,2,2,0],fingers:[0,0,1,2,3,0]},
+    E:{frets:[0,2,2,1,0,0],fingers:[0,2,3,1,0,0]},
+    Em:{frets:[0,2,2,0,0,0],fingers:[0,2,3,0,0,0]},
+    G:{frets:[3,2,0,0,0,3],fingers:[2,1,0,0,0,3]},
+    Dm:{frets:[null,null,0,2,3,1],fingers:[0,0,0,2,3,1]},
+  };
+  const PAIRS=[
+    {a:'C',b:'Am',tip:'<strong>Two fingers stay put.</strong> Index (B string, fret 1) and middle (D string, fret 2) are the same in both chords. Only the ring finger moves: A string fret 3 for C, G string fret 2 for Am.'},
+    {a:'A',b:'E',tip:'<strong>Move the fingers as one block.</strong> From A, lift all three together and land middle and ring on the A and D strings at fret 2, index on the G string at fret 1. Strum all six strings for E, five for A.'},
+    {a:'Em',b:'G',tip:'<strong>The biggest jump of the four.</strong> Middle finger goes from the A string to low E at fret 3, index to the A string at fret 2, ring to high e at fret 3. Aim for the low E first: it\'s the first string you strum.'},
+    {a:'Dm',b:'Am',tip:'<strong>The same shape, one string over.</strong> Every finger moves one string toward the thick side: index from high e to B, middle from G to D, ring from B (fret 3) to G (fret 2).'},
+  ];
+
+  function fretSVG(frets,fingers){
+    const strings=6, fretsShown=4, w=100,h=120, left=14, top=14, sw=(w-2*left)/(strings-1), fh=(h-top-10)/fretsShown;
+    let s=`<svg viewBox="0 0 ${w} ${h}" aria-hidden="true"><rect x="${left-1}" y="${top-3}" width="${w-2*left+2}" height="3" class="cd-nut"/>`;
+    for(let f=1;f<=fretsShown;f++) s+=`<line x1="${left}" y1="${top+f*fh}" x2="${w-left}" y2="${top+f*fh}" class="cd-fret"/>`;
+    for(let i=0;i<strings;i++){ const x=left+i*sw; s+=`<line x1="${x}" y1="${top}" x2="${x}" y2="${top+fretsShown*fh}" class="cd-string"/>`; }
+    frets.forEach((f,i)=>{
+      const x=left+i*sw;
+      if(f===null) s+=`<text x="${x}" y="${top-6}" class="cd-x">✕</text>`;
+      else if(f===0) s+=`<circle cx="${x}" cy="${top-7}" r="3.4" class="cd-open"/>`;
+      else{ const y=top+(f-0.5)*fh; s+=`<circle cx="${x}" cy="${y}" r="6.6" class="cd-dot"/>`; if(fingers[i]) s+=`<text x="${x}" y="${y+3.1}" class="finger-num">${fingers[i]}</text>`; }
+    });
+    return s+'</svg>';
+  }
+  const notesOf=name=>{ const n=[]; CH[name].frets.forEach((f,i)=>{ if(f!==null) n.push(S.OPEN[i]*Math.pow(2,f/12)); }); return n; };
+  function click(t,accent){
+    const ctx=S.ctx(), o=ctx.createOscillator(), g=ctx.createGain();
+    o.frequency.value=accent?1600:1100; g.gain.setValueAtTime(0.0001,t); g.gain.exponentialRampToValueAtTime(accent?0.16:0.09,t+0.002); g.gain.exponentialRampToValueAtTime(0.0001,t+0.05);
+    o.connect(g).connect(ctx.destination); o.start(t); o.stop(t+0.06);
+  }
+  const load=k=>{ try{ return JSON.parse(localStorage.getItem(k)||'null'); }catch(e){ return null; } };
+  const save=(k,v)=>{ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(e){} };
+
+  let active=null; // only one drill plays at a time
+  const host=document.getElementById('drills');
+
+  PAIRS.forEach(p=>{
+    const id=`${p.a}-${p.b}`, key='firstchords.plus.l3.'+id;
+    const saved=load(key)||{};
+    const st={stage:1, ok:!!saved.ok, bpm:60, timer:null, next:0, step:0, ring:[], ui:[]};
+    const el=document.createElement('div'); el.className='drill'; el.id='drill-'+id;
+    el.innerHTML=`
+      <div class="drill-head"><h4>${p.a} ↔ ${p.b}</h4><span class="done" ${st.ok?'':'hidden'}>Stage 1 done ✓</span></div>
+      <div class="drill-body">
+        <div class="mini">
+          <button type="button" aria-label="Play ${p.a}" data-play="${p.a}"><figure>${fretSVG(CH[p.a].frets,CH[p.a].fingers)}<figcaption>${p.a}</figcaption></figure></button>
+          <button type="button" aria-label="Play ${p.b}" data-play="${p.b}"><figure>${fretSVG(CH[p.b].frets,CH[p.b].fingers)}<figcaption>${p.b}</figcaption></figure></button>
+        </div>
+        <p class="tip">${p.tip}</p>
+      </div>
+      <div class="stage-pick" role="group" aria-label="Practice stage">
+        <div class="seg">
+          <button type="button" id="s1-${id}" aria-pressed="true">Stage 1 · ↓ only</button>
+          <button type="button" id="s2-${id}" aria-pressed="false">Stage 2 · ↓↑</button>
+        </div>
+        <span class="lock-note">Stage 2 unlocks when Stage 1 is clean.</span>
+      </div>
+      <div class="stage-view" aria-live="polite">
+        <div class="now-chord">${p.a}</div>
+        <div class="next-chord">next<b>${p.b}</b></div>
+        <div class="ticks"></div>
+      </div>
+      <div class="transport">
+        <button type="button" class="btn" id="play-${id}"><span class="ico" aria-hidden="true"></span><span class="txt">Play</span></button>
+        <div class="tempo-row" style="flex:1; min-width:220px;">
+          <label for="tempo-${id}">Speed</label>
+          <input type="range" id="tempo-${id}" min="50" max="120" step="5" value="60">
+          <output for="tempo-${id}">60 BPM</output>
+        </div>
+      </div>
+      <label class="stage-check"><input type="checkbox" id="ok-${id}" ${st.ok?'checked':''}> I can change cleanly with downstrokes at 80 BPM for a full minute</label>`;
+    host.appendChild(el);
+
+    const $=s=>el.querySelector(s);
+    const s1=$('#s1-'+id), s2=$('#s2-'+id), okBox=$('#ok-'+id), lock=$('.lock-note'), done=$('.done');
+    const nowEl=$('.now-chord'), nextEl=$('.next-chord b'), ticks=$('.ticks'), playBtn=$('#play-'+id);
+    const tempo=$('#tempo-'+id), tempoOut=$('output');
+
+    // slots per chord: stage 1 = 4 beats, stage 2 = 8 eighths (down on the beat, up on the "&")
+    const slots=()=>st.stage===1?4:8;
+    function drawTicks(){
+      const n=slots(); let h='';
+      for(let i=0;i<n;i++){ const isUp=st.stage===2&&i%2===1; h+=`<span class="${i===n-1?'change':''}">${st.stage===1?'↓':(isUp?'↑':'↓')}</span>`; }
+      ticks.innerHTML=h;
+    }
+    function show(step){
+      const n=slots(), idx=Math.floor(step/n)%2, pos=step%n;
+      nowEl.textContent=idx?p.b:p.a; nextEl.textContent=idx?p.a:p.b;
+      [...ticks.children].forEach((t,i)=>t.classList.toggle('on',!!st.timer&&i===pos));
+    }
+    function setStage(n){
+      if(n===2&&!st.ok){ lock.textContent='Finish Stage 1 first: tick the box below once it\'s clean at 80 BPM.'; return; }
+      st.stage=n; s1.setAttribute('aria-pressed',n===1); s2.setAttribute('aria-pressed',n===2);
+      st.step=0; drawTicks(); show(0);
+    }
+    function refreshLock(){
+      s2.disabled=!st.ok; s2.title=st.ok?'':'Finish Stage 1 first';
+      lock.textContent=st.ok?'Stage 2 unlocked. Start it at 60 BPM again.':'Stage 2 unlocks when Stage 1 is clean.';
+      done.hidden=!st.ok;
+      if(!st.ok&&st.stage===2) setStage(1);
+    }
+    s1.addEventListener('click',()=>setStage(1));
+    s2.addEventListener('click',()=>setStage(2));
+    okBox.addEventListener('change',()=>{ st.ok=okBox.checked; save(key,{ok:st.ok}); refreshLock(); });
+    tempo.addEventListener('input',()=>{ st.bpm=+tempo.value; tempoOut.textContent=st.bpm+' BPM'; });
+    el.querySelectorAll('[data-play]').forEach(b=>b.addEventListener('click',()=>S.strum(CH[b.dataset.play].frets)));
+
+    function schedule(){
+      const ctx=S.ctx(), n=slots(), slotLen=60/st.bpm/(st.stage===1?1:2);
+      while(st.next<ctx.currentTime+0.12){
+        const step=st.step, pos=step%n, idx=Math.floor(step/n)%2, name=idx?p.b:p.a, up=st.stage===2&&pos%2===1;
+        if(!up) click(st.next,pos===0);
+        st.ring.forEach(v=>{ try{ v.out.gain.setTargetAtTime(0,st.next,0.03); v.src.stop(st.next+0.3); }catch(e){} });
+        let notes=notesOf(name); if(up) notes=notes.slice(-4).reverse();
+        st.ring=notes.map((fq,k)=>S.play(fq,st.next-ctx.currentTime+k*0.012,up?0.26:0.38));
+        st.ui.push(setTimeout(()=>show(step),Math.max(0,(st.next-ctx.currentTime)*1000)));
+        st.next+=slotLen; st.step++;
+      }
+      if(st.ui.length>64) st.ui=st.ui.slice(-16);
+    }
+    function stop(){
+      clearInterval(st.timer); st.timer=null; st.ui.forEach(clearTimeout); st.ui=[];
+      const t=S.time; st.ring.forEach(v=>{ try{ v.out.gain.cancelScheduledValues(t); v.out.gain.setTargetAtTime(0,t,0.04); v.src.stop(t+0.3); }catch(e){} }); st.ring=[];
+      playBtn.classList.remove('on'); playBtn.querySelector('.txt').textContent='Play'; el.classList.remove('playing');
+      st.step=0; show(0); if(active===api) active=null;
+    }
+    const api={stop};
+    playBtn.addEventListener('click',()=>{
+      if(st.timer){ stop(); return; }
+      if(active) active.stop();
+      active=api; const ctx=S.ctx(); st.step=0; st.next=ctx.currentTime+0.1; schedule(); st.timer=setInterval(schedule,25);
+      playBtn.classList.add('on'); playBtn.querySelector('.txt').textContent='Stop'; el.classList.add('playing');
+    });
+
+    drawTicks(); refreshLock(); show(0);
+  });
+
+  // In the claude.ai preview each lesson lives at its own link; on the real site plain relative links work.
+  if(window.self!==window.top){ document.querySelectorAll('a[data-preview]').forEach(a=>{ a.href=a.dataset.preview; a.target='_blank'; a.rel='noopener'; }); }
+
+  const links=[...document.querySelectorAll('.jump a')], secs=links.map(a=>document.querySelector(a.getAttribute('href')));
+  function mark(){ const y=scrollY+120; let cur=-1; secs.forEach((s,i)=>{ if(s.getBoundingClientRect().top+scrollY<=y) cur=i; }); links.forEach((a,i)=>i===cur?a.setAttribute('aria-current','true'):a.removeAttribute('aria-current')); }
+  addEventListener('scroll',mark,{passive:true}); mark();
+})();
+</script>
+</body>
+</html>
