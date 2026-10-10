@@ -35,6 +35,34 @@
   .cd-barre{fill:var(--wood);}
   .cd-frl{font-family:'Inter',sans-serif; font-size:8px; fill:var(--faint);}
 
+  /* F barre hand illustration */
+  .hand-scroll{overflow-x:auto;}
+  .hand-f{display:block; width:100%; height:auto;}
+  .hf-head{fill:#3A2C24;}
+  .hf-board{fill:#3A2C24;}
+  .hf-fret{fill:#D4CEC2;}
+  .hf-inlay{fill:#EDE6D6;}
+  .hf-nut{fill:#F6EEDB; stroke:var(--ink); stroke-width:1;}
+  .hf-wound{stroke:#B98E52;}
+  .hf-plain{stroke:#C9C4BA;}
+  .hf-fnum{font-family:'Inter',sans-serif; font-size:12px; fill:var(--faint); text-anchor:middle; font-variant-numeric:tabular-nums;}
+  .hf-slabel{font-family:'Fraunces',serif; font-weight:600; font-size:13px; fill:var(--faint); text-anchor:end;}
+  .hf-out{fill:none; stroke:var(--ink); stroke-width:4.4; stroke-linejoin:round;}
+  .hf-skin{fill:#F3D6B6;}
+  .hf-nail{fill:#FBEBDD; stroke:#C79E7C; stroke-width:1;}
+  .hf-crease{fill:none; stroke:#C79E7C; stroke-width:1.3; stroke-linecap:round;}
+  .hf-badge{fill:var(--wood);}
+  .hf-num{font-family:'Fraunces',serif; font-weight:700; font-size:12px; fill:#FFFFFF; text-anchor:middle;}
+  .hf-thumb{fill:#F3D6B6; stroke:var(--ink); stroke-width:1.6; stroke-dasharray:4 3; opacity:.75;}
+  .hf-cap{font-family:'Inter',sans-serif; font-size:12px; fill:var(--faint); text-anchor:middle;}
+  .hand-key{list-style:none; margin:0; padding:0; display:grid; grid-template-columns:1fr 1fr; gap:8px 18px;}
+  @media (max-width:560px){.hand-key{grid-template-columns:1fr;}}
+  .hand-key li{display:flex; gap:10px; align-items:flex-start; font-size:0.88rem; color:var(--ink-2); line-height:1.45;}
+  .hand-key li:last-child{grid-column:1/-1;}
+  .hand-key b{flex:0 0 auto; width:24px; height:24px; border-radius:50%; background:var(--wood); color:var(--on-accent); display:inline-flex; align-items:center; justify-content:center; font-family:'Fraunces',serif; font-size:0.85rem;}
+  .hand-key b.t{background:none; border:1.6px dashed var(--line); color:var(--muted);}
+  .hand-key strong{color:var(--ink);}
+
   .honest{display:grid; grid-template-columns:auto 1fr; gap:6px 18px; background:var(--card); border:1.4px solid var(--wood); border-radius:12px; padding:20px 22px;}
   @media (max-width:560px){.honest{grid-template-columns:1fr;}}
   .honest .big{font-family:'Fraunces',serif; font-weight:700; font-size:2.4rem; line-height:1; color:var(--wood);}
@@ -107,6 +135,77 @@
           <p style="font-size:0.85rem; color:var(--faint);">You don't need to play this yet. It's just to show where the lesson is heading.</p>
         </div>
       </div>
+    </div>
+
+
+    <div class="card hand-card" style="margin-top:20px;">
+      <h3>What it looks like in your hand</h3>
+      <p class="body-text" style="margin:0;">An F barre chord, seen from above, the way you look down at your own hand while playing: low E at the top, headstock to the left.</p>
+      <div class="hand-scroll">
+<svg class="hand-f" viewBox="0 0 660 370" role="img" aria-labelledby="handFT">
+<title id="handFT">A fretting hand holding an F barre chord, seen from above: index finger flat across all six strings at fret 1, middle finger on the G string at fret 2, ring finger on the A string and pinky on the D string at fret 3, thumb behind the neck</title>
+<rect x="314" y="54" width="34" height="68" rx="17" class="hf-thumb" transform="rotate(-6 331 88)"/>
+<rect x="0" y="82" width="66" height="160" rx="4" class="hf-head"/>
+<rect x="70" y="88" width="562" height="148" class="hf-board"/>
+<rect x="213" y="88" width="4" height="148" class="hf-fret"/>
+<rect x="348" y="88" width="4" height="148" class="hf-fret"/>
+<rect x="473" y="88" width="4" height="148" class="hf-fret"/>
+<rect x="598" y="88" width="4" height="148" class="hf-fret"/>
+<circle cx="412.5" cy="162.0" r="6" class="hf-inlay"/>
+<rect x="63" y="85" width="8" height="154" rx="2" class="hf-nut"/>
+<line x1="0" y1="102" x2="632" y2="102" class="hf-wound" stroke-width="3"/>
+<line x1="0" y1="126.4" x2="632" y2="126.4" class="hf-wound" stroke-width="2.6"/>
+<line x1="0" y1="150.8" x2="632" y2="150.8" class="hf-wound" stroke-width="2.2"/>
+<line x1="0" y1="175.2" x2="632" y2="175.2" class="hf-wound" stroke-width="1.8"/>
+<line x1="0" y1="199.6" x2="632" y2="199.6" class="hf-plain" stroke-width="1.3"/>
+<line x1="0" y1="224" x2="632" y2="224" class="hf-plain" stroke-width="1.1"/>
+<text x="142.5" y="76" class="hf-fnum">1</text>
+<text x="260.5" y="76" class="hf-fnum">2</text>
+<text x="412.5" y="76" class="hf-fnum">3</text>
+<text x="537.5" y="76" class="hf-fnum">4</text>
+<path d="M118,300 C130,276 440,272 470,300 C490,330 480,370 470,380 L120,380 C110,360 108,320 118,300 Z" class="hf-out"/>
+<rect x="-16" y="-238.5" width="32" height="258.5" rx="16.0" transform="translate(150 318) rotate(11.1)" class="hf-out"/>
+<rect x="-15" y="-162.3" width="30" height="182.3" rx="15.0" transform="translate(262 322) rotate(21.7)" class="hf-out"/>
+<rect x="-14.5" y="-220.2" width="29" height="240.2" rx="14.5" transform="translate(352 326) rotate(22.4)" class="hf-out"/>
+<rect x="-13" y="-186.7" width="26" height="206.7" rx="13.0" transform="translate(430 330) rotate(11.1)" class="hf-out"/>
+<path d="M118,300 C130,276 440,272 470,300 C490,330 480,370 470,380 L120,380 C110,360 108,320 118,300 Z" class="hf-skin"/>
+<rect x="-16" y="-238.5" width="32" height="258.5" rx="16.0" transform="translate(150 318) rotate(11.1)" class="hf-skin"/>
+<rect x="-15" y="-162.3" width="30" height="182.3" rx="15.0" transform="translate(262 322) rotate(21.7)" class="hf-skin"/>
+<rect x="-14.5" y="-220.2" width="29" height="240.2" rx="14.5" transform="translate(352 326) rotate(22.4)" class="hf-skin"/>
+<rect x="-13" y="-186.7" width="26" height="206.7" rx="13.0" transform="translate(430 330) rotate(11.1)" class="hf-skin"/>
+<rect x="-9.6" y="-234.5" width="19.2" height="17.6" rx="9" class="hf-nail" transform="translate(150 318) rotate(11.1)"/>
+<path d="M-9.6,-52.5 Q0,-49.5 9.6,-52.5" class="hf-crease" transform="translate(150 318) rotate(11.1)"/>
+<path d="M-9.6,-107.3 Q0,-104.3 9.6,-107.3" class="hf-crease" transform="translate(150 318) rotate(11.1)"/>
+<path d="M-9.6,-157.4 Q0,-154.4 9.6,-157.4" class="hf-crease" transform="translate(150 318) rotate(11.1)"/>
+<circle cx="189.6" cy="116.8" r="11" class="hf-badge"/><text x="189.6" y="120.8" class="hf-num">1</text>
+<rect x="-9" y="-158.3" width="18" height="16.5" rx="8.4" class="hf-nail" transform="translate(262 322) rotate(21.7)"/>
+<path d="M-9,-51.9 Q0,-48.9 9,-51.9" class="hf-crease" transform="translate(262 322) rotate(21.7)"/>
+<path d="M-9,-94.1 Q0,-91.1 9,-94.1" class="hf-crease" transform="translate(262 322) rotate(21.7)"/>
+<circle cx="305.2" cy="213.4" r="11" class="hf-badge"/><text x="305.2" y="217.4" class="hf-num">2</text>
+<rect x="-8.7" y="-216.2" width="17.4" height="16" rx="8.1" class="hf-nail" transform="translate(352 326) rotate(22.4)"/>
+<path d="M-8.7,-70.5 Q0,-67.5 8.7,-70.5" class="hf-crease" transform="translate(352 326) rotate(22.4)"/>
+<path d="M-8.7,-127.7 Q0,-124.7 8.7,-127.7" class="hf-crease" transform="translate(352 326) rotate(22.4)"/>
+<circle cx="412.5" cy="179.4" r="11" class="hf-badge"/><text x="412.5" y="183.4" class="hf-num">3</text>
+<rect x="-7.8" y="-182.7" width="15.6" height="14.3" rx="7.3" class="hf-nail" transform="translate(430 330) rotate(11.1)"/>
+<path d="M-7.8,-59.7 Q0,-56.7 7.8,-59.7" class="hf-crease" transform="translate(430 330) rotate(11.1)"/>
+<path d="M-7.8,-108.3 Q0,-105.3 7.8,-108.3" class="hf-crease" transform="translate(430 330) rotate(11.1)"/>
+<circle cx="455.9" cy="198.1" r="11" class="hf-badge"/><text x="455.9" y="202.1" class="hf-num">4</text>
+<text x="654" y="106" class="hf-slabel">E</text>
+<text x="654" y="130.4" class="hf-slabel">A</text>
+<text x="654" y="154.8" class="hf-slabel">D</text>
+<text x="654" y="179.2" class="hf-slabel">G</text>
+<text x="654" y="203.6" class="hf-slabel">B</text>
+<text x="654" y="228" class="hf-slabel">e</text>
+<text x="331" y="42" class="hf-cap">thumb behind the neck</text>
+</svg>
+      </div>
+      <ul class="hand-key">
+        <li><b>1</b><span><strong>Index:</strong> flat across all six strings, just behind fret 1. Roll it slightly onto its bony side; it presses harder there.</span></li>
+        <li><b>2</b><span><strong>Middle:</strong> G string, fret 2.</span></li>
+        <li><b>3</b><span><strong>Ring:</strong> A string, fret 3.</span></li>
+        <li><b>4</b><span><strong>Pinky:</strong> D string, fret 3, right next to the ring finger.</span></li>
+        <li><b class="t">T</b><span><strong>Thumb:</strong> behind the neck, roughly behind your middle finger. Squeeze between thumb and index, not with the whole arm.</span></li>
+      </ul>
     </div>
 
     <div class="honest" style="margin-top:20px;">
