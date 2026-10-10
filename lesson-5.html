@@ -69,16 +69,6 @@
   .chord-card .name small{font-family:'Inter',sans-serif; font-size:0.75rem; font-weight:500; color:var(--faint);}
   .place-steps{margin:0; padding-left:1.2em; display:grid; gap:8px; font-size:0.93rem; color:var(--ink-2); line-height:1.5;}
   .place-steps strong{color:var(--ink);}
-  .string-check{display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:10px;}
-  @media (max-width:560px){.string-check{grid-template-columns:repeat(2,minmax(0,1fr));}}
-  .sc-item{border:1.4px solid var(--rule); border-radius:10px; padding:10px; display:grid; gap:8px; justify-items:center; background:var(--paper);}
-  .sc-item.ok{border-color:var(--sage);}
-  .sc-item button{font:600 0.95rem 'Fraunces',serif; color:var(--ink); background:var(--card); border:1.4px solid var(--rule); border-radius:8px; padding:8px 12px; width:100%; cursor:pointer;}
-  .sc-item button:hover{border-color:var(--wood);}
-  .sc-item button small{display:block; font:500 0.72rem 'Inter',sans-serif; color:var(--faint);}
-  .sc-item label{display:flex; align-items:center; gap:6px; font-size:0.8rem; color:var(--ink-2); cursor:pointer;}
-  .sc-item input{width:16px; height:16px; accent-color:var(--sage);}
-  .check-msg{margin:0; font-size:0.9rem; color:var(--sage); font-weight:600; min-height:1.3em;}
   .fixes{margin-top:20px; background:var(--card); border:1.4px solid var(--rule); border-radius:12px; padding:16px 20px;}
   .fixes h4{font-family:'Fraunces',serif; font-weight:600; font-size:1.05rem; margin:0 0 8px;}
   .fixes ul{margin:0; padding-left:1.1em; display:grid; gap:6px; font-size:0.9rem; color:var(--ink-2); line-height:1.5;}
@@ -94,6 +84,16 @@
   .ticks span.change{box-shadow:inset 0 -3px 0 var(--wood);}
   .ticks span.on.change{box-shadow:none;}
   .transport{display:flex; align-items:center; gap:18px; flex-wrap:wrap;}
+
+  /* 5.3 full F */
+  .build{gap:16px;}
+  .build-row{display:grid; grid-template-columns:200px 1fr; gap:20px; align-items:center;}
+  @media (max-width:560px){.build-row{grid-template-columns:1fr;}}
+  .build-row .chord-card svg{max-width:130px;}
+  .build-text h4{font-family:'Fraunces',serif; font-weight:600; font-size:1.15rem; margin:0 0 6px;}
+  .build-text p{margin:0; font-size:0.93rem; color:var(--ink-2); line-height:1.55;}
+  .tips-f{margin-top:20px;}
+  .pair-btns{display:flex; gap:8px; flex-wrap:wrap;}
 
   .honest{display:grid; grid-template-columns:auto 1fr; gap:6px 18px; background:var(--card); border:1.4px solid var(--wood); border-radius:12px; padding:20px 22px;}
   @media (max-width:560px){.honest{grid-template-columns:1fr;}}
@@ -126,6 +126,7 @@
   <div class="jump-inner">
     <a href="#why">5.1 · Why barre chords</a>
     <a href="#mini-f">5.2 · The mini F</a>
+    <a href="#full-f">5.3 · The full F</a>
     <a href="#ahead">In this lesson</a>
   </div>
 </nav>
@@ -312,13 +313,6 @@
       </ol>
     </div>
 
-    <div class="card" style="margin-top:20px;">
-      <h3>String check</h3>
-      <p class="body-text" style="margin:0;">Hold the shape and pick one string at a time. Tap each string below to hear how it should sound, compare it with your guitar, and tick it when yours rings just as clearly.</p>
-      <div class="string-check" id="stringCheck"></div>
-      <p class="check-msg" id="checkMsg" aria-live="polite"></p>
-    </div>
-
     <div class="fixes">
       <h4>If a string buzzes or sounds dead</h4>
       <ul>
@@ -331,36 +325,63 @@
 
     <p class="note-box" style="margin-top:16px;"><strong>Too hard today?</strong> Play <strong>Fmaj7</strong> instead: the same shape with your index on the B string only, high e open. It sounds softer and dreamier, and it's a perfect stepping stone. <button type="button" class="inline-play" id="play-fmaj7">▶ Hear Fmaj7</button></p>
 
-    <div class="card practice" style="margin-top:20px;">
-      <h3>Practice task: C ↔ F</h3>
-      <p class="body-text" style="margin:0;">C to F is one of the most common chord changes there is. Good news: your index finger stays on the B string at fret 1 and simply flattens to cover high e as well. Middle and ring keep their shape and both move one string over: middle from D to G, ring from A to D. Use Stage 1 (downstrokes) until it's clean at 70 BPM, then Stage 2.</p>
-      <div class="seg" role="group" aria-label="Practice stage">
-        <button type="button" id="cf-s1" aria-pressed="true">Stage 1 · ↓ only</button>
-        <button type="button" id="cf-s2" aria-pressed="false">Stage 2 · ↓↑</button>
+    <div class="card practice drill" style="margin-top:20px;" id="drill52"
+      data-title="Practice task: C ↔ F"
+      data-text="C to F is one of the most common chord changes there is. Good news: your index finger stays on the B string at fret 1 and simply flattens to cover high e as well. Middle and ring keep their shape and both move one string over: middle from D to G, ring from A to D. Use Stage 1 (downstrokes) until it's clean at 70 BPM, then Stage 2."></div>
+  </div>
+
+  <!-- 5.3 -->
+  <div class="sub" id="full-f">
+    <p class="sub-n">5.3</p>
+    <h3 class="sub-h">The full F</h3>
+    <p class="lede">The full F is the mini F with two changes: your index finger stretches across all six strings, and your ring and pinky fingers add the low notes on the A and D strings. Build it up in three steps instead of grabbing it all at once.</p>
+
+    <div class="card build">
+      <div class="seg" role="group" aria-label="Build-up step" id="buildPick">
+        <button type="button" id="bf-1" data-step="0" aria-pressed="true">1 · Barre</button>
+        <button type="button" id="bf-2" data-step="1" aria-pressed="false">2 · Add middle</button>
+        <button type="button" id="bf-3" data-step="2" aria-pressed="false">3 · Full F</button>
       </div>
-      <div class="stage-view">
-        <div class="now-chord" id="cfNow">C</div>
-        <div class="next-chord">next<b id="cfNext">F</b></div>
-        <div class="ticks" id="cfTicks"></div>
-      </div>
-      <div class="transport">
-        <button type="button" class="btn" id="cf-play"><span class="ico" aria-hidden="true"></span><span class="txt">Play</span></button>
-        <div class="tempo-row" style="flex:1; min-width:220px;">
-          <label for="cf-tempo">Speed</label>
-          <input type="range" id="cf-tempo" min="50" max="110" step="5" value="55">
-          <output for="cf-tempo" id="cf-tempo-out">55 BPM</output>
+      <div class="build-row">
+        <div class="chord-card" id="buildCard">
+          <svg viewBox="0 0 100 120" aria-hidden="true" id="buildSvg"></svg>
+          <span class="name" id="buildName">Barre</span>
+          <button type="button" class="chord-play" id="play-build" aria-label="Play this step"><span class="tri" aria-hidden="true"></span>Play</button>
+        </div>
+        <div class="build-text">
+          <h4 id="buildTitle"></h4>
+          <p id="buildText"></p>
         </div>
       </div>
     </div>
+
+    <ul class="opps tips-f">
+      <li><span class="ic" aria-hidden="true">!</span><h4>Your index only needs three strings</h4><p>The A, D and G strings are already pressed by your other fingers. The barre only has to hold the low E, B and high e, so put the pressure at the tip and the base of your index, not in the middle.</p></li>
+      <li><span class="ic" aria-hidden="true">↻</span><h4>Roll it, don't crush it</h4><p>Roll the index slightly onto its bony, thumb-facing side, right behind fret 1. The bony edge presses more evenly than the soft pad with its creases.</p></li>
+      <li><span class="ic" aria-hidden="true">T</span><h4>Thumb low, arm helps</h4><p>Keep the thumb low behind the neck, roughly behind your middle finger. Let the weight of your arm pull back gently instead of squeezing with the hand alone.</p></li>
+      <li><span class="ic" aria-hidden="true">5</span><h4>Start higher up</h4><p>The same shape at fret 5 (an A chord) is easier: the frets are closer together, and strings take less force to press down away from the nut. Get it ringing at fret 5, then slide it down to fret 1.</p></li>
+    </ul>
+
+    <div class="card compare" style="margin-top:20px;">
+      <h3>Hear the difference</h3>
+      <p class="body-text" style="margin:0;">Both are F chords. The full F adds the low F and C notes underneath, so it sounds bigger and deeper. Use the mini F while you're building strength, and switch to the full F when it rings.</p>
+      <div class="pair-btns">
+        <button type="button" class="btn-quiet" id="cmp-mini">Play mini F</button>
+        <button type="button" class="btn-quiet" id="cmp-full">Play full F</button>
+      </div>
+    </div>
+
+    <div class="card practice drill" style="margin-top:20px;" id="drill53"
+      data-title="Practice task: changing into the full F"
+      data-text="Pick a pair and practice the change, Stage 1 first. If the full F still buzzes, it's fine to practice with the mini F for a few days: the movement is the same."></div>
   </div>
 
   <!-- ahead -->
   <div class="sub" id="ahead">
     <p class="sub-n">Next</p>
     <h3 class="sub-h">In this lesson</h3>
-    <p class="lede">From the mini F, we'll build up to a full barre chord one small step at a time. These sections are on their way.</p>
+    <p class="lede">With the full F in your hands, two steps remain. These sections are on their way.</p>
     <ol class="ahead">
-      <li data-n="5.3"><strong>The full F</strong><span>Index finger across all six strings, and how to make every string ring.</span></li>
       <li data-n="5.4"><strong>Bm, your first minor barre</strong><span>The A-shape barre on the A string, at fret 2.</span></li>
       <li data-n="5.5"><strong>Moving the shape</strong><span>Slide F and Bm up the neck to play G, A, Cm, Dm and more.</span></li>
     </ol>
@@ -423,34 +444,26 @@
   document.getElementById('play-miniF').addEventListener('click',()=>{ S.strum(MINI_F); miniCard.classList.add('playing'); clearTimeout(mt); mt=setTimeout(()=>miniCard.classList.remove('playing'),2000); });
   document.getElementById('play-fmaj7').addEventListener('click',()=>S.strum(FMAJ7));
 
-  // string check: D, G, B, high e as they should sound in the mini F
-  const CHECK=[[2,3,'D','fret 3 · ring'],[3,2,'G','fret 2 · middle'],[4,1,'B','fret 1 · index'],[5,1,'e','fret 1 · index']];
-  const SAVE='firstchords.plus.l5.minif';
-  let ticked={}; try{ ticked=JSON.parse(localStorage.getItem(SAVE)||'{}'); }catch(e){}
-  const sc=document.getElementById('stringCheck'), msg=document.getElementById('checkMsg');
-  function updateMsg(){ const n=CHECK.filter(c=>ticked[c[2]]).length; msg.textContent=n===4?'All four strings ring. That\'s a clean mini F.':(n?`${n} of 4 strings ringing clean.`:''); }
-  CHECK.forEach(([s,f,name,sub])=>{
-    const d=document.createElement('div'); d.className='sc-item'+(ticked[name]?' ok':'');
-    d.innerHTML=`<button type="button" id="sc-${name}">${name} string<small>${sub}</small></button><label><input type="checkbox" id="ok-${name}" ${ticked[name]?'checked':''}> rings clean</label>`;
-    d.querySelector('button').addEventListener('click',()=>S.note(s,f));
-    d.querySelector('input').addEventListener('change',e=>{ ticked[name]=e.target.checked; d.classList.toggle('ok',e.target.checked); try{ localStorage.setItem(SAVE,JSON.stringify(ticked)); }catch(err){} updateMsg(); });
-    sc.appendChild(d);
-  });
-  updateMsg();
-
-  // C <-> F drill, 4 beats per chord; stage 2 adds upstrokes
-  (function(){
-    const PAIR=[['C',C],['F',MINI_F]];
-    const st={stage:1,bpm:55,timer:null,next:0,step:0,ring:[],ui:[]};
-    const ticks=document.getElementById('cfTicks'), nowEl=document.getElementById('cfNow'), nextEl=document.getElementById('cfNext'), btn=document.getElementById('cf-play');
-    const tempo=document.getElementById('cf-tempo'), tout=document.getElementById('cf-tempo-out');
+  // chord-change drill: pick a pair, 4 beats per chord, Stage 1 downstrokes, Stage 2 down-up
+  let activeDrill=null;
+  function makeDrill(root,pairs,startBpm){
+    const id=root.id, multi=pairs.length>1;
+    root.innerHTML=`<h3>${root.dataset.title}</h3><p class="body-text" style="margin:0;">${root.dataset.text}</p>`
+      +(multi?`<div class="seg" role="group" aria-label="Chord pair">${pairs.map((p,i)=>`<button type="button" id="${id}-p${i}" aria-pressed="${i===0}">${p[0][0]} ↔ ${p[1][0]}</button>`).join('')}</div>`:'')
+      +`<div class="seg" role="group" aria-label="Practice stage"><button type="button" id="${id}-s1" aria-pressed="true">Stage 1 · ↓ only</button><button type="button" id="${id}-s2" aria-pressed="false">Stage 2 · ↓↑</button></div>`
+      +`<div class="stage-view"><div class="now-chord">${pairs[0][0][0]}</div><div class="next-chord">next<b>${pairs[0][1][0]}</b></div><div class="ticks"></div></div>`
+      +`<div class="transport"><button type="button" class="btn" id="${id}-play"><span class="ico" aria-hidden="true"></span><span class="txt">Play</span></button>`
+      +`<div class="tempo-row" style="flex:1; min-width:220px;"><label for="${id}-tempo">Speed</label><input type="range" id="${id}-tempo" min="50" max="110" step="5" value="${startBpm}"><output for="${id}-tempo">${startBpm} BPM</output></div></div>`;
+    const st={pair:pairs[0],stage:1,bpm:startBpm,timer:null,next:0,step:0,ring:[],ui:[]};
+    const q=s=>root.querySelector(s), ticks=q('.ticks'), nowEl=q('.now-chord'), nextEl=q('.next-chord b'), btn=q('#'+id+'-play'), tempo=q('#'+id+'-tempo'), tout=q('output');
     tempo.addEventListener('input',()=>{ st.bpm=+tempo.value; tout.textContent=st.bpm+' BPM'; });
     const slots=()=>st.stage===1?4:8;
     function draw(){ const n=slots(); let h=''; for(let i=0;i<n;i++) h+=`<span class="${i===n-1?'change':''}">${st.stage===1||i%2===0?'↓':'↑'}</span>`; ticks.innerHTML=h; }
-    function show(step){ const n=slots(), idx=Math.floor(step/n)%2, pos=step%n; nowEl.textContent=PAIR[idx][0]; nextEl.textContent=PAIR[1-idx][0]; [...ticks.children].forEach((t,i)=>t.classList.toggle('on',!!st.timer&&i===pos)); }
-    function setStage(n){ st.stage=n; document.getElementById('cf-s1').setAttribute('aria-pressed',n===1); document.getElementById('cf-s2').setAttribute('aria-pressed',n===2); st.step=0; draw(); show(0); }
-    document.getElementById('cf-s1').addEventListener('click',()=>setStage(1));
-    document.getElementById('cf-s2').addEventListener('click',()=>setStage(2));
+    function show(step){ const n=slots(), idx=Math.floor(step/n)%2, pos=step%n; nowEl.textContent=st.pair[idx][0]; nextEl.textContent=st.pair[1-idx][0]; [...ticks.children].forEach((t,i)=>t.classList.toggle('on',!!st.timer&&i===pos)); }
+    function setStage(n){ st.stage=n; q('#'+id+'-s1').setAttribute('aria-pressed',n===1); q('#'+id+'-s2').setAttribute('aria-pressed',n===2); st.step=0; draw(); show(0); }
+    q('#'+id+'-s1').addEventListener('click',()=>setStage(1));
+    q('#'+id+'-s2').addEventListener('click',()=>setStage(2));
+    if(multi) pairs.forEach((p,i)=>q(`#${id}-p${i}`).addEventListener('click',()=>{ st.pair=p; pairs.forEach((_,j)=>q(`#${id}-p${j}`).setAttribute('aria-pressed',i===j)); st.step=0; show(0); }));
     function click(t,acc){ const ctx=S.ctx(), o=ctx.createOscillator(), g=ctx.createGain(); o.frequency.value=acc?1600:1100; g.gain.setValueAtTime(0.0001,t); g.gain.exponentialRampToValueAtTime(acc?0.16:0.09,t+0.002); g.gain.exponentialRampToValueAtTime(0.0001,t+0.05); o.connect(g).connect(ctx.destination); o.start(t); o.stop(t+0.06); }
     function schedule(){
       const ctx=S.ctx(), n=slots(), len=60/st.bpm/(st.stage===1?1:2);
@@ -458,17 +471,51 @@
         const step=st.step, pos=step%n, idx=Math.floor(step/n)%2, up=st.stage===2&&pos%2===1;
         if(!up) click(st.next,pos===0);
         st.ring.forEach(v=>{ try{ v.out.gain.setTargetAtTime(0,st.next,0.03); v.src.stop(st.next+0.3); }catch(e){} });
-        let notes=[]; PAIR[idx][1].forEach((f,i)=>{ if(f!==null) notes.push(S.OPEN[i]*Math.pow(2,f/12)); }); if(up) notes=notes.slice(-4).reverse();
+        let notes=[]; st.pair[idx][1].forEach((f,i)=>{ if(f!==null) notes.push(S.OPEN[i]*Math.pow(2,f/12)); }); if(up) notes=notes.slice(-4).reverse();
         st.ring=notes.map((fq,k)=>S.play(fq,st.next-ctx.currentTime+k*0.012,up?0.26:0.38));
         st.ui.push(setTimeout(()=>show(step),Math.max(0,(st.next-ctx.currentTime)*1000)));
         st.next+=len; st.step++;
       }
       if(st.ui.length>64) st.ui=st.ui.slice(-16);
     }
-    function stop(){ clearInterval(st.timer); st.timer=null; st.ui.forEach(clearTimeout); st.ui=[]; const t=S.time; st.ring.forEach(v=>{ try{ v.out.gain.cancelScheduledValues(t); v.out.gain.setTargetAtTime(0,t,0.04); v.src.stop(t+0.3); }catch(e){} }); st.ring=[]; btn.classList.remove('on'); btn.querySelector('.txt').textContent='Play'; st.step=0; show(0); }
-    btn.addEventListener('click',()=>{ if(st.timer){ stop(); return; } const ctx=S.ctx(); const go=()=>{ st.step=0; st.next=ctx.currentTime+0.1; schedule(); st.timer=setInterval(schedule,25); btn.classList.add('on'); btn.querySelector('.txt').textContent='Stop'; }; if(ctx.state!=='running') ctx.resume().then(go,go); else go(); });
+    const api={stop(){ clearInterval(st.timer); st.timer=null; st.ui.forEach(clearTimeout); st.ui=[]; const t=S.time; st.ring.forEach(v=>{ try{ v.out.gain.cancelScheduledValues(t); v.out.gain.setTargetAtTime(0,t,0.04); v.src.stop(t+0.3); }catch(e){} }); st.ring=[]; btn.classList.remove('on'); btn.querySelector('.txt').textContent='Play'; st.step=0; show(0); if(activeDrill===api) activeDrill=null; }};
+    btn.addEventListener('click',()=>{
+      if(st.timer){ api.stop(); return; }
+      if(activeDrill) activeDrill.stop();
+      activeDrill=api; const ctx=S.ctx();
+      const go=()=>{ st.step=0; st.next=ctx.currentTime+0.1; schedule(); st.timer=setInterval(schedule,25); btn.classList.add('on'); btn.querySelector('.txt').textContent='Stop'; };
+      if(ctx.state!=='running') ctx.resume().then(go,go); else go();
+    });
     draw(); show(0);
-  })();
+  }
+  makeDrill(document.getElementById('drill52'),[[['C',C],['F',MINI_F]]],55);
+
+  // ---------- 5.3 full F ----------
+  const FULL_F=[1,3,3,2,1,1];
+  const BUILD=[
+    {name:'Barre',frets:[1,1,1,1,1,1],fingers:[0,0,0,0,0,0],title:'Step 1: the barre on its own',
+     text:'Lay your index finger flat across all six strings, right behind fret 1. Strum, then pick each string one by one. They won\'t make a nice chord yet, but every one should ring instead of buzzing. This is the hard part, so spend most of your time here.'},
+    {name:'Barre + middle',frets:[1,1,1,2,1,1],fingers:[0,0,0,2,0,0],title:'Step 2: add the middle finger',
+     text:'Keep the barre and put your middle finger on the G string at fret 2. Arch it so it doesn\'t touch the B string underneath. Check that the B and high e still ring.'},
+    {name:'F',frets:FULL_F,fingers:[0,3,4,2,0,0],title:'Step 3: ring and pinky make the full F',
+     text:'Add your ring finger on the A string and your pinky on the D string, both at fret 3, on their tips. That\'s a full F. Strum all six strings and listen for any string that buzzes.'},
+  ];
+  let bStep=0;
+  function showBuild(i){
+    bStep=i; const b=BUILD[i];
+    document.getElementById('buildSvg').innerHTML=chordSVG(b.frets,b.fingers,[1,0,5]);
+    document.getElementById('buildName').textContent=b.name;
+    document.getElementById('buildTitle').textContent=b.title;
+    document.getElementById('buildText').textContent=b.text;
+    document.querySelectorAll('#buildPick button').forEach(x=>x.setAttribute('aria-pressed',+x.dataset.step===i));
+  }
+  document.querySelectorAll('#buildPick button').forEach(x=>x.addEventListener('click',()=>{ showBuild(+x.dataset.step); S.strum(BUILD[+x.dataset.step].frets); }));
+  const bCard=document.getElementById('buildCard'); let bt=null;
+  document.getElementById('play-build').addEventListener('click',()=>{ S.strum(BUILD[bStep].frets); bCard.classList.add('playing'); clearTimeout(bt); bt=setTimeout(()=>bCard.classList.remove('playing'),2000); });
+  showBuild(0);
+  document.getElementById('cmp-mini').addEventListener('click',()=>S.strum(MINI_F));
+  document.getElementById('cmp-full').addEventListener('click',()=>S.strum(FULL_F));
+  makeDrill(document.getElementById('drill53'),[[['C',C],['F',FULL_F]],[['Am',[null,0,2,2,1,0]],['F',FULL_F]],[['F',FULL_F],['G',[3,2,0,0,0,3]]]],50);
 
   if(window.self!==window.top){ document.querySelectorAll('a[data-preview]').forEach(a=>{ a.href=a.dataset.preview; a.target='_blank'; a.rel='noopener'; }); }
   const links=[...document.querySelectorAll('.jump a')], secs=links.map(a=>document.querySelector(a.getAttribute('href')));
