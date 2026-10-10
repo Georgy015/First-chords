@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>First Chords Plus · Lesson 5</title>
+<meta name="description" content="First Chords Plus, Lesson 5: barre chords. Why they open up the whole neck, what makes them hard at first, and how regular practice gets you there.">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#FAF6EC" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#1C1714" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M16 3C22 3 28 5.5 28 11C28 17.5 20 26 16 29C12 26 4 17.5 4 11C4 5.5 10 3 16 3Z' fill='%23C9873F'/%3E%3C/svg%3E">
+<link rel="preload" href="fonts/fraunces-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="assets/plus.css">
+<style>
+  .intro-lede{font-size:1.05rem; color:var(--ink-2); line-height:1.6; max-width:62ch; margin:0 0 14px;}
+  .opps{list-style:none; margin:8px 0 0; padding:0; display:grid; grid-template-columns:1fr 1fr; gap:12px;}
+  @media (max-width:560px){.opps{grid-template-columns:1fr;}}
+  .opps li{background:var(--card); border:1.4px solid var(--rule); border-radius:12px; padding:16px 18px; display:grid; gap:4px; align-content:start;}
+  .opps .ic{width:30px; height:30px; border-radius:50%; background:var(--hover); color:var(--wood); display:flex; align-items:center; justify-content:center; font-family:'Fraunces',serif; font-weight:700; font-size:0.95rem;}
+  .opps h4{font-family:'Fraunces',serif; font-weight:600; font-size:1.05rem; margin:4px 0 0;}
+  .opps p{margin:0; font-size:0.9rem; color:var(--ink-2); line-height:1.5;}
+
+  /* one shape, many chords */
+  .move{display:grid; grid-template-columns:auto 1fr; gap:16px 24px; align-items:center;}
+  @media (max-width:560px){.move{grid-template-columns:1fr; justify-items:start;}}
+  .move-fig{text-align:center;}
+  .move-fig svg{width:130px; height:auto;}
+  .move-name{font-family:'Fraunces',serif; font-weight:700; font-size:2.2rem; line-height:1; margin-top:4px;}
+  .move-sub{font-size:0.82rem; color:var(--faint);}
+  .move-ctl{display:grid; gap:12px;}
+  .move-ctl p{margin:0; font-size:0.92rem; color:var(--ink-2); line-height:1.5;}
+  .seg.frets button{min-width:62px; font-variant-numeric:tabular-nums;}
+  .seg.frets button small{display:block; font-size:0.68rem; color:inherit; opacity:.7; font-weight:500;}
+  .cd-barre{fill:var(--wood);}
+  .cd-frl{font-family:'Inter',sans-serif; font-size:8px; fill:var(--faint);}
+
+  .honest{display:grid; grid-template-columns:auto 1fr; gap:6px 18px; background:var(--card); border:1.4px solid var(--wood); border-radius:12px; padding:20px 22px;}
+  @media (max-width:560px){.honest{grid-template-columns:1fr;}}
+  .honest .big{font-family:'Fraunces',serif; font-weight:700; font-size:2.4rem; line-height:1; color:var(--wood);}
+  .honest h4{font-family:'Fraunces',serif; font-weight:600; font-size:1.15rem; margin:0 0 6px;}
+  .honest p{margin:0 0 8px; font-size:0.93rem; color:var(--ink-2); line-height:1.55;}
+  .honest p:last-child{margin:0;}
+  .timeline{list-style:none; margin:14px 0 0; padding:0; display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px;}
+  @media (max-width:560px){.timeline{grid-template-columns:1fr;}}
+  .timeline li{border-top:3px solid var(--rule); padding-top:8px; font-size:0.86rem; color:var(--ink-2); line-height:1.45;}
+  .timeline li:nth-child(2){border-color:var(--line);}
+  .timeline li:nth-child(3){border-color:var(--wood);}
+  .timeline strong{display:block; font-family:'Fraunces',serif; font-size:0.98rem; color:var(--ink);}
+
+  .ahead{list-style:none; margin:0; padding:0; display:grid; gap:8px;}
+  .ahead li{display:grid; grid-template-columns:44px 1fr; gap:2px 8px; align-items:baseline; padding:10px 0; border-bottom:1px solid var(--rule);}
+  .ahead li::before{content:attr(data-n); font-family:'Fraunces',serif; font-weight:600; color:var(--line); grid-row:1 / span 2;}
+  .ahead strong{font-family:'Fraunces',serif; font-weight:600;}
+  .ahead span{font-size:0.86rem; color:var(--faint);}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <a class="back" href="lesson-4.html" data-preview="https://claude.ai/artifact/1FGw4VHR7KiFpuUhqQxbW6">← Lesson 4</a>
+  <span class="plus-badge">Plus</span>
+</div>
+
+<nav class="jump" aria-label="Jump to a section">
+  <div class="jump-inner">
+    <a href="#why">5.1 · Why barre chords</a>
+    <a href="#ahead">In this lesson</a>
+  </div>
+</nav>
+
+<section class="wrap lesson" id="lesson-5">
+  <p class="kicker">Lesson 5 · Barre chords</p>
+  <h2 class="lesson-h">Barre chords: the key to the whole neck</h2>
+  <p class="intro-lede">So far, every chord you've played has leaned on the open strings at the top of the neck. Barre chords take that crutch away: your index finger lays flat across the strings and becomes a movable nut. It's the step where the guitar stops being a handful of shapes and starts being an instrument you can find your way around.</p>
+
+  <!-- 5.1 -->
+  <div class="sub" id="why">
+    <p class="sub-n">5.1</p>
+    <h3 class="sub-h">Why barre chords are worth it</h3>
+    <p class="lede">A barre chord is a chord shape you can slide anywhere. Once your hand knows it, a lot opens up at once.</p>
+
+    <ul class="opps">
+      <li><span class="ic" aria-hidden="true">1</span><h4>Every chord, anywhere</h4><p>One shape, moved up and down the neck, gives you every major chord. A second shape gives you every minor chord. No more songs you can't play because of an F or a B♭.</p></li>
+      <li><span class="ic" aria-hidden="true">2</span><h4>More songs, more subtle sound</h4><p>Bm, F♯m, F and their cousins show up in a huge number of songs. Barre chords also let you play the same chord higher up the neck, for a fuller or sweeter version of it.</p></li>
+      <li><span class="ic" aria-hidden="true">3</span><h4>New rhythms</h4><p>Ease off the pressure for a split second and every string goes quiet. That one trick gives you choppy, muted strums: the backbone of funk, reggae, ska and a lot of pop.</p></li>
+      <li><span class="ic" aria-hidden="true">4</span><h4>Melody and improvising</h4><p>Barre shapes are signposts on the neck. Scales, riffs and solos sit right around them, so they're your way into playing melodies and improvising over chords.</p></li>
+    </ul>
+
+    <div class="card" style="margin-top:20px;">
+      <h3>Hear it: one shape, five chords</h3>
+      <div class="move">
+        <div class="move-fig">
+          <svg viewBox="0 0 100 120" id="moveSvg" aria-hidden="true"></svg>
+          <div class="move-name" id="moveName" aria-live="polite">F</div>
+          <div class="move-sub" id="moveSub">barre at fret 1</div>
+        </div>
+        <div class="move-ctl">
+          <p>This is the same hand shape every time. Only its position changes. Tap a fret to slide it there and hear the chord.</p>
+          <div class="seg frets" role="group" aria-label="Barre position">
+            <button type="button" id="mv-1" data-fret="1" aria-pressed="true">F<small>fret 1</small></button>
+            <button type="button" id="mv-3" data-fret="3" aria-pressed="false">G<small>fret 3</small></button>
+            <button type="button" id="mv-5" data-fret="5" aria-pressed="false">A<small>fret 5</small></button>
+            <button type="button" id="mv-7" data-fret="7" aria-pressed="false">B<small>fret 7</small></button>
+            <button type="button" id="mv-8" data-fret="8" aria-pressed="false">C<small>fret 8</small></button>
+          </div>
+          <p style="font-size:0.85rem; color:var(--faint);">You don't need to play this yet. It's just to show where the lesson is heading.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="honest" style="margin-top:20px;">
+      <div class="big" aria-hidden="true">“Ouch.”</div>
+      <div>
+        <h4>Yes, they feel hard at first. That's normal.</h4>
+        <p>Almost every guitarist remembers their first barre chords: strings that buzz, a tired index finger, a sound that's more thud than chord. That isn't a sign you're doing it wrong. Your hand simply hasn't built the strength and the feel for it yet.</p>
+        <p>It's the beginning, not the whole story. What it asks for is regular, short practice: five to ten minutes a day, starting with the warm-ups from Lesson 4. Every guitarist who plays barre chords today went through exactly this, and the payoff is far bigger than the struggle.</p>
+        <ul class="timeline" aria-label="What to expect">
+          <li><strong>Week 1</strong>Some strings buzz or sound dead. Your index finger gets tired fast.</li>
+          <li><strong>Weeks 2–3</strong>Most strings ring. Changing into the chord is still slow.</li>
+          <li><strong>Week 4 and on</strong>The shape lands cleanly, and you start using it in songs.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- ahead -->
+  <div class="sub" id="ahead">
+    <p class="sub-n">Next</p>
+    <h3 class="sub-h">In this lesson</h3>
+    <p class="lede">We'll build up to a full barre chord one small step at a time. These sections are on their way.</p>
+    <ol class="ahead">
+      <li data-n="5.2"><strong>The mini F</strong><span>A four-string F with a small barre on just two strings. The gentle first step.</span></li>
+      <li data-n="5.3"><strong>The full F</strong><span>Index finger across all six strings, and how to make every string ring.</span></li>
+      <li data-n="5.4"><strong>Bm, your first minor barre</strong><span>The A-shape barre on the A string, at fret 2.</span></li>
+      <li data-n="5.5"><strong>Moving the shape</strong><span>Slide F and Bm up the neck to play G, A, Cm, Dm and more.</span></li>
+    </ol>
+  </div>
+
+  <div class="next-lesson">
+    <p><strong>More of Lesson 5 is on its way</strong>Meanwhile, keep up the Lesson 4 warm-ups every day. They're the best preparation there is.</p>
+    <a class="btn-next" href="lesson-4.html" data-preview="https://claude.ai/artifact/1FGw4VHR7KiFpuUhqQxbW6"><span aria-hidden="true">←</span> Back to Lesson 4</a>
+  </div>
+</section>
+
+<footer class="wrap">
+  <p class="made"><strong>First Chords</strong> · made by a guitarist, for beginners</p>
+</footer>
+
+<script src="assets/guitar-sound.js"></script>
+<script>
+(function(){
+  const S=window.FCSound;
+  const NAMES={1:'F',3:'G',5:'A',7:'B',8:'C'};
+  // E-shape major barre at fret n: barre all strings, A and D at n+2, G at n+1
+  function shape(n){ return [n,n+2,n+2,n+1,n,n]; }
+  function draw(n){
+    const strings=6, fretsShown=4, w=100,h=120, left=18, top=14, sw=(w-left-12)/(strings-1), fh=(h-top-10)/fretsShown;
+    let s='';
+    if(n===1) s+=`<rect x="${left-1}" y="${top-3}" width="${sw*5+2}" height="3" class="cd-nut"/>`;
+    else s+=`<text x="${left-6}" y="${top+0.5*fh+3}" class="cd-frl" text-anchor="end">${n}fr</text>`;
+    for(let f=1;f<=fretsShown;f++) s+=`<line x1="${left}" y1="${top+f*fh}" x2="${left+sw*5}" y2="${top+f*fh}" class="cd-fret"/>`;
+    for(let i=0;i<strings;i++){ const x=left+i*sw; s+=`<line x1="${x}" y1="${top}" x2="${x}" y2="${top+fretsShown*fh}" class="cd-string"/>`; }
+    s+=`<rect x="${left-6}" y="${top+0.5*fh-6.6}" width="${sw*5+12}" height="13.2" rx="6.6" class="cd-barre"/><text x="${left+sw*2.5}" y="${top+0.5*fh+3.1}" class="finger-num">1</text>`;
+    [[1,3,3],[2,3,4],[3,2,2]].forEach(([i,f,fg])=>{ const x=left+i*sw, y=top+(f-0.5)*fh; s+=`<circle cx="${x}" cy="${y}" r="6.6" class="cd-dot"/><text x="${x}" y="${y+3.1}" class="finger-num">${fg}</text>`; });
+    document.getElementById('moveSvg').innerHTML=s;
+    document.getElementById('moveName').textContent=NAMES[n];
+    document.getElementById('moveSub').textContent='barre at fret '+n;
+  }
+  document.querySelectorAll('[data-fret]').forEach(b=>b.addEventListener('click',()=>{
+    const n=+b.dataset.fret; document.querySelectorAll('[data-fret]').forEach(x=>x.setAttribute('aria-pressed',x===b));
+    draw(n); S.strum(shape(n));
+  }));
+  draw(1);
+
+  if(window.self!==window.top){ document.querySelectorAll('a[data-preview]').forEach(a=>{ a.href=a.dataset.preview; a.target='_blank'; a.rel='noopener'; }); }
+  const links=[...document.querySelectorAll('.jump a')], secs=links.map(a=>document.querySelector(a.getAttribute('href')));
+  function mark(){ const y=scrollY+120; let cur=-1; secs.forEach((s,i)=>{ if(s.getBoundingClientRect().top+scrollY<=y) cur=i; }); links.forEach((a,i)=>i===cur?a.setAttribute('aria-current','true'):a.removeAttribute('aria-current')); }
+  addEventListener('scroll',mark,{passive:true}); mark();
+})();
+</script>
+</body>
+</html>
