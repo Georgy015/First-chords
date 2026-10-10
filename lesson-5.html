@@ -35,26 +35,25 @@
   .cd-barre{fill:var(--wood);}
   .cd-frl{font-family:'Inter',sans-serif; font-size:8px; fill:var(--faint);}
 
-  /* F barre hand illustration */
+  /* F barre hand illustration (drawn from a reference photo, front view) */
   .hand-scroll{overflow-x:auto;}
-  .hand-f{display:block; width:100%; height:auto;}
-  .hf-head{fill:#3A2C24;}
-  .hf-board{fill:#3A2C24;}
-  .hf-fret{fill:#D4CEC2;}
-  .hf-inlay{fill:#EDE6D6;}
-  .hf-nut{fill:#F6EEDB; stroke:var(--ink); stroke-width:1;}
-  .hf-wound{stroke:#B98E52;}
-  .hf-plain{stroke:#C9C4BA;}
-  .hf-fnum{font-family:'Inter',sans-serif; font-size:12px; fill:var(--faint); text-anchor:middle; font-variant-numeric:tabular-nums;}
-  .hf-slabel{font-family:'Fraunces',serif; font-weight:600; font-size:13px; fill:var(--faint); text-anchor:end;}
-  .hf-out{fill:none; stroke:var(--ink); stroke-width:4.4; stroke-linejoin:round;}
-  .hf-skin{fill:#F3D6B6;}
-  .hf-nail{fill:#FBEBDD; stroke:#C79E7C; stroke-width:1;}
-  .hf-crease{fill:none; stroke:#C79E7C; stroke-width:1.3; stroke-linecap:round;}
-  .hf-badge{fill:var(--wood);}
-  .hf-num{font-family:'Fraunces',serif; font-weight:700; font-size:12px; fill:#FFFFFF; text-anchor:middle;}
-  .hf-thumb{fill:#F3D6B6; stroke:var(--ink); stroke-width:1.6; stroke-dasharray:4 3; opacity:.75;}
-  .hf-cap{font-family:'Inter',sans-serif; font-size:12px; fill:var(--faint); text-anchor:middle;}
+  .hand-f{display:block; width:100%; max-width:640px; height:auto; margin:0 auto;}
+  .hf-grain{fill:none; stroke:#6B4430; stroke-width:1.2; opacity:.45;}
+  .hf-fret{fill:#D8D3C9; stroke:#9C968C; stroke-width:1;}
+  .hf-nut{fill:#F6EEDB; stroke:#B9AE9C; stroke-width:1;}
+  .hf-head{fill:#3A2418;}
+  .hf-wound{stroke:#C59A5C;}
+  .hf-plain{stroke:#D3CEC4;}
+  .hf-out{fill:none; stroke:#5A3A28; stroke-width:5; stroke-linejoin:round;}
+  .hf-skin{fill:url(#hfSkin);}
+  .hf-shade{fill:#C98F6F; opacity:.28;}
+  .hf-crease{fill:none; stroke:#B98262; stroke-width:2; stroke-linecap:round; opacity:.7;}
+  .hf-nail{fill:#F7DCCB; stroke:#C99577; stroke-width:1.5;}
+  .hf-badge{fill:var(--wood); stroke:#FFFFFF; stroke-width:2;}
+  .hf-num{font-family:'Fraunces',serif; font-weight:700; font-size:20px; fill:#FFFFFF; text-anchor:middle;}
+  .hf-fnum{font-family:'Inter',sans-serif; font-weight:600; font-size:20px; fill:var(--faint); text-anchor:middle; font-variant-numeric:tabular-nums;}
+  .hf-cap{display:none;}
+  .hf-slabel{font-family:'Fraunces',serif; font-weight:600; font-size:20px; fill:#EDE6D6; text-anchor:middle;}
   .hand-key{list-style:none; margin:0; padding:0; display:grid; grid-template-columns:1fr 1fr; gap:8px 18px;}
   @media (max-width:560px){.hand-key{grid-template-columns:1fr;}}
   .hand-key li{display:flex; gap:10px; align-items:flex-start; font-size:0.88rem; color:var(--ink-2); line-height:1.45;}
@@ -140,63 +139,99 @@
 
     <div class="card hand-card" style="margin-top:20px;">
       <h3>What it looks like in your hand</h3>
-      <p class="body-text" style="margin:0;">An F barre chord, seen from above, the way you look down at your own hand while playing: low E at the top, headstock to the left.</p>
+      <p class="body-text" style="margin:0;">An F barre chord, seen from the front, the way someone facing you would see it: headstock to the right, low E string at the top. Your thumb is hidden behind the neck.</p>
       <div class="hand-scroll">
-<svg class="hand-f" viewBox="0 0 660 370" role="img" aria-labelledby="handFT">
-<title id="handFT">A fretting hand holding an F barre chord, seen from above: index finger flat across all six strings at fret 1, middle finger on the G string at fret 2, ring finger on the A string and pinky on the D string at fret 3, thumb behind the neck</title>
-<rect x="314" y="54" width="34" height="68" rx="17" class="hf-thumb" transform="rotate(-6 331 88)"/>
-<rect x="0" y="82" width="66" height="160" rx="4" class="hf-head"/>
-<rect x="70" y="88" width="562" height="148" class="hf-board"/>
-<rect x="213" y="88" width="4" height="148" class="hf-fret"/>
-<rect x="348" y="88" width="4" height="148" class="hf-fret"/>
-<rect x="473" y="88" width="4" height="148" class="hf-fret"/>
-<rect x="598" y="88" width="4" height="148" class="hf-fret"/>
-<circle cx="412.5" cy="162.0" r="6" class="hf-inlay"/>
-<rect x="63" y="85" width="8" height="154" rx="2" class="hf-nut"/>
-<line x1="0" y1="102" x2="632" y2="102" class="hf-wound" stroke-width="3"/>
-<line x1="0" y1="126.4" x2="632" y2="126.4" class="hf-wound" stroke-width="2.6"/>
-<line x1="0" y1="150.8" x2="632" y2="150.8" class="hf-wound" stroke-width="2.2"/>
-<line x1="0" y1="175.2" x2="632" y2="175.2" class="hf-wound" stroke-width="1.8"/>
-<line x1="0" y1="199.6" x2="632" y2="199.6" class="hf-plain" stroke-width="1.3"/>
-<line x1="0" y1="224" x2="632" y2="224" class="hf-plain" stroke-width="1.1"/>
-<text x="142.5" y="76" class="hf-fnum">1</text>
-<text x="260.5" y="76" class="hf-fnum">2</text>
-<text x="412.5" y="76" class="hf-fnum">3</text>
-<text x="537.5" y="76" class="hf-fnum">4</text>
-<path d="M118,300 C130,276 440,272 470,300 C490,330 480,370 470,380 L120,380 C110,360 108,320 118,300 Z" class="hf-out"/>
-<rect x="-16" y="-238.5" width="32" height="258.5" rx="16.0" transform="translate(150 318) rotate(11.1)" class="hf-out"/>
-<rect x="-15" y="-162.3" width="30" height="182.3" rx="15.0" transform="translate(262 322) rotate(21.7)" class="hf-out"/>
-<rect x="-14.5" y="-220.2" width="29" height="240.2" rx="14.5" transform="translate(352 326) rotate(22.4)" class="hf-out"/>
-<rect x="-13" y="-186.7" width="26" height="206.7" rx="13.0" transform="translate(430 330) rotate(11.1)" class="hf-out"/>
-<path d="M118,300 C130,276 440,272 470,300 C490,330 480,370 470,380 L120,380 C110,360 108,320 118,300 Z" class="hf-skin"/>
-<rect x="-16" y="-238.5" width="32" height="258.5" rx="16.0" transform="translate(150 318) rotate(11.1)" class="hf-skin"/>
-<rect x="-15" y="-162.3" width="30" height="182.3" rx="15.0" transform="translate(262 322) rotate(21.7)" class="hf-skin"/>
-<rect x="-14.5" y="-220.2" width="29" height="240.2" rx="14.5" transform="translate(352 326) rotate(22.4)" class="hf-skin"/>
-<rect x="-13" y="-186.7" width="26" height="206.7" rx="13.0" transform="translate(430 330) rotate(11.1)" class="hf-skin"/>
-<rect x="-9.6" y="-234.5" width="19.2" height="17.6" rx="9" class="hf-nail" transform="translate(150 318) rotate(11.1)"/>
-<path d="M-9.6,-52.5 Q0,-49.5 9.6,-52.5" class="hf-crease" transform="translate(150 318) rotate(11.1)"/>
-<path d="M-9.6,-107.3 Q0,-104.3 9.6,-107.3" class="hf-crease" transform="translate(150 318) rotate(11.1)"/>
-<path d="M-9.6,-157.4 Q0,-154.4 9.6,-157.4" class="hf-crease" transform="translate(150 318) rotate(11.1)"/>
-<circle cx="189.6" cy="116.8" r="11" class="hf-badge"/><text x="189.6" y="120.8" class="hf-num">1</text>
-<rect x="-9" y="-158.3" width="18" height="16.5" rx="8.4" class="hf-nail" transform="translate(262 322) rotate(21.7)"/>
-<path d="M-9,-51.9 Q0,-48.9 9,-51.9" class="hf-crease" transform="translate(262 322) rotate(21.7)"/>
-<path d="M-9,-94.1 Q0,-91.1 9,-94.1" class="hf-crease" transform="translate(262 322) rotate(21.7)"/>
-<circle cx="305.2" cy="213.4" r="11" class="hf-badge"/><text x="305.2" y="217.4" class="hf-num">2</text>
-<rect x="-8.7" y="-216.2" width="17.4" height="16" rx="8.1" class="hf-nail" transform="translate(352 326) rotate(22.4)"/>
-<path d="M-8.7,-70.5 Q0,-67.5 8.7,-70.5" class="hf-crease" transform="translate(352 326) rotate(22.4)"/>
-<path d="M-8.7,-127.7 Q0,-124.7 8.7,-127.7" class="hf-crease" transform="translate(352 326) rotate(22.4)"/>
-<circle cx="412.5" cy="179.4" r="11" class="hf-badge"/><text x="412.5" y="183.4" class="hf-num">3</text>
-<rect x="-7.8" y="-182.7" width="15.6" height="14.3" rx="7.3" class="hf-nail" transform="translate(430 330) rotate(11.1)"/>
-<path d="M-7.8,-59.7 Q0,-56.7 7.8,-59.7" class="hf-crease" transform="translate(430 330) rotate(11.1)"/>
-<path d="M-7.8,-108.3 Q0,-105.3 7.8,-108.3" class="hf-crease" transform="translate(430 330) rotate(11.1)"/>
-<circle cx="455.9" cy="198.1" r="11" class="hf-badge"/><text x="455.9" y="202.1" class="hf-num">4</text>
-<text x="654" y="106" class="hf-slabel">E</text>
-<text x="654" y="130.4" class="hf-slabel">A</text>
-<text x="654" y="154.8" class="hf-slabel">D</text>
-<text x="654" y="179.2" class="hf-slabel">G</text>
-<text x="654" y="203.6" class="hf-slabel">B</text>
-<text x="654" y="228" class="hf-slabel">e</text>
-<text x="331" y="42" class="hf-cap">thumb behind the neck</text>
+<svg class="hand-f" viewBox="0 70 900 630" role="img" aria-labelledby="handFT">
+<title id="handFT">Illustration of a fretting hand holding an F barre chord, seen from the front: the index finger lies straight across all six strings at fret 1, the middle finger presses the G string at fret 2, the ring finger the A string and the pinky the D string at fret 3.</title>
+<defs><linearGradient id="hfWood" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5A3826"/><stop offset=".5" stop-color="#4A2D1F"/><stop offset="1" stop-color="#3C2418"/></linearGradient>
+<linearGradient id="hfSkin" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#E2B293"/><stop offset=".35" stop-color="#F1CDB1"/><stop offset=".7" stop-color="#EEC6A8"/><stop offset="1" stop-color="#D9A585"/></linearGradient>
+<clipPath id="hfClip"><rect x="0" y="0" width="900" height="700"/></clipPath></defs>
+<g clip-path="url(#hfClip)">
+<rect x="0" y="150" width="830" height="302" fill="url(#hfWood)"/>
+<path d="M0,164 C220,167 520,161 830,166" class="hf-grain"/>
+<path d="M0,187 C220,190 520,184 830,189" class="hf-grain"/>
+<path d="M0,210 C220,213 520,207 830,212" class="hf-grain"/>
+<path d="M0,233 C220,236 520,230 830,235" class="hf-grain"/>
+<path d="M0,256 C220,259 520,253 830,258" class="hf-grain"/>
+<path d="M0,279 C220,282 520,276 830,281" class="hf-grain"/>
+<path d="M0,302 C220,305 520,299 830,304" class="hf-grain"/>
+<path d="M0,325 C220,328 520,322 830,327" class="hf-grain"/>
+<path d="M0,348 C220,351 520,345 830,350" class="hf-grain"/>
+<path d="M0,371 C220,374 520,368 830,373" class="hf-grain"/>
+<path d="M0,394 C220,397 520,391 830,396" class="hf-grain"/>
+<path d="M0,417 C220,420 520,414 830,419" class="hf-grain"/>
+<path d="M0,440 C220,443 520,437 830,442" class="hf-grain"/>
+<rect x="116" y="150" width="8" height="302" rx="2" class="hf-fret"/>
+<rect x="286" y="150" width="8" height="302" rx="2" class="hf-fret"/>
+<rect x="466" y="150" width="8" height="302" rx="2" class="hf-fret"/>
+<rect x="646" y="150" width="8" height="302" rx="2" class="hf-fret"/>
+<rect x="830" y="142" width="18" height="318" rx="3" class="hf-nut"/>
+<rect x="848" y="136" width="52" height="330" class="hf-head"/>
+<line x1="0" y1="176" x2="848" y2="176" class="hf-wound" stroke-width="4.2"/>
+<line x1="0" y1="226" x2="848" y2="226" class="hf-wound" stroke-width="3.6"/>
+<line x1="0" y1="276" x2="848" y2="276" class="hf-wound" stroke-width="3"/>
+<line x1="0" y1="326" x2="848" y2="326" class="hf-wound" stroke-width="2.4"/>
+<line x1="0" y1="376" x2="848" y2="376" class="hf-plain" stroke-width="1.7"/>
+<line x1="0" y1="426" x2="848" y2="426" class="hf-plain" stroke-width="1.4"/>
+<path d="M372,640 C384,592 430,580 470,586 C520,572 600,570 650,580 C700,570 760,580 772,620 C790,660 800,690 806,720 L352,720 C356,690 362,662 372,640 Z" class="hf-out"/>
+<rect x="-40" y="-380.3" width="80" height="400.3" rx="40.0" transform="translate(430 610) rotate(-14.6)" class="hf-out"/>
+<rect x="-46" y="-422.6" width="92" height="442.6" rx="46.0" transform="translate(512 600) rotate(-12.9)" class="hf-out"/>
+<rect x="-49" y="-312.1" width="98" height="332.1" rx="49.0" transform="translate(604 600) rotate(-6.6)" class="hf-out"/>
+<ellipse cx="0" cy="-146.7" rx="54.88" ry="49.0" transform="translate(604 600) rotate(-6.6)" class="hf-out"/>
+<rect x="-55" y="-522" width="110" height="542" rx="55.0" transform="translate(708 610) rotate(0.4)" class="hf-out"/>
+<path d="M372,640 C384,592 430,580 470,586 C520,572 600,570 650,580 C700,570 760,580 772,620 C790,660 800,690 806,720 L352,720 C356,690 362,662 372,640 Z" class="hf-skin"/>
+<rect x="-40" y="-380.3" width="80" height="400.3" rx="40.0" transform="translate(430 610) rotate(-14.6)" class="hf-skin"/>
+<rect x="-46" y="-422.6" width="92" height="442.6" rx="46.0" transform="translate(512 600) rotate(-12.9)" class="hf-skin"/>
+<rect x="-49" y="-312.1" width="98" height="332.1" rx="49.0" transform="translate(604 600) rotate(-6.6)" class="hf-skin"/>
+<ellipse cx="0" cy="-146.7" rx="54.88" ry="49.0" transform="translate(604 600) rotate(-6.6)" class="hf-skin"/>
+<rect x="-55" y="-522" width="110" height="542" rx="55.0" transform="translate(708 610) rotate(0.4)" class="hf-skin"/>
+<rect x="14.4" y="-352.3" width="20.8" height="268.6" rx="10.4" class="hf-shade" transform="translate(430 610) rotate(-14.6)"/>
+<path d="M-20.8,-288.3 Q0,-283.3 20.8,-288.3" class="hf-crease" transform="translate(430 610) rotate(-14.6)"/>
+<path d="M-20.8,-281.3 Q0,-274.3 20.8,-281.3" class="hf-crease" transform="translate(430 610) rotate(-14.6)"/>
+<path d="M-20.8,-274.3 Q0,-269.3 20.8,-274.3" class="hf-crease" transform="translate(430 610) rotate(-14.6)"/>
+<path d="M-20.8,-174.2 Q0,-169.2 20.8,-174.2" class="hf-crease" transform="translate(430 610) rotate(-14.6)"/>
+<path d="M-20.8,-167.2 Q0,-160.2 20.8,-167.2" class="hf-crease" transform="translate(430 610) rotate(-14.6)"/>
+<path d="M-20.8,-160.2 Q0,-155.2 20.8,-160.2" class="hf-crease" transform="translate(430 610) rotate(-14.6)"/>
+<rect x="-24" y="-374.3" width="48" height="27.2" rx="20.8" class="hf-nail" transform="translate(430 610) rotate(-14.6)"/>
+<circle cx="360.9" cy="345" r="20" class="hf-badge"/><text x="360.9" y="352" class="hf-num">4</text>
+<rect x="16.6" y="-390.4" width="23.9" height="297.4" rx="12" class="hf-shade" transform="translate(512 600) rotate(-12.9)"/>
+<path d="M-23.9,-319.7 Q0,-314.7 23.9,-319.7" class="hf-crease" transform="translate(512 600) rotate(-12.9)"/>
+<path d="M-23.9,-312.7 Q0,-305.7 23.9,-312.7" class="hf-crease" transform="translate(512 600) rotate(-12.9)"/>
+<path d="M-23.9,-305.7 Q0,-300.7 23.9,-305.7" class="hf-crease" transform="translate(512 600) rotate(-12.9)"/>
+<path d="M-23.9,-192.9 Q0,-187.9 23.9,-192.9" class="hf-crease" transform="translate(512 600) rotate(-12.9)"/>
+<path d="M-23.9,-185.9 Q0,-178.9 23.9,-185.9" class="hf-crease" transform="translate(512 600) rotate(-12.9)"/>
+<path d="M-23.9,-178.9 Q0,-173.9 23.9,-178.9" class="hf-crease" transform="translate(512 600) rotate(-12.9)"/>
+<rect x="-27.6" y="-416.6" width="55.2" height="31.3" rx="23.9" class="hf-nail" transform="translate(512 600) rotate(-12.9)"/>
+<circle cx="444.3" cy="303.4" r="20" class="hf-badge"/><text x="444.3" y="310.4" class="hf-num">3</text>
+<rect x="17.6" y="-277.8" width="25.5" height="209.1" rx="12.7" class="hf-shade" transform="translate(604 600) rotate(-6.6)"/>
+<path d="M-25.5,-223.8 Q0,-218.8 25.5,-223.8" class="hf-crease" transform="translate(604 600) rotate(-6.6)"/>
+<path d="M-25.5,-216.8 Q0,-209.8 25.5,-216.8" class="hf-crease" transform="translate(604 600) rotate(-6.6)"/>
+<path d="M-25.5,-209.8 Q0,-204.8 25.5,-209.8" class="hf-crease" transform="translate(604 600) rotate(-6.6)"/>
+<path d="M-25.5,-145.8 Q0,-140.8 25.5,-145.8" class="hf-crease" transform="translate(604 600) rotate(-6.6)"/>
+<path d="M-25.5,-138.8 Q0,-131.8 25.5,-138.8" class="hf-crease" transform="translate(604 600) rotate(-6.6)"/>
+<path d="M-25.5,-131.8 Q0,-126.8 25.5,-131.8" class="hf-crease" transform="translate(604 600) rotate(-6.6)"/>
+<circle cx="578.1" cy="376.8" r="20" class="hf-badge"/><text x="578.1" y="383.8" class="hf-num">2</text>
+<rect x="19.8" y="-483.5" width="28.6" height="368.7" rx="14.3" class="hf-shade" transform="translate(708 610) rotate(0.4)"/>
+<path d="M-28.6,-395.6 Q0,-390.6 28.6,-395.6" class="hf-crease" transform="translate(708 610) rotate(0.4)"/>
+<path d="M-28.6,-388.6 Q0,-381.6 28.6,-388.6" class="hf-crease" transform="translate(708 610) rotate(0.4)"/>
+<path d="M-28.6,-381.6 Q0,-376.6 28.6,-381.6" class="hf-crease" transform="translate(708 610) rotate(0.4)"/>
+<path d="M-28.6,-239 Q0,-234 28.6,-239" class="hf-crease" transform="translate(708 610) rotate(0.4)"/>
+<path d="M-28.6,-232 Q0,-225 28.6,-232" class="hf-crease" transform="translate(708 610) rotate(0.4)"/>
+<path d="M-28.6,-225 Q0,-220 28.6,-225" class="hf-crease" transform="translate(708 610) rotate(0.4)"/>
+<rect x="-33" y="-516" width="66" height="55" rx="28.6" class="hf-nail" transform="translate(708 610) rotate(0.4)"/>
+<circle cx="710.9" cy="234.2" r="20" class="hf-badge"/><text x="710.9" y="241.2" class="hf-num">1</text>
+</g>
+<text x="205" y="128" class="hf-fnum">4</text>
+<text x="380" y="128" class="hf-fnum">3</text>
+<text x="560" y="128" class="hf-fnum">2</text>
+<text x="790" y="128" class="hf-fnum">1</text>
+<text x="290.0" y="102" class="hf-cap">fret</text>
+<text x="870" y="182" class="hf-slabel">E</text>
+<text x="870" y="232" class="hf-slabel">A</text>
+<text x="870" y="282" class="hf-slabel">D</text>
+<text x="870" y="332" class="hf-slabel">G</text>
+<text x="870" y="382" class="hf-slabel">B</text>
+<text x="870" y="432" class="hf-slabel">e</text>
 </svg>
       </div>
       <ul class="hand-key">
@@ -204,7 +239,7 @@
         <li><b>2</b><span><strong>Middle:</strong> G string, fret 2.</span></li>
         <li><b>3</b><span><strong>Ring:</strong> A string, fret 3.</span></li>
         <li><b>4</b><span><strong>Pinky:</strong> D string, fret 3, right next to the ring finger.</span></li>
-        <li><b class="t">T</b><span><strong>Thumb:</strong> behind the neck, roughly behind your middle finger. Squeeze between thumb and index, not with the whole arm.</span></li>
+        <li><b class="t">T</b><span><strong>Thumb:</strong> hidden behind the neck, roughly behind your middle finger. Squeeze between thumb and index, not with the whole arm.</span></li>
       </ul>
     </div>
 
