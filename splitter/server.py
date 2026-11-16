@@ -355,6 +355,7 @@ def main():
     parser.add_argument("--host", default="127.0.0.1",
                         help="address to listen on (use 0.0.0.0 to reach it from other devices)")
     parser.add_argument("--port", type=int, default=8765)
+    parser.add_argument("--open", action="store_true", help="open the app in your browser")
     args = parser.parse_args()
     if args.host in ("127.0.0.1", "localhost", "::1"):
         allowed_hosts = {"127.0.0.1", "localhost", "[::1]"}
@@ -365,6 +366,10 @@ def main():
     threading.Thread(target=worker, daemon=True).start()
     server = ThreadingHTTPServer((args.host, args.port), Handler)
     print(f"Stem Splitter running at http://{args.host}:{args.port}  (device: {pick_device()})")
+    if args.open:
+        import webbrowser
+        local = "127.0.0.1" if args.host in ("0.0.0.0", "::") else args.host
+        threading.Timer(0.5, webbrowser.open, [f"http://{local}:{args.port}"]).start()
     try:
         server.serve_forever()
     except KeyboardInterrupt:
