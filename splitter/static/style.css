@@ -1,0 +1,97 @@
+:root{
+  --bg:#FAF6EC; --card:#FFFFFF; --ink:#3B2E24; --muted:#6b5c4c; --faint:#8a7a66;
+  --rule:#D9CFBB; --hover:#F2EBDC; --lane:#F4EEE0; --accent:#C9873F; --on-accent:#FFFFFF; --danger:#B4452F;
+  --vocals:#D8433B; --drums:#1F9D6B; --bass:#8E44D6; --guitar:#E0701A; --piano:#C28A00; --other:#2F7FD8;
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --bg:#16130F; --card:#211C17; --ink:#EFE6D6; --muted:#BBAC96; --faint:#A0907A;
+    --rule:#3A322A; --hover:#2C251F; --lane:#1A1612; --accent:#D99A52; --on-accent:#1C1714; --danger:#E8735C;
+    --vocals:#F0605A; --drums:#35C28C; --bass:#B06CF5; --guitar:#F58A3A; --piano:#E5B02E; --other:#5BA2F2;
+    color-scheme:dark;
+  }
+}
+*{box-sizing:border-box}
+body{margin:0; background:var(--bg); color:var(--ink); font:15px/1.5 Inter,system-ui,-apple-system,"Segoe UI",sans-serif;}
+main{max-width:1100px; margin:0 auto; padding:28px 16px 64px;}
+h1{font:600 1.9rem/1.2 Fraunces,Georgia,serif; margin:0;}
+h2{font:600 1.15rem/1.3 Fraunces,Georgia,serif; margin:0;}
+.sub{color:var(--muted); margin:6px 0 22px;}
+.card{background:var(--card); border:1px solid var(--rule); border-radius:14px; padding:18px; margin-bottom:20px;}
+[hidden]{display:none !important}
+
+.btn{font:inherit; font-weight:500; color:var(--ink); background:transparent; border:1px solid var(--rule); border-radius:999px; padding:7px 14px; cursor:pointer; white-space:nowrap;}
+.btn:hover{background:var(--hover);}
+.btn:disabled{opacity:.5; cursor:default;}
+.btn.primary{background:var(--accent); border-color:var(--accent); color:var(--on-accent); font-weight:600; padding:10px 20px;}
+.btn.primary:hover{filter:brightness(1.06);}
+.btn.toggle[aria-pressed="true"]{background:var(--accent); border-color:var(--accent); color:var(--on-accent);}
+:focus-visible{outline:2px solid var(--accent); outline-offset:2px;}
+
+.upload{display:flex; flex-wrap:wrap; align-items:center; gap:14px 24px;}
+.upload-main{display:flex; flex-wrap:wrap; align-items:center; gap:12px; flex:1 1 300px;}
+.hint{color:var(--faint);}
+.seg{display:flex; gap:8px; border:0; padding:0; margin:0;}
+.seg label{cursor:pointer;}
+.seg input{position:absolute; opacity:0;}
+.seg span{display:block; border:1px solid var(--rule); border-radius:10px; padding:6px 12px; font-weight:600;}
+.seg small{display:block; font-weight:400; color:var(--faint); font-size:.78rem;}
+.seg input:checked + span{border-color:var(--accent); box-shadow:inset 0 0 0 1px var(--accent);}
+.seg input:focus-visible + span{outline:2px solid var(--accent); outline-offset:2px;}
+.msg{flex-basis:100%; margin:0; color:var(--muted); min-height:0;}
+.msg:empty{display:none;}
+.msg.err{color:var(--danger);}
+
+.transport{display:flex; flex-wrap:wrap; align-items:center; gap:14px; margin-bottom:14px;}
+.play{width:54px; height:54px; flex:none; border-radius:50%; border:0; background:var(--accent); color:var(--on-accent); cursor:pointer; display:grid; place-items:center;}
+.play svg{width:28px; height:28px; fill:currentColor;}
+.play:disabled{opacity:.5; cursor:default;}
+.now{flex:1 1 200px; min-width:0;}
+.now h2{overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
+.time{color:var(--muted); font-variant-numeric:tabular-nums;}
+.actions{display:flex; flex-wrap:wrap; gap:8px;}
+
+.tracks{position:relative; --ctl:250px; display:grid; gap:6px;}
+.track{display:grid; grid-template-columns:var(--ctl) 1fr; height:68px;}
+.ctl{display:grid; grid-template-columns:auto 1fr auto; grid-template-rows:auto auto; align-items:center; gap:4px 10px; padding:6px 12px 6px 0;}
+.ms{grid-row:1 / span 2; display:grid; gap:4px;}
+.ms button{width:28px; height:25px; font:600 12px/1 inherit; color:var(--muted); background:transparent; border:1px solid var(--rule); border-radius:6px; cursor:pointer;}
+.ms button:hover{background:var(--hover);}
+.ms .m[aria-pressed="true"]{background:var(--danger); border-color:var(--danger); color:#fff;}
+.ms .s[aria-pressed="true"]{background:var(--c); border-color:var(--c); color:#fff;}
+.name{font-weight:600; text-transform:capitalize; display:flex; align-items:center; gap:7px;}
+.name::before{content:""; width:9px; height:9px; border-radius:50%; background:var(--c);}
+.dl{color:var(--muted); display:grid; place-items:center; width:28px; height:25px; border-radius:6px;}
+.dl:hover{background:var(--hover); color:var(--ink);}
+.dl svg{width:16px; height:16px; fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round; stroke-linejoin:round;}
+.vol{grid-column:2 / span 2; width:100%; margin:0; accent-color:var(--c);}
+.lane{background:var(--lane); border-radius:8px; overflow:hidden; min-width:0;}
+.lane canvas{display:block; width:100%; height:100%;}
+.track.silent .lane{opacity:.3;}
+.track.silent .name{color:var(--faint);}
+.overlay{position:absolute; top:0; bottom:0; left:var(--ctl); right:0; cursor:pointer; touch-action:none; z-index:1;}
+.playhead{position:absolute; top:0; bottom:0; left:0; width:2px; margin-left:-1px; background:var(--ink); pointer-events:none; will-change:transform;}
+.region{position:absolute; top:0; bottom:0; background:color-mix(in srgb, var(--accent) 22%, transparent); border-inline:2px solid var(--accent); pointer-events:none; border-radius:4px;}
+.tip{color:var(--faint); font-size:.85rem; margin:12px 0 0;}
+
+.library h2{margin:28px 0 10px;}
+#songs{list-style:none; margin:0; padding:0; display:grid; gap:8px;}
+.song{display:flex; align-items:center; gap:12px; background:var(--card); border:1px solid var(--rule); border-radius:12px; padding:10px 14px;}
+.song.current{border-color:var(--accent);}
+.song .info{flex:1; min-width:0;}
+.song .t{font-weight:600; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
+.song .d{color:var(--faint); font-size:.85rem;}
+.song .d.err{color:var(--danger);}
+.bar{height:5px; border-radius:3px; background:var(--rule); margin-top:6px; overflow:hidden;}
+.bar i{display:block; height:100%; background:var(--accent); transition:width .5s linear;}
+.empty{color:var(--faint);}
+
+.dropveil{position:fixed; inset:0; display:none; place-items:center; font:600 1.8rem Fraunces,Georgia,serif; color:var(--on-accent); background:color-mix(in srgb, var(--accent) 88%, transparent); z-index:10; pointer-events:none;}
+body.dragging .dropveil{display:grid;}
+
+@media (max-width:640px){
+  .tracks{--ctl:132px;}
+  .ctl{padding-right:8px; gap:4px 6px;}
+  .dl{display:none;}
+  .vol{grid-column:2;}
+}

@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Stem Splitter</title>
+<link rel="stylesheet" href="static/style.css">
+</head>
+<body>
+<main>
+  <header class="top">
+    <h1>Stem Splitter</h1>
+    <p class="sub">Split a song into vocals, drums, bass, guitar and more. Runs entirely on this computer.</p>
+  </header>
+
+  <section class="card upload" id="drop">
+    <div class="upload-main">
+      <button type="button" class="btn primary" id="pick">Choose a song</button>
+      <span class="hint">or drop an audio file anywhere on this page</span>
+      <input type="file" id="file" accept="audio/*,video/*,.mp3,.wav,.flac,.m4a,.ogg,.opus,.aac,.wma,.aiff" hidden>
+    </div>
+    <fieldset class="seg" aria-label="Stems">
+      <label><input type="radio" name="model" value="6" checked><span>6 stems<small>with guitar and piano</small></span></label>
+      <label><input type="radio" name="model" value="4"><span>4 stems<small>vocals, drums, bass, other</small></span></label>
+    </fieldset>
+    <p class="msg" id="uploadMsg" role="status"></p>
+  </section>
+
+  <section class="card player" id="player" hidden>
+    <div class="transport">
+      <button type="button" class="play" id="play" aria-label="Play">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path id="playIcon" d="M8 5v14l11-7z"/></svg>
+      </button>
+      <div class="now">
+        <h2 id="title"></h2>
+        <div class="time"><span id="cur">0:00</span> / <span id="dur">0:00</span></div>
+      </div>
+      <div class="actions">
+        <button type="button" class="btn toggle" id="loop" aria-pressed="false" title="Loop the selection, or the whole song (L)">Loop</button>
+        <button type="button" class="btn" id="reset" title="Reset volumes, mutes and solos">Reset mix</button>
+        <button type="button" class="btn" id="exportMix" title="Save the current mix as one WAV file">Export mix</button>
+      </div>
+    </div>
+    <p class="msg" id="playerMsg" role="status"></p>
+    <div class="tracks" id="tracks">
+      <div class="overlay" id="overlay">
+        <div class="region" id="region" hidden></div>
+        <div class="playhead" id="playhead"></div>
+      </div>
+    </div>
+    <p class="tip">Click a waveform to jump. Drag across it to select a section to loop. Space plays and pauses.</p>
+  </section>
+
+  <section class="library">
+    <h2>Your songs</h2>
+    <ul id="songs"></ul>
+    <p class="empty" id="empty">Nothing here yet. Songs you split are kept so you can reopen them later.</p>
+  </section>
+</main>
+<div class="dropveil" id="veil">Drop to split</div>
+<script src="static/app.js"></script>
+</body>
+</html>
